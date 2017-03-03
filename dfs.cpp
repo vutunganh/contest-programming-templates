@@ -40,7 +40,7 @@ int adr_3d( int x = 0, int y = 0, int z = 0 )
 
 vector< int > neighbour_2d( int x, int y )
 {
-  vector< int >;
+  vector< int > to_ret;
   for( int r = y - 1; r < y + 2; ++r )
     for( int c = x - 1; c < x + 2; ++c )
       /* tady muzete priohybat podminky, pokud vzdalenost neni nutne kolma 1
