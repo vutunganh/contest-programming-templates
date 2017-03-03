@@ -3,4 +3,5 @@ acm sablonky
 
 TODO: 
 dodelat dfs
+
 zkontrolovat spravnost dfs
