@@ -7,6 +7,8 @@
 using namespace std;
 using neighbour_list = std::vector<int>;
 
+enum class NODE_STATE { UNKNOWN, OPEN, VISITED };
+
 /* sirka je "x"-ova
  * hloubka je "y"-ova
  */
@@ -57,6 +59,27 @@ vector< int > neighbour_2d( int x, int y )
         to_ret.push_back( (r+x) * width + (c+y) );
       }
   return to_ret;
+}
+
+void dfs_init( int start, vector< int >& V )
+{
+  vector< NODE_STATE > S( V.size( ) );
+  for( auto& s : S )
+    S[ start ] = UNKNOWN;
+
+  dfs( start );
+}
+
+void dfs( int n, vector< int >& V, vector< NODE_STATE >& S )
+{
+  if( S[ n ] != UNKNOWN )
+    return;
+
+  S[ n ] = OPEN;
+  for( auto& v : V[ n ] )
+    dfs( v, V, S );
+
+  S[ n ] = VISITED:
 }
 
 /* vector< int > neighbour_3d( int x, int y, int z ) */
