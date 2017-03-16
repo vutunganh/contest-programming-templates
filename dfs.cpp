@@ -40,6 +40,9 @@ int adr_3d( int x = 0, int y = 0, int z = 0 )
   return z * width * depth +  y * width + x;
 }
 
+/**
+ * vraci seznam sousedu pro kazdy node
+ */
 vector< int > neighbour_2d( int x, int y )
 {
   vector< int > to_ret;
