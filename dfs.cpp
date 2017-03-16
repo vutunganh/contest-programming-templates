@@ -46,19 +46,19 @@ int adr_3d( int x = 0, int y = 0, int z = 0 )
 vector< int > neighbour_2d( int x, int y )
 {
   vector< int > to_ret;
-  for( int r = y - 1; r < y + 2; ++r )
-    for( int c = x - 1; c < x + 2; ++c )
+  for( int r = -1; r < 2; ++r )
+    for( int c = -1; c < 2; ++c )
       /* tady muzete priohybat podminky, pokud vzdalenost neni nutne kolma 1
        * jsou tam i mozna funkcni kontroly mezi bludiste
        */
       if( r * r + c * c == 1 && 
-          r >= 0 &&
-          c >= 0 &&
-          r < depth &&
-          c < width
+          r+y >= 0 &&
+          c+x >= 0 &&
+          r+y < depth &&
+          c+x < width
         )
       {
-        to_ret.push_back( r * width + c );
+        to_ret.push_back( (r+x) * width + (c+y) );
       }
   return to_ret;
 }
