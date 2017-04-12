@@ -1,0 +1,3 @@
+/home/users/k/kristja6/ACM/my-z-kacerova/unsolved/CombatingCancer/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/users/k/kristja6/ACM/my-z-kacerova/unsolved/CombatingCancer/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/users/k/kristja6/ACM/my-z-kacerova/unsolved/CombatingCancer/cmake-build-debug/CMakeFiles/TreeOfLife.dir

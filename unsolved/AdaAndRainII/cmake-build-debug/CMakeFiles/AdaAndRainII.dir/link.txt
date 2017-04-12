@@ -1,0 +1,1 @@
+/usr/bin/c++   -g   CMakeFiles/AdaAndRainII.dir/main.cpp.o  -o AdaAndRainII 
