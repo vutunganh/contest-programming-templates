@@ -1,0 +1,68 @@
+#include <iostream>
+#include <vector>
+#include <string.h>
+
+using namespace std;
+
+const int ZERO = 100000000;
+
+int B[200000000];
+
+bool solve( )
+{
+  int N, K;
+  cin >> N >> K;
+  //vector< int > B( 200000000, 0 );
+  //for (int i = 0; i < 200000000; ++ i) B[i] = 0;
+  memset(B, 0, 200000000);
+  bool works = false;
+
+  int first;
+  cin >> first;
+
+  int min = first + ZERO;
+  int max = first + ZERO;
+
+  B[ first + ZERO ] = 1;
+  if( first % K == 0 )
+    works = true;
+
+  for( int i = 0; i < N - 1; ++i )
+  {
+    int n;
+    cin >> n;
+
+    min -= abs( n );
+    max += abs( n );
+
+    for( int j = min; j <= max; ++j )
+      if( B[ j ] )
+      {
+        B[ j - abs( n ) ] = std::max(B[j] + 1, B[j - abs(n)]);
+        if( ( j - abs( n ) - ZERO ) % K == 0 && B[j - abs(n)] == N)
+          works = true;
+      }
+
+    for( int j = max; j >= min; --j )
+      if( B[ j ] )
+      {
+        B[ j + abs( n ) ] = std::max(B[j] + 1, B[j + abs(n)]);
+        if( ( j + abs( n ) - ZERO ) % K == 0 && B[j + abs(n)] == N )
+          works = true;
+      }
+  }
+
+  return works;
+}
+
+int main( void )
+{
+  int M;
+  cin >> M;
+
+  for( int i = 0; i < M; ++i )
+    if( solve( ) )
+      cout << "Divisible" << endl;
+    else
+      cout << "Not divisible" << endl;
+}
