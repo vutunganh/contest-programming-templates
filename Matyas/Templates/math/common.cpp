@@ -5,6 +5,7 @@ typedef unsigned long long ull;
 typedef long long ll;
 using namespace std;
 
+// nejmensi spolecny delitel
 ll gcd(ll m, ll n) {
   if(m == 0 && n == 0)
     return -1;
@@ -21,6 +22,7 @@ ll gcd(ll m, ll n) {
   return m;
 }
 
+// kombinacni cislo: (n k)
 ull NchooseK(ull n, ull k)
 {
   if (k == 0) return 1;
@@ -74,6 +76,7 @@ ll modularInversion(ll n, ll m) {
   return q[1];
 }
 
+// kombinacni cislo: (n k) mod p
 ull NchooseKmodP(ull n, ull k, ull p) {
   ull top = 1;
   ull bottom = 1;
@@ -89,6 +92,7 @@ ull NchooseKmodP(ull n, ull k, ull p) {
   return ((top % p) * (modularInversion(bottom, p) % p)) % p;
 }
 
+// vrati vektor vsech prvocisel <= upTo
 vector<int> getPrimes(int upTo) {
   vector<int> result = {2, 3, 5};
   for (int i = 6; i <= upTo; ++i) {
@@ -104,6 +108,9 @@ vector<int> getPrimes(int upTo) {
   return result;
 }
 
+// vrati vektor prvocinitelnu n
+// napr 12 = 2^2 * 3 vrati
+// { (2, 2), (3, 1) }
 vector<pair<int, int>> factors(int n, const vector<int> & primes) {
   vector<pair<int, int>> result;
   for (int i = 0; i < primes.size() && primes[i] <= n; ++i) {
@@ -119,6 +126,7 @@ vector<pair<int, int>> factors(int n, const vector<int> & primes) {
   return result;
 }
 
+// pocet delitelu pro dany rozklad na prvocinitele
 // facts = result of factors(n)
 int divisors(const vector<pair<int, int>> & facts) {
   int d = 1;
@@ -128,6 +136,7 @@ int divisors(const vector<pair<int, int>> & facts) {
   return d;
 }
 
+// pocet delitelu ktere jsou ctverce
 // facts = result of factors(n)
 int squareDivisors(vector<pair<int, int>> facts) {
   bool confirm = false;
