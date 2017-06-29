@@ -15,6 +15,7 @@
 #define aa first
 #define bb second
 #define PB push_back
+#define MP make_pair
 
 using namespace std;
 
