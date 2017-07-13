@@ -14,7 +14,8 @@
 #define bb second
 #define PB push_back
 #define MP make_pair
-#define MF(m,f) ( m.find( f ) != m.end( ) )
+#define MF(m,f) m.find( f )
+#define MFB(m,f) ( m.find( f ) != m.end( ) )
 #define MOD ( static_cast< int >( 1e9 + 7 ) )
 
 using namespace std;
