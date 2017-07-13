@@ -1,15 +1,12 @@
 #include <bits/stdc++.h>
 #define i_in(n) int n; scanf( " %d", &n )
 #define i_sin(n) int n; cin >> n
-#define ll_in(n) long long n; scanf( " %lld", &n )
-#define ll_sin(n) long long n; cin >> n
 #define DPRINT(X) cout << #X << ":" << X << endl;
 #define vi vector< int >
-#define vl vector< long long >
 #define vvi vector< vector< int > >
-#define vvll vector< vector< long long > >
-#define FOR(i,a,b) for( int i = a; i < b; ++i )
-#define UFOR(i,a,b) for( size_t i = a; i < b; ++i )
+#define FOR(i,a,b) for( auto i = a; i < b; ++i )
+#define F(a,b) FOR( i, a, b )
+#define FF(a,b) FOR( j, a, b )
 #define aa first
 #define bb second
 #define PB push_back
