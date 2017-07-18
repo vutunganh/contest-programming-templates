@@ -3,6 +3,7 @@
 
 typedef unsigned long long ull;
 typedef long long ll;
+typedef pair<int,int> P;
 using namespace std;
 
 // nejmensi spolecny delitel
@@ -108,9 +109,30 @@ vector<int> getPrimes(int upTo) {
   return result;
 }
 
+// vrati vektor vsech prvocisel <= upTo
+// se slozitosti n * log(log(n))
+vector<int> erasothenes(int upTo) {
+  vector<bool> sieve(upTo + 1, false);
+  for (int i = 2; i <= upTo; ++i) {
+    if (!sieve[i]) {
+      for (int j = 2*i; j <= upTo; j += i) {
+        sieve[j] = true;
+      }
+    }
+  }
+
+  vector<int> result;
+  for (int i = 2; i <= upTo; ++i) {
+    if (!sieve[i])
+      result.push_back(i);
+  }
+  return result;
+}
+
 // vrati vektor prvocinitelnu n
 // napr 12 = 2^2 * 3 vrati
 // { (2, 2), (3, 1) }
+// v case O(n^(1/2))
 vector<pair<int, int>> factors(int n, const vector<int> & primes) {
   vector<pair<int, int>> result;
   for (int i = 0; i < primes.size() && primes[i] <= n; ++i) {
@@ -128,7 +150,7 @@ vector<pair<int, int>> factors(int n, const vector<int> & primes) {
 
 // pocet delitelu pro dany rozklad na prvocinitele
 // facts = result of factors(n)
-int divisors(const vector<pair<int, int>> & facts) {
+int divisorsCount(const vector<pair<int, int>> &facts) {
   int d = 1;
   for (int i = 0; i < facts.size(); ++i) {
     d *= (facts[i].second + 1);
@@ -140,7 +162,7 @@ int divisors(const vector<pair<int, int>> & facts) {
 // facts = result of factors(n)
 int squareDivisors(vector<pair<int, int>> facts) {
   bool confirm = false;
-  // set to false if not counting proper divisors
+  // set to false if not counting proper divisorsCount
   bool isEvenPerfectSquare = true;
 
   for (int i = 0; i < facts.size(); ++i) {
@@ -155,7 +177,82 @@ int squareDivisors(vector<pair<int, int>> facts) {
   int subtract = (confirm && isEvenPerfectSquare) ? 1 : 0;
 
   if (confirm)
-    return divisors(facts) - subtract;
+    return divisorsCount(facts) - subtract;
   else
     return 0;
+}
+
+// rychle umocnovani v case log(exp)
+int ipow(int base, int exp) {
+    int result = 1;
+    while (exp)
+    {
+        if (exp & 1)
+            result *= base;
+        exp >>= 1;
+        base *= base;
+    }
+
+    return result;
+}
+
+// rozsirene erasethonovo site, pamatuje si jmensiho prvocinitele pro kazde cislo
+// lze pouzit pro rozklad na prvocinitele v log(n)
+vector<int> erasothenesExt(int upTo) {
+  vector<bool> v(upTo + 1, false);
+  vector<int> sp(upTo + 1, 0);
+  for (int i = 2; i <= upTo; ++i) {
+    if (!v[i]) {
+      for (int j = 2*i; j <= upTo; j += i) {
+        if (!v[j]) {
+          v[j] = true;
+          sp[j] = i;
+        }
+      }
+      sp[i] = i;
+    }
+  }
+  sp[1] = 1;
+  return sp;
+}
+
+// rychla faktorizace v O(log(n)) za pomoci rozsireneho sita
+vector<P> fastFactors(int n, vector<int> & sieve) {
+  int c;
+  vector<P> divs;
+  divs.push_back({sieve[n], 1});
+  n /= sieve[n];
+  while (n != 1) {
+    c = sieve[n];
+    if (divs.back().first != c) {
+      divs.push_back({c, 1});
+    } else {
+      divs.back().second ++;
+    }
+    n = n/sieve[n];
+  }
+  return divs;
+}
+
+// pomocna funkce pro fastDivisors
+void getDivs(vector<int> & res, vector<P> & divs, int t, int i) {
+  if (i >= divs.size()) {
+    res.push_back(t);
+    return;
+  }
+  int n = t;
+  for (int j = 0; j <= divs[i].second; ++j) {
+    getDivs(res, divs, n, i + 1);
+    n *= divs[i].first;
+  }
+}
+
+// ziska delitele v asymptoticky optimalnim case
+vector<int> fastDivisors(int n, vector<int> sieve) {
+  vector<P> divs = fastFactors(n, sieve);
+  vector<int> exp(divs.size(), 0);
+  vector<int> result;
+
+  getDivs(result, divs, 1, 0);
+  return result;
 }
