@@ -11,8 +11,8 @@
   numbers=none
 }
 
-\title{Knihovna tymu My z Kacerova}
-\author{Matyas Kristan, Vu Tung Anh}
+\title{Knihovna týmu My z Kačerova}
+\author{Matyáš Křišťan, Vu Tung Anh}
 
 \begin{document}
 \maketitle
@@ -22,7 +22,7 @@
 
 
 \section{Algoritmy}
-\subsection{Grafove algoritmy}
+\subsection{Grafové algoritmy}
 \subsubsection{Reprezentace}
 \begin{lstlisting}
 struct Vertex {
@@ -77,7 +77,7 @@ void floydWarshall(vector<vector<int>> & dist) {
       for (int j = 0; j < n; ++j) {
         if (dist[i][k] == INT_MAX || 
             dist[k][j] == INT_MAX) 
-              continue;
+              éontinue;
         dist[i][j] = 
           min(dist[i][k] + dist[k][j], 
               dist[i][j]);
@@ -132,7 +132,7 @@ int addTreeLCAQuery(
 }
 \end{lstlisting}
 
-\subsection{Stringove algoritmy}
+\subsection{Stringové algoritmy}
 \subsubsection{Longest common substring}
 Jenom delka.
 \begin{lstlisting}
@@ -331,7 +331,7 @@ using namespace std;
   }
 \end{lstlisting}
 
-\subsection{Kombinacni cislo}
+\subsection{Kombinačni číslo}
 \begin{lstlisting}
   ull NchooseK(ull n, ull k)
   {
@@ -350,7 +350,7 @@ using namespace std;
   }
 \end{lstlisting}
 
-\subsection{Modularni inverze}
+\subsection{Modularní inverze}
 \begin{lstlisting}
 ll modularInversion(ll n, ll m) {
   ll mod = m;
@@ -389,7 +389,7 @@ ll modularInversion(ll n, ll m) {
 }
 \end{lstlisting}
 
-\subsection{Kombinacni cislo modulene(?)}
+\subsection{Kombinacni cislo modulené(?)}
 \begin{lstlisting}
   ull NchooseKmodP(ull n, ull k, ull p) {
     ull top = 1;
@@ -407,8 +407,7 @@ ll modularInversion(ll n, ll m) {
   }
 \end{lstlisting}
 
-// vrati vektor vsech prvocisel <= upTo
-\subsection{Eratosthenova sita (ruzne rychla)}
+\subsection{Eratosthenova síta}
 \begin{lstlisting}
   vector<int> getPrimes(int upTo) {
     vector<int> result = {2, 3, 5};
@@ -465,7 +464,7 @@ ll modularInversion(ll n, ll m) {
   }
 \end{lstlisting}
 
-\subsection{Pocet delitelu (potreba faktorizace vyse!)}
+\subsection{Počet dělitelů (potřeba faktorizace výše!)}
 \begin{lstlisting}
   int divisorsCount(const vector<pair<int, int>> &facts) {
     int d = 1;
@@ -476,7 +475,7 @@ ll modularInversion(ll n, ll m) {
   }
 \end{lstlisting}
 
-\subsection{Pocet ctvercovych delitelu}
+\subsection{Počet čtvercových dělitelů}
 \begin{lstlisting}
   int squareDivisors(vector<pair<int, int>> facts) {
     bool confirm = false;
@@ -501,7 +500,7 @@ ll modularInversion(ll n, ll m) {
     }
 \end{lstlisting}
 
-\subsection{Rychle umocnovani}
+\subsection{Rychlé umocňování}
 \begin{lstlisting}
   int ipow(int base, int exp) {
     int result = 1;
@@ -517,7 +516,7 @@ ll modularInversion(ll n, ll m) {
     }
 \end{lstlisting}
 
-\subsection{Rozsirene Eratosthenovo sito}
+\subsection{Rozšířené Eratosthenovo síto}
 Faktorizace v O(log(n))
 \begin{lstlisting}
   vector<int> erasothenesExt(int upTo) {
@@ -540,7 +539,7 @@ Faktorizace v O(log(n))
 \end{lstlisting}
 
 // rychla faktorizace v O(log(n)) za pomoci rozsireneho sita
-\subsection{Rychla faktorizace}
+\subsection{Rychlá faktorizace}
 Potreba rozsirene Eratosthenovo sito vyse
 \begin{lstlisting}
   vector<P> fastFactors(int n, vector<int> & sieve) {
