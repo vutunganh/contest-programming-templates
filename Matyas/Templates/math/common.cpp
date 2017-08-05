@@ -94,6 +94,7 @@ ull NchooseKmodP(ull n, ull k, ull p) {
 }
 
 // vrati vektor vsech prvocisel <= upTo
+// O(n^(3/2))
 vector<int> getPrimes(int upTo) {
   vector<int> result = {2, 3, 5};
   for (int i = 6; i <= upTo; ++i) {
