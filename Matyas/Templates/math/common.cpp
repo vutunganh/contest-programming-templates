@@ -6,6 +6,42 @@ typedef long long ll;
 typedef pair<int,int> P;
 using namespace std;
 
+ll d(ll s) {
+  return s;
+}
+
+struct Matrix {
+  Matrix(int rows, int columns):
+      m(vector<vector<ll>>{rows, vector<ll>(columns, 0)})
+      , rows(rows)
+      , columns(columns) {
+  }
+  Matrix(int size, bool unit = false):
+      m(vector<vector<ll>>{size, vector<ll>(size, 0)})
+    , rows(size), columns(size) {
+    if (unit) {
+      for (int i = 0; i < size; ++i) {
+        m[i][i] = 1;
+      }
+    }
+  }
+
+  Matrix operator * (const Matrix & other) const {
+    Matrix result(rows, columns);
+    for (int i = 0; i < 2; ++i) {
+      for (int j = 0; j < 2; ++j) {
+        for (int k = 0; k < 2; ++k) {
+          result.m[i][j] = d(d(result.m[i][j]) + d(d(m[i][k]) * d(other.m[k][j])));
+        }
+      }
+    }
+    return result;
+  }
+
+  vector<vector<ll>> m;
+  int rows, columns;
+};
+
 // nejmensi spolecny delitel
 ll gcd(ll m, ll n) {
   if(m == 0 && n == 0)
@@ -181,6 +217,21 @@ int squareDivisors(vector<pair<int, int>> facts) {
     return divisorsCount(facts) - subtract;
   else
     return 0;
+}
+
+// rychle umocnovani v case log(exp)
+// ocekava ctvercovou matici
+Matrix ipow(Matrix base, ll exp) {
+  Matrix result(base.rows, true);
+  while (exp)
+  {
+    if (exp & 1)
+        result = result * base;
+    exp >>= 1;
+    base = base * base;
+  }
+
+  return result;
 }
 
 // rychle umocnovani v case log(exp)
