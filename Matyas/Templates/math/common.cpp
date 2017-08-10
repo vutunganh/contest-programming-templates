@@ -184,17 +184,34 @@ int squareDivisors(vector<pair<int, int>> facts) {
 }
 
 // rychle umocnovani v case log(exp)
-int ipow(int base, int exp) {
-    int result = 1;
-    while (exp)
-    {
-        if (exp & 1)
-            result *= base;
-        exp >>= 1;
-        base *= base;
-    }
+ll ipow(ll base, ll exp) {
+  ll result = 1;
+  while (exp)
+  {
+    if (exp & 1)
+        result *= base;
+    exp >>= 1;
+    base *= base;
+  }
 
-    return result;
+  return result;
+}
+
+// rychle modularni umocnovani v case log(exp)
+ll ipowMod(ll base, ll exp, ll mod) {
+  ll result = 1;
+  while (exp)
+  {
+    if (exp & 1) {
+      result *= base;
+      result %= mod;
+    }
+    exp >>= 1;
+    base *= base;
+    base %= mod;
+  }
+
+  return result;
 }
 
 // rozsirene erasethonovo site, pamatuje si jmensiho prvocinitele pro kazde cislo
