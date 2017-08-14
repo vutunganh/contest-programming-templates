@@ -12,7 +12,7 @@ typedef pair<int,int> P;
 struct Vertex {
   vector<int> e;
   int deg_in;
-  bool visited = false;
+  bool v = false;
   int depth;
   vector<P> query;
 };
@@ -64,15 +64,15 @@ void floydWarshall(vector<vector<int>> & dist) {
 // nalezne nejblizsi polecne predky na stromu pro predem zadanou mnozinu dvojic vrcholu.
 // O(n * log*(n))
 void treeLCA(int v = 0, vector<Vertex> & g, UnionFind & uf, vector<int> & results, int depth = 0) {
-  g[v].visited = true;
+  g[v].v = true;
   g[v].depth = depth;
 
   for (int i = 0; i < g[v].query.size(); ++i) {
     const int u = g[v].query[i].second;
     const int resultIndex = g[v].query[i].first;
-    if (g[u].visited) {
+    if (g[u].v) {
       // vypocita vzdalenost dvou vrcholu (pocet hran cesty)
-      // d(visited, u) = u.depth + v.depth - 2*lca(u, visited).depth
+      // d(v, u) = u.depth + v.depth - 2*lca(u, v).depth
       results[resultIndex] = g[u].depth + g[v].depth - 2*g[ uf.root(u) ].depth;
 
       // vypocita nejblizsiho spolecneho predka
@@ -81,7 +81,7 @@ void treeLCA(int v = 0, vector<Vertex> & g, UnionFind & uf, vector<int> & result
   }
 
   for (int i = 0; i < g[v].e.size(); ++i) {
-    if (!g[ g[v].e[i] ].visited) {
+    if (!g[ g[v].e[i] ].v) {
       treeLCA(g[v].e[i], g, uf, results, depth + 1);
       uf.parent[g[v].e[i]] = v;
     }
@@ -95,4 +95,73 @@ int addTreeLCAQuery(vector<Vertex> & g, vector<int> & results, int v, int u) {
   const int r = (int) results.size();
   results.push_back(0);
   return r;
+}
+
+void treeDiameterRec(vector<Vertex> & g, int n, int depth, int & maxD, int & maxDIdx) {
+  if (g[n].v) return;
+  g[n].v = true;
+  g[n].depth = depth;
+  if (depth > maxD) {
+    maxD = depth;
+    maxDIdx = n;
+  }
+
+  for (int i = 0; i < g[n].e.size(); ++i) {
+    treeDiameterRec(g, g[n].e[i], depth + 1, maxD, maxDIdx);
+  }
+}
+
+int startOfLongestPath, endOfLongestPath;
+
+// spocte sirku stromu (delku nejdelsi cesty)
+int treeDiameter(vector<Vertex> & g) {
+  int maxD = 0, maxDIdx;
+  treeDiameterRec(g, 0, 0, maxD, maxDIdx);
+  for (int i = 0; i < g.size(); ++i) g[i].v = false;
+  startOfLongestPath = maxDIdx;
+
+  maxD = 0;
+  treeDiameterRec(g, maxDIdx, 0, maxD, maxDIdx);
+  for (int i = 0; i < g.size(); ++i) g[i].v = false;
+  endOfLongestPath = maxDIdx;
+
+  return maxD;
+}
+
+// pomocna funkce
+pair<bool, int> treeCenterRec(vector<Vertex> & g, int n, int depth, int diameter, int end) {
+  if (g[n].v) return {false, -1};
+  g[n].v = true;
+  g[n].depth = depth;
+
+  bool foundEnd = false;
+  int endIdx = -1;
+  if (n == end) {
+    foundEnd = true;
+  }
+
+  for (int i = 0; i < g[n].e.size(); ++i) {
+    auto a = treeCenterRec(g, g[n].e[i], depth + 1, diameter, end);
+    foundEnd |= a.first;
+    if (a.second != -1) {
+      endIdx = a.second;
+      break;
+    }
+  }
+
+  if (foundEnd && depth == diameter/2) {
+    endIdx = n;
+    return {true, endIdx};
+  }
+
+  return {foundEnd, endIdx};
+}
+
+// nalezne nejaky stredu stromu
+// O(n)
+int treeCenter(vector<Vertex> & g) {
+  int diameter = treeDiameter(g);
+  int result = treeCenterRec(g, startOfLongestPath, 0, diameter, endOfLongestPath).second;
+  for (int i = 0; i < g.size(); ++i) g[i].v = false;
+  return result;
 }
