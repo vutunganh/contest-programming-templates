@@ -1,7 +1,4 @@
 # my-z-kacerova
 acm sablonky
 
-TODO: 
-dodelat dfs
-
-zkontrolovat spravnost dfs
+Latex si lze zkompilovat ve slozce 'latex' prikazem make
