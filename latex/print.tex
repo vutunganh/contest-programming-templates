@@ -1,8 +1,8 @@
 \documentclass{article}
-\usepackage{listings}
-\usepackage{inconsolata}
 \usepackage[czech]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{inconsolata}
 
 % nastavuje code blocks
 \lstset{
@@ -15,11 +15,8 @@
 \author{Matyáš Křišťan, Vu Tung Anh}
 
 \begin{document}
-\maketitle
-\pagenumbering{gobble}
-\newpage
-\pagenumbering{arabic}
 
+\tableofcontents
 
 \section{Algoritmy}
 \subsection{Grafové algoritmy}
@@ -28,7 +25,7 @@
 struct Vertex {
   vector<int> e;
   int deg_in;
-  bool visited = false;
+  bool v = false;
   int depth;
   vector<P> query;
 };
@@ -77,7 +74,7 @@ void floydWarshall(vector<vector<int>> & dist) {
       for (int j = 0; j < n; ++j) {
         if (dist[i][k] == INT_MAX || 
             dist[k][j] == INT_MAX) 
-              éontinue;
+              continue;
         dist[i][j] = 
           min(dist[i][k] + dist[k][j], 
               dist[i][j]);
@@ -87,6 +84,7 @@ void floydWarshall(vector<vector<int>> & dist) {
 }
 \end{lstlisting}
 
+\subsection{Stromové algoritmy}
 \subsubsection{LCA}
 \begin{lstlisting}
 void treeLCA(int v = 0, 
@@ -94,16 +92,15 @@ void treeLCA(int v = 0,
              UnionFind & uf,
              vector<int> & results,
              int depth = 0) {
-  g[v].visited = true;
+  g[v].v = true;
   g[v].depth = depth;
 
   for (int i = 0; i < g[v].query.size(); ++i) {
     const int u = g[v].query[i].second;
     const int resultIndex = g[v].query[i].first;
-    if (g[u].visited) {
+    if (g[u].v) {
       // vypocita vzdalenost dvou vrcholu (pocet hran cesty)
-      // d(visited, u) = 
-      //   u.depth + v.depth - 2*lca(u, visited).depth
+      // d(v, u) = u.depth + v.depth - 2*lca(u, v).depth
       results[resultIndex] = 
         g[u].depth + g[v].depth - 2*g[ uf.root(u) ].depth;
 
@@ -113,7 +110,7 @@ void treeLCA(int v = 0,
   }
 
   for (int i = 0; i < g[v].e.size(); ++i) {
-    if (!g[ g[v].e[i] ].visited) {
+    if (!g[ g[v].e[i] ].v) {
       treeLCA(g[v].e[i], g, uf, results, depth + 1);
       uf.parent[g[v].e[i]] = v;
     }
@@ -131,6 +128,92 @@ int addTreeLCAQuery(
   return r;
 }
 \end{lstlisting}
+
+\subsubsection{Nejdelší ceste ve stromě}
+\begin{lstlisting}
+  void treeDiameterRec(
+      vector<Vertex> & g,
+      int n,
+      int depth,
+      int & maxD,
+      int & maxDIdx) {
+    if (g[n].v) return;
+    g[n].v = true;
+    g[n].depth = depth;
+    if (depth > maxD) {
+      maxD = depth;
+      maxDIdx = n;
+    }
+
+    for (int i = 0; i < g[n].e.size(); ++i) {
+      treeDiameterRec(g, g[n].e[i], depth + 1, maxD, maxDIdx);
+    }
+  }
+
+  int startOfLongestPath, endOfLongestPath;
+
+  // spocte sirku stromu (delku nejdelsi cesty)
+  int treeDiameter(vector<Vertex> & g) {
+    int maxD = 0, maxDIdx;
+    treeDiameterRec(g, 0, 0, maxD, maxDIdx);
+    for (int i = 0; i < g.size(); ++i) g[i].v = false;
+    startOfLongestPath = maxDIdx;
+
+    maxD = 0;
+    treeDiameterRec(g, maxDIdx, 0, maxD, maxDIdx);
+    for (int i = 0; i < g.size(); ++i) g[i].v = false;
+    endOfLongestPath = maxDIdx;
+
+    return maxD;
+  }
+\end{lstlisting}
+
+\subsubsection{Střed stromu}
+\begin{lstlisting}
+  pair<bool, int> treeCenterRec(
+  vector<Vertex> & g,
+  int n, int depth,
+  int diameter, int end) {
+    if (g[n].v) return {false, -1};
+    g[n].v = true;
+    g[n].depth = depth;
+
+    bool foundEnd = false;
+    int endIdx = -1;
+    if (n == end) {
+      foundEnd = true;
+    }
+
+    for (int i = 0; i < g[n].e.size(); ++i) {
+      auto a = 
+        treeCenterRec(g, g[n].e[i], depth + 1, diameter, end);
+      foundEnd |= a.first;
+      if (a.second != -1) {
+        endIdx = a.second;
+        break;
+      }
+    }
+
+    if (foundEnd && depth == diameter/2) {
+      endIdx = n;
+      return {true, endIdx};
+    }
+
+    return {foundEnd, endIdx};
+  }
+
+  // nalezne nejaky stredu stromu
+  // O(n)
+  int treeCenter(vector<Vertex> & g) {
+    int diameter = treeDiameter(g);
+    int result = 
+      treeCenterRec(g, startOfLongestPath,
+                    0, diameter, endOfLongestPath).second;
+    for (int i = 0; i < g.size(); ++i) g[i].v = false;
+    return result;
+  }
+\end{lstlisting}
+
 
 \subsection{Stringové algoritmy}
 \subsubsection{Longest common substring}
@@ -151,12 +234,27 @@ int LongestCommonSubstringLen(string & p, string & q) {
 }
 \end{lstlisting}
 
+\subsubsection{Longest common subsequence}
+Jenom delka.
+\begin{lstlisting}
+int LongestCommonSubsubsequenceLen(string & p, string & q) {
+   int result = 0;
+   vector<vector<int>> dp(p.size()+1, vector<int>(q.size()+1, 0));
+   for (int i = 1; i <= p.size(); ++i) {
+     for (int j = 1; j <= q.size(); ++j) {
+       if (p[i - 1] == q[j - 1]) {
+           dp[i][j] = dp[i - 1][j - 1] + 1;
+           result = max(result, dp[i][j]);
+       }
+       dp[i][j] = max(dp[i][j], max(dp[i - 1][j], dp[i][j - 1]));
+     }
+   }
+   return result;
+}
+\end{lstlisting}
+
 \subsection{Mergesort s inverzemi}
 \begin{lstlisting}
-//
-// Created by maty on 3/3/17.
-//
-
 #include <iostream>
 #include <vector>
 #include <climits>
@@ -229,9 +327,109 @@ int main() {
 }
 \end{lstlisting}
 
+\subsection{Binární vyhledávání}
+\begin{lstlisting}
+  ll fn(ll i) {
+    //if (i < 0) return INT_MIN;
+    //if (i >= a.size()) return INT_MAX;
+    //return a[i];
+  }
+\end{lstlisting}
+
+\subsubsection{Upper bound}
+Nejpravejsi roven
+\begin{lstlisting}
+  pair<ll,int> rightmostFind(int l, int r, ll val) {
+    if (r >= l) {
+      const int mid = (r + l) / 2;
+
+      ll res = fn(mid);
+      ll resNext = fn(mid + 1);
+
+      if (res <= val && resNext > val) {
+        return {res, mid};
+      } else if (res > val) {
+        return rightmostFind(l, mid - 1, val);
+      } else {
+        return rightmostFind(mid + 1, r, val);
+      }
+    }
+    // nenalezeno
+    return {0, -1};
+  }
+\end{lstlisting}
+
+\subsubsection{Any bound}
+Jakýkoliv roven
+\begin{lstlisting}
+  pair<ll,int> binarySearch(int l, int r, ll val) {
+    if (r >= l) {
+      const int mid = (r + l) / 2;
+
+      ll res = fn(mid);
+
+      if (res == val) {
+        return {res, mid};
+      } else if (res > val) {
+        return binarySearch(l, mid - 1, val);
+      } else {
+        return binarySearch(mid + 1, r, val);
+      }
+    }
+    // nenalezeno
+    return {0, -1};
+  };
+\end{lstlisting}
+
+\subsubsection{První větší}
+\begin{lstlisting}
+  pair<ll,int> upperbound(int l, int r, ll val) {
+    if (r >= l) {
+      const int mid = (r + l) / 2;
+
+      ll res = fn(mid);
+      ll resprev = fn(mid - 1);
+
+      if (res > val && resprev <= val) {
+        return {res, mid};
+      } else if (res > val) {
+        return upperbound(l, mid - 1, val);
+      } else {
+        return upperbound(mid + 1, r, val);
+      }
+    }
+    // nenalezeno
+    return {0, -1};
+  };
+\end{lstlisting}
+
+\subsubsection{Lower bound}
+Prvni >= val
+\begin{lstlisting}
+  pair<ll,int> lowerbound(int l, int r, ll val) {
+    if (r >= l) {
+      const int mid = (r + l) / 2;
+
+      ll res = fn(mid);
+      ll resprev = fn(mid - 1);
+
+      if (res >= val && resprev < val) {
+        return {res, mid};
+      } else if (res >= val) {
+        return lowerbound(l, mid - 1, val);
+      } else {
+        return lowerbound(mid + 1, r, val);
+      }
+    }
+    // nenalezeno
+    return {0, -1};
+  };
+\end{lstlisting}
 
 \newpage
+
 \section{Datové struktury}
+
 \subsection{Fenwick}
 \begin{lstlisting}
 #define vi vector< int >
@@ -309,6 +507,53 @@ typedef unsigned long long ull;
 typedef long long ll;
 typedef pair<int,int> P;
 using namespace std;
+\end{lstlisting}
+
+\subsection{Struktury}
+\subsubsection{Matice}
+\begin{lstlisting}
+struct Matrix {
+  Matrix(int rows, int columns):
+      m(vector<vector<ll>>{rows, vector<ll>(columns, 0)})
+      , rows(rows)
+      , columns(columns) {
+  }
+  Matrix(int size, bool unit = false):
+      m(vector<vector<ll>>{size, vector<ll>(size, 0)})
+    , rows(size), columns(size) {
+    if (unit) {
+      for (int i = 0; i < size; ++i) {
+        m[i][i] = 1;
+      }
+    }
+  }
+
+  Matrix operator * (const Matrix & other) const {
+    Matrix result(rows, columns);
+    for (int i = 0; i < 2; ++i) {
+      for (int j = 0; j < 2; ++j) {
+        for (int k = 0; k < 2; ++k) {
+          result.m[i][j] = 
+            d(d(result.m[i][j]) + 
+              d(d(m[i][k]) * d(other.m[k][j])));
+        }
+      }
+    }
+    return result;
+  }
+
+  vector<vector<ll>> m;
+  int rows, columns;
+};
+\end{lstlisting}
+
+\subsection{Odčítání v modulu}
+Proprietary (x - y) \% k
+\begin{lstlisting}
+inline ll modsub( ll x, ll y, ll k )
+{
+  return ( x % k - y % k + k ) % k;
+}
 \end{lstlisting}
 
 \subsection{GCD}
@@ -500,20 +745,39 @@ ll modularInversion(ll n, ll m) {
     }
 \end{lstlisting}
 
-\subsection{Rychlé umocňování}
+\subsection{Rychlé umocňování čísel}
 \begin{lstlisting}
   int ipow(int base, int exp) {
     int result = 1;
       while (exp)
       {
-        if (exp & 1)
-              result *= base;
-          exp >>= 1;
-          base *= base;
-        }
+        if (exp & 1) {
+            result *= base;
+            // modulit tady
+          }
+        exp >>= 1;
+        base *= base;
+        // modulit tady
+      }
 
       return result;
     }
+\end{lstlisting}
+
+\subsection{Rychlé umocňování matic}
+\begin{lstlisting}
+  Matrix ipow(Matrix base, ll exp) {
+    Matrix result(base.rows, true);
+    while (exp)
+    {
+      if (exp & 1)
+          result = result * base;
+      exp >>= 1;
+      base = base * base;
+    }
+
+    return result;
+  }
 \end{lstlisting}
 
 \subsection{Rozšířené Eratosthenovo síto}
@@ -590,3 +854,32 @@ At je to cokoliv
   }
 \end{lstlisting}
 \end{document}
+
+\subsection{Minimal subarray sum}
+Nejkratsi usek pole roven nejakemu k.
+
+\begin{lstlisting}
+  int minSubarraySum(vector<int> ar, int k) {
+    if (k == 0) return 0;
+    int minLen = INT_MAX;
+    int start = 0, end = 0;
+    int curSum = ar[0];
+    while (end != ar.size() - 1 || start != ar.size() - 1) {
+      if (curSum == k) minLen = min(minLen, end - start + 1);
+
+      if (curSum >= k && start < end) {
+        curSum -= ar[start];
+        start++;
+      } else {
+        if (end < ar.size() - 1) {
+          end++;
+          curSum += ar[end];
+        } else {
+          break;
+        }
+      }
+    }
+    if (curSum == k) minLen = min(minLen, end - start + 1);
+    return minLen;
+  }
+\end{lstlisting}
