@@ -148,7 +148,7 @@ vector<int> getPrimes(int upTo) {
 
 // vrati vektor vsech prvocisel <= upTo
 // se slozitosti n * log(log(n))
-vector<int> erasothenes(int upTo) {
+vector<int> eratosthenes(int upTo) {
   vector<bool> sieve(upTo + 1, false);
   for (int i = 2; i <= upTo; ++i) {
     if (!sieve[i]) {
@@ -244,7 +244,6 @@ ll ipow(ll base, ll exp) {
     exp >>= 1;
     base *= base;
   }
-
   return result;
 }
 
@@ -265,9 +264,9 @@ ll ipowMod(ll base, ll exp, ll mod) {
   return result;
 }
 
-// rozsirene erasethonovo site, pamatuje si jmensiho prvocinitele pro kazde cislo
+// rozsireni eratosthenova site, pamatuje si jmensiho prvocinitele pro kazde cislo
 // lze pouzit pro rozklad na prvocinitele v log(n)
-vector<int> erasothenesExt(int upTo) {
+vector<int> eratosthenesExt(int upTo) {
   vector<bool> v(upTo + 1, false);
   vector<int> sp(upTo + 1, 0);
   for (int i = 2; i <= upTo; ++i) {
