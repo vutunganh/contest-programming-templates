@@ -1,23 +1,23 @@
 #include <bits/stdc++.h>
+using namespace std;
+
+using pii = pair<int, int>
 using ll = long long;
 using ull = unsigned long long;
-#define i_in(n) int n; scanf(" %d", &n)
-#define i_sin(n) int n; cin >> n
-#define DPRINT(X) cout << #X << ":" << X << endl;
-#define vi vector< int >
-#define vvi vector< vector< int > >
-#define FOR(i,a,b) for (auto i = a; i < b; ++i)
-#define REP(n) F(0,n)
-#define F(a,b) FOR(i, a, b)
-#define FF(a,b) FOR(j, a, b)
+using ld = double;
+using vi = vector<int>;
+using vvi = vector<vector<int>>;
+#define FOR(i,a,b) for (auto i = (a); i < (b); ++i)
+#define F(a,b) FOR(i, (a), (b))
+#define FF(a,b) FOR(j, (a), (b))
 #define aa first
 #define bb second
 #define PB push_back
-#define MP make_pair
-#define sc(t) static_cast< t >
-#define MOD (sc(int)(1e9 + 7))
-
-using namespace std;
+#define MOD ((int)1e9+7)
+#define INF (1<<30)
+#define LINF (1<<62LL)
+#define EPS (1e-10)
+#define EQ(a,b) (fabs(a - b) <= fabs(a + b) * EPS)
 
 int main(void)
 {
