@@ -1,5 +1,5 @@
 \documentclass{article}
-\usepackage[czech]{babel}
+\usepackage[shorthands=off, czech]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{listings}
 \usepackage{inconsolata}
@@ -83,6 +83,9 @@ void floydWarshall(vector<vector<int>> & dist) {
   }
 }
 \end{lstlisting}
+
+\subsubsection{Maximální párování}
+\lstinputlisting{../Tung/hopcroft-karp.cpp}
 
 \subsection{Stromové algoritmy}
 \subsubsection{LCA}
@@ -518,7 +521,8 @@ struct BigInt {
     else m = r;
 
     vector<vector<NUM>> matrix = 
-    vector<vector<NUM>>(size(), vector<NUM>(size() + m.size() + 1, 0));
+    vector<vector<NUM>>(size(), 
+      vector<NUM>(size() + m.size() + 1, 0));
 
     for (int i = 0; i < size(); ++i) {
       for (int j = 0; j < m.size(); ++j) {
