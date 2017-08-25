@@ -18,7 +18,7 @@
 }
 
 \title{Knihovna týmu My z Kačerova}
-\author{Matyáš Křišťan, Vu Tung Anh}
+\author{Matyáš Křišťan, Jan Uhlík, Vu Tung Anh}
 
 \begin{document}
 
@@ -26,853 +26,86 @@
 
 \section{Algoritmy}
 \subsection{Grafové algoritmy}
-\subsubsection{Reprezentace}
-\begin{lstlisting}
-struct Vertex {
-  vector<int> e;
-  int deg_in;
-  bool v = false;
-  int depth;
-  vector<P> query;
-};
-\end{lstlisting}
 
 \subsubsection{Topsort}
-\begin{lstlisting}
-  vector<int> topsort(vector<Vertex> & g) {
-    vector<int> res;
-    vector<int> s;
-    for (int i = 0; i < g.size(); ++i) {
-      if (g[i].deg_in == 0) s.push_back(i);
-    }
-    while (!s.empty()) {
-      const int cur = s.back();
-      s.pop_back();
-      res.push_back(cur);
-
-      for (int i = 0; i < g[cur].e.size(); ++i) {
-        const int v = g[cur].e[i];
-        g[v].deg_in --;
-        if (g[v].deg_in == 0) {
-          s.push_back(v);
-        }
-      }
-    }
-    return res;
-  }
-\end{lstlisting}
+O(n + m)
+\lstinputlisting[firstline = 21, lastline = 41]{../Matyas/Templates/algorithms/graph.cpp}
 
 \subsubsection{Floyd Warshall}
-\begin{lstlisting}
-inline vector<vector<int>> 
-createFloydWarsharMatrix(int v) {
-  auto result = 
-    vector<vector<int>>{v, vector<int>(v, INT_MAX)};
-  for (int i = 0; i < v; ++i) {
-    result[i][i] = 0;
-  }
-  return result;
-}
-void floydWarshall(vector<vector<int>> & dist) {
-  const int n = dist.size();
-  for (int k = 0; k < n; ++k) {
-    for (int i = 0; i < n; ++i) {
-      for (int j = 0; j < n; ++j) {
-        if (dist[i][k] == INT_MAX || 
-            dist[k][j] == INT_MAX) 
-              continue;
-        dist[i][j] = 
-          min(dist[i][k] + dist[k][j], 
-              dist[i][j]);
-      }
-    }
-  }
-}
-\end{lstlisting}
+O(n**3)
+\lstinputlisting[firstline = 44, lastline =61]{../Matyas/Templates/algorithms/graph.cpp}
 
 \subsubsection{Maximální párování}
 \lstinputlisting{../Tung/hopcroft-karp.cpp}
 
 \subsubsection{Dijkstra}
-\lstinputlisting[firstline=24, lastline=54]{../Tung/dijkstra.cpp}
+\lstinputlisting[firstline = 24, lastline = 54]{../Tung/dijkstra.cpp}
 
 \subsection{Stromové algoritmy}
 \subsubsection{LCA}
-\begin{lstlisting}
-void treeLCA(int v = 0, 
-             vector<Vertex> & g,
-             UnionFind & uf,
-             vector<int> & results,
-             int depth = 0) {
-  g[v].v = true;
-  g[v].depth = depth;
+O(n * log(n))
+\lstinputlisting[firstline = 66, lastline = 98]{../Matyas/Templates/algorithms/graph.cpp}
 
-  for (int i = 0; i < g[v].query.size(); ++i) {
-    const int u = g[v].query[i].second;
-    const int resultIndex = g[v].query[i].first;
-    if (g[u].v) {
-      // vypocita vzdalenost dvou vrcholu (pocet hran cesty)
-      // d(v, u) = u.depth + v.depth - 2*lca(u, v).depth
-      results[resultIndex] = 
-        g[u].depth + g[v].depth - 2*g[ uf.root(u) ].depth;
-
-      // vypocita nejblizsiho spolecneho predka
-      //results[resultIndex] = uf.root(u);
-    }
-  }
-
-  for (int i = 0; i < g[v].e.size(); ++i) {
-    if (!g[ g[v].e[i] ].v) {
-      treeLCA(g[v].e[i], g, uf, results, depth + 1);
-      uf.parent[g[v].e[i]] = v;
-    }
-  }
-}
-// pridani dotazu pro treeLCA. 
-// Vraci index, na kterem se bude nachazet vysledek
-// v poli results.
-int addTreeLCAQuery(
-  vector<Vertex> & g, vector<int> & results, int v, int u) {
-  g[v].query.push_back({results.size(), u});
-  g[u].query.push_back({results.size(), v});
-  const int r = (int) results.size();
-  results.push_back(0);
-  return r;
-}
-\end{lstlisting}
-
-\subsubsection{Nejdelší ceste ve stromě}
-\begin{lstlisting}
-  void treeDiameterRec(
-      vector<Vertex> & g,
-      int n,
-      int depth,
-      int & maxD,
-      int & maxDIdx) {
-    if (g[n].v) return;
-    g[n].v = true;
-    g[n].depth = depth;
-    if (depth > maxD) {
-      maxD = depth;
-      maxDIdx = n;
-    }
-
-    for (int i = 0; i < g[n].e.size(); ++i) {
-      treeDiameterRec(g, g[n].e[i], depth + 1, maxD, maxDIdx);
-    }
-  }
-
-  int startOfLongestPath, endOfLongestPath;
-
-  // spocte sirku stromu (delku nejdelsi cesty)
-  int treeDiameter(vector<Vertex> & g) {
-    int maxD = 0, maxDIdx;
-    treeDiameterRec(g, 0, 0, maxD, maxDIdx);
-    for (int i = 0; i < g.size(); ++i) g[i].v = false;
-    startOfLongestPath = maxDIdx;
-
-    maxD = 0;
-    treeDiameterRec(g, maxDIdx, 0, maxD, maxDIdx);
-    for (int i = 0; i < g.size(); ++i) g[i].v = false;
-    endOfLongestPath = maxDIdx;
-
-    return maxD;
-  }
-\end{lstlisting}
+\subsubsection{Nejdelší cesta ve stromě}
+O(těžko říct, s každým dalším query se zlepšuje)
+\lstinputlisting[firstline = 100, lastline = 129]{../Matyas/Templates/algorithms/graph.cpp}
 
 \subsubsection{Střed stromu}
-\begin{lstlisting}
-  pair<bool, int> treeCenterRec(
-  vector<Vertex> & g,
-  int n, int depth,
-  int diameter, int end) {
-    if (g[n].v) return {false, -1};
-    g[n].v = true;
-    g[n].depth = depth;
-
-    bool foundEnd = false;
-    int endIdx = -1;
-    if (n == end) {
-      foundEnd = true;
-    }
-
-    for (int i = 0; i < g[n].e.size(); ++i) {
-      auto a = 
-        treeCenterRec(g, g[n].e[i], depth + 1, diameter, end);
-      foundEnd |= a.first;
-      if (a.second != -1) {
-        endIdx = a.second;
-        break;
-      }
-    }
-
-    if (foundEnd && depth == diameter/2) {
-      endIdx = n;
-      return {true, endIdx};
-    }
-
-    return {foundEnd, endIdx};
-  }
-
-  // nalezne nejaky stredu stromu
-  // O(n)
-  int treeCenter(vector<Vertex> & g) {
-    int diameter = treeDiameter(g);
-    int result = 
-      treeCenterRec(g, startOfLongestPath,
-                    0, diameter, endOfLongestPath).second;
-    for (int i = 0; i < g.size(); ++i) g[i].v = false;
-    return result;
-  }
-\end{lstlisting}
+O(n)
+\lstinputlisting[firstline = 132, lastline = 167]{../Matyas/Templates/algorithms/graph.cpp}
 
 
 \subsection{Stringové algoritmy}
 \subsubsection{Longest common substring}
-Jenom delka.
-\begin{lstlisting}
-int LongestCommonSubstringLen(string & p, string & q) {
-  int result = 0;
-  vector<vector<int>> dp(p.size()+1, vector<int>(q.size()+1, 0));
-  for (int i = 1; i <= p.size(); ++i) {
-    for (int j = 1; j <= q.size(); ++j) {
-      if (p[i - 1] == q[j - 1]) {
-        dp[i][j] = dp[i - 1][j - 1] + 1;
-        result = max(result, dp[i][j]);
-      }
-    }
-  }
-  return result;
-}
-\end{lstlisting}
+O(n * m)
+Jenom délka.
+\lstinputlisting[firstline = 11, lastline = 22]{../Matyas/Templates/algorithms/string.cpp}
 
 \subsubsection{Longest common subsequence}
-Jenom delka.
-\begin{lstlisting}
-int LongestCommonSubsubsequenceLen(string & p, string & q) {
-   int result = 0;
-   vector<vector<int>> dp(p.size()+1, vector<int>(q.size()+1, 0));
-   for (int i = 1; i <= p.size(); ++i) {
-     for (int j = 1; j <= q.size(); ++j) {
-       if (p[i - 1] == q[j - 1]) {
-           dp[i][j] = dp[i - 1][j - 1] + 1;
-           result = max(result, dp[i][j]);
-       }
-       dp[i][j] = max(dp[i][j], max(dp[i - 1][j], dp[i][j - 1]));
-     }
-   }
-   return result;
-}
-\end{lstlisting}
+O(n * m)
+Jenom délka.
+\lstinputlisting[firstline = 25, lastline = 38]{../Matyas/Templates/algorithms/string.cpp}
 
 \subsection{Mergesort s inverzemi}
-\begin{lstlisting}
-#include <iostream>
-#include <vector>
-#include <climits>
-#include <cstring>
-#include <algorithm>
-
-/* Mergesort ktery dokaze spocitat pocet inverzi v permutaci.
- * To je, suma(x z Prvky)(f(x))
- * kde f(x) je pocet prvku ktere jsou pred x a jsou vyssi */
-
-using namespace std;
-
-long long inv;
-
-int mergesort(vector<int> &src, int left, int right, int *result) {
-  if (right == left) {
-    result[0] = src[left];
-    return 0;
-  }
-
-  int middle = (left + right) / 2;
-  int resultL[middle - left + 2], resultR[right - middle + 1];
-  resultL[middle - left + 1] = INT_MAX;
-  resultR[right - middle] = INT_MAX;
-
-  mergesort(src, left, middle, resultL);
-  mergesort(src, middle + 1, right, resultR);
-
-  // merge
-  int l = 0, r = 0;
-  for (int i = 0; i <= right - left; ++i) {
-    if (resultL[l] < resultR[r]) {
-      result[i] = resultL[l]; ++ l;
-    } else {
-      result[i] = resultR[r]; ++ r;
-      inv += (middle - left + 1) - l;
-    }
-  }
-  return 0;
-}
-
-int result[200000];
-
-int main() {
-  vector<int> input;
-
-  // nacitani vstupu. Prvni na vstupu je pocet hodnot
-  int N;
-  cin >> N;
-
-  for (int i = 0; i < N; ++i) {
-    int n;
-    cin >> n;
-    input.push_back(n);
-  }
-
-  // pred zavolanim nad novou posloupnosti potreba nastavit inv = 0
-  mergesort(input, 0, input.size() - 1, result);
-
-
-  cout << "inversions: " << inv << endl;
-  cout << "sorted output: " << endl;
-  for (int i = 0; i < N - 1; ++i) {
-    cout << result[i] << " ";
-  }
-  cout << result[N-1] << endl;
-
-
-  return 0;
-}
-\end{lstlisting}
+O(n * log(n)) asi
+\lstinputlisting[firstline = 17, lastline = 44]{../Matyas/Templates/algorithms/mergesort.cpp}
 
 \subsection{Binární vyhledávání}
-\begin{lstlisting}
-  ll fn(ll i) {
-    //if (i < 0) return INT_MIN;
-    //if (i >= a.size()) return INT_MAX;
-    //return a[i];
-  }
-\end{lstlisting}
-
-\subsubsection{Upper bound}
-Nejpravejsi roven
-\begin{lstlisting}
-  pair<ll,int> rightmostFind(int l, int r, ll val) {
-    if (r >= l) {
-      const int mid = (r + l) / 2;
-
-      ll res = fn(mid);
-      ll resNext = fn(mid + 1);
-
-      if (res <= val && resNext > val) {
-        return {res, mid};
-      } else if (res > val) {
-        return rightmostFind(l, mid - 1, val);
-      } else {
-        return rightmostFind(mid + 1, r, val);
-      }
-    }
-    // nenalezeno
-    return {0, -1};
-  }
-\end{lstlisting}
-
-\subsubsection{Any bound}
-Jakýkoliv roven
-\begin{lstlisting}
-  pair<ll,int> binarySearch(int l, int r, ll val) {
-    if (r >= l) {
-      const int mid = (r + l) / 2;
-
-      ll res = fn(mid);
-
-      if (res == val) {
-        return {res, mid};
-      } else if (res > val) {
-        return binarySearch(l, mid - 1, val);
-      } else {
-        return binarySearch(mid + 1, r, val);
-      }
-    }
-    // nenalezeno
-    return {0, -1};
-  };
-\end{lstlisting}
-
-\subsubsection{První větší}
-\begin{lstlisting}
-  pair<ll,int> upperbound(int l, int r, ll val) {
-    if (r >= l) {
-      const int mid = (r + l) / 2;
-
-      ll res = fn(mid);
-      ll resprev = fn(mid - 1);
-
-      if (res > val && resprev <= val) {
-        return {res, mid};
-      } else if (res > val) {
-        return upperbound(l, mid - 1, val);
-      } else {
-        return upperbound(mid + 1, r, val);
-      }
-    }
-    // nenalezeno
-    return {0, -1};
-  };
-\end{lstlisting}
-
-\subsubsection{Lower bound}
-Prvni >= val
-\begin{lstlisting}
-  pair<ll,int> lowerbound(int l, int r, ll val) {
-    if (r >= l) {
-      const int mid = (r + l) / 2;
-
-      ll res = fn(mid);
-      ll resprev = fn(mid - 1);
-
-      if (res >= val && resprev < val) {
-        return {res, mid};
-      } else if (res >= val) {
-        return lowerbound(l, mid - 1, val);
-      } else {
-        return lowerbound(mid + 1, r, val);
-      }
-    }
-    // nenalezeno
-    return {0, -1};
-  };
-\end{lstlisting}
+\lstinputlisting[firstline = 7]{../Matyas/Templates/algorithms/binary-search.cpp}
 
 \newpage
 
 \section{Datové struktury}
 
 \subsection{Big Integer}
-\begin{lstlisting}
-struct BigInt {
-  typedef int NUM;
-  vector<NUM> n; // change to char for memory efficiency
-  int base = 10;
-
-  BigInt() = default;
-  BigInt(int m): n(vector<NUM>()) {
-    if (m == 0) return;
-
-    int sign = (m >= 0) ? 1 : -1;
-    if (m < 0) m *= -1;
-    while (m > 0) {
-      n.push_back(m % base);
-      m /= base;
-    }
-    fixRep();
-    if (sign == -1) {
-      *this = - *this;
-    }
-  }
-  BigInt(const string & a) {
-    if (a.size() == 0) return;
-    if (a[0] == '-') {
-      n = vector<NUM>(a.size() - 1);
-      fromString(a, 1);
-      *this = -*this;
-    } else {
-      n = vector<NUM>(a.size());
-      fromString(a, 0);
-    }
-  }
-
-  void fromString(const string & a, int start) {
-    for (int i = 0; i < a.size() - start; ++i) {
-      n[i] = a[a.size() - 1 - i] - '0';
-    }
-  }
-
-  // addition
-  void operator += (const BigInt & r) {
-    if (r.size() > size())
-      n.resize(r.size(), 0);
-
-    for (int i = 0; i < size(); ++i) n[i] += r.n[i];
-
-    fixNegatives();
-    fixRep();
-  }
-
-  BigInt operator - () const {
-    BigInt result = *this;
-    for (int i = 0; i < result.size(); ++i) result.n[i] *= -1;
-    result.fixNegatives();
-    return result;
-  }
-
-  void operator -= (const BigInt & r) {
-    *this += (- r);
-  }
-
-  BigInt operator + (const BigInt & r) const {
-    BigInt result;
-    result = *this;
-    result += r;
-    return result;
-  }
-
-  BigInt operator - (const BigInt & r) const {
-    BigInt result = *this;
-    result -= r;
-    return result;
-  }
-
-  // multiplication
-  void operator *= (const BigInt & r) {
-    if (*this == 0 || r == 0) {
-      *this = 0;
-      return;
-    }
-    BigInt m;
-    bool neg = (r < 0 != *this < 0);
-    if (*this < 0) *this = -*this;
-    if (r < 0) m = -r;
-    else m = r;
-
-    vector<vector<NUM>> matrix = 
-    vector<vector<NUM>>(size(), 
-      vector<NUM>(size() + m.size() + 1, 0));
-
-    for (int i = 0; i < size(); ++i) {
-      for (int j = 0; j < m.size(); ++j) {
-        matrix[i][j + i] = n[i] * m.n[j];
-      }
-      // fix the base representation
-      for (int j = 0; j < m.size() + 1; ++j) {
-        matrix[i][j + i + 1] += matrix[i][j + i]/base;
-        matrix[i][j + i] %= base;
-      }
-    }
-    // sum together
-    for (int i = 1; i < size(); ++i) {
-      for (int j = 0; j < size() + m.size() + 1; ++j) {
-        matrix[i][j] += matrix[i - 1][j];
-      }
-    }
-    const int s = size();
-    n.resize(size() + m.size() + 2, 0);
-    for (int i = 0; i < s + m.size() + 1; ++i) {
-      n[i] = matrix[s - 1][i];
-    }
-    fixRep();
-
-    if (neg) *this = -*this;
-  }
-
-  BigInt operator * (const BigInt & r) const {
-    BigInt result = *this;
-    result *= r;
-    return result;
-  }
-
-  // comparision
-  bool operator == (const BigInt & r) const {
-    if (r.size() != size()) return false;
-    for (int i = 0; i < r.size(); ++i) {
-      if (r.n[i] != n[i]) return false;
-    }
-    return true;
-  }
-
-  bool operator < (const BigInt & r) const {
-    if (isNegative() && !r.isNegative()) return true;
-    else if (!isNegative() && r.isNegative()) return false;
-    else if (isNegative() && r.isNegative()) {
-      return (-r < -*this);
-    }
-    if (r.size() > size()) return true;
-    else if (r.size() < size()) return false;
-
-    for (int i = r.size() - 1; i >= 0; --i) {
-      if (r.n[i] > n[i]) return true;
-      else if (r.n[i] < n[i]) return false;
-    }
-    return false;
-  }
-
-  bool operator > (const BigInt & r) const {
-    return r < *this;
-  }
-
-  bool operator <= (const BigInt & r) const {
-    return !(*this > r);
-  }
-
-  bool operator >= (const BigInt & r) const {
-    return !(*this < r);
-  }
-
-  // O(n) kde n je pocet cifer
-  void leftShift() {
-    n.insert(n.begin(), 0);
-  }
-
-  bool isNegative() const {
-    return (size() > 0 && n[size() - 1] < 0);
-  }
-
-  void fixNegatives() {
-    for (int i = 0; i < size() - 1; ++i) {
-      if (n[i] < 0) {
-        n[i] += base;
-        n[i + 1] --;
-      }
-    }
-  }
-
-  void fixRep() {
-    for (int i = 1; i < size(); ++i) {
-      n[i] += n[i - 1]/base;
-      n[i - 1] %= base;
-    }
-
-    if (size() >= 1 && abs(n[size() - 1]) >= base) {
-      n.push_back(n[size() - 1]/base);
-      n[size() - 2] %= base;
-    }
-    // removed excess zeroes
-    while (size() > 0 && n[size() - 1] == 0) n.pop_back();
-  }
-
-  int size() const { return (int) n.size(); }
-
-  operator string() const {
-    if (size() == 0) { return "0"; }
-    string result;
-    if (n[size() - 1] >= 0) {
-      for (int i = size() - 1; i >= 0; --i) {
-        result.push_back(n[i] + '0');
-      }
-    } else {
-      result = "-" + (string)(- *this);
-    }
-    return result;
-  }
-};
-
-\end{lstlisting}
+\lstinputlisting[firstline = 9]{../Matyas/Templates/math/big-int.cpp}
 
 \subsection{Fenwick}
-\begin{lstlisting}
-#define vi vector< int >
-
-using namespace std;
-
-vi T;
-
-void add( int i, int delta )
-{
-  while( i < T.size( ) )
-  {
-    T[ i ] += delta;
-    i += ( i & -i );
-  }
-}
-
-int pref_sum( int i )
-{
-  int res = 0;
-  while( i > 0 )
-  {
-    s += T[ i ];
-    i = i & ( i - 1 );
-  }
-
-  return res;
-}
-\end{lstlisting}
+JEŠTĚ JEDNOU ZDŮRAZNÍM, ŽE SE NEPOUŽÍVÁ T[0]
+\lstinputlisting{../Tung/fenwick.cpp}
 
 \subsection{Union Find}
-\begin{lstlisting}
-#include <vector>
-using namespace std;
-struct UnionFind {
-  vector<int> parent;
-  vector<int> depth;
-  UnionFind(int n): parent(vector<int>(n)), 
-                    depth(vector<int>(n, 0)) {
-    for (int i = 0; i < n; ++ i) parent[i] = i;
-  }
-
-  // nalezne koren pro vrchol v
-  // O(log*(n))
-  int root(int v) {
-    return (v == parent[v]) ? v : parent[v] = root(parent[v]);
-  }
-
-  // zjisti, jestli jsou dva vektory ve stejne komponente
-  bool find(int a, int b) {
-    return root(a) == root(b);
-  }
-
-  // spoji dva vrcholy do jedne komponenty
-  void do_union(int a, int b) {
-    if (a == b) return;
-    if (depth[a] < depth[b]) {
-      parent[a] = b;
-    } else if (depth[a] > depth[b]) {
-      parent[b] = a;
-    } else {
-      parent[b] = a;
-      depth[a] ++;
-    }
-  }
-};
-\end{lstlisting}
+\lstinputlisting[firstline = 2]{../Matyas/Templates/data-structures/union-find.cpp}
 
 \newpage
-\section{Matematika}
 
-\subsection{Typedefy}
-\begin{lstlisting}
-typedef unsigned long long ull;
-typedef long long ll;
-typedef pair<int,int> P;
-using namespace std;
-\end{lstlisting}
+\section{Matematika}
 
 \subsection{Struktury}
 \subsubsection{Matice}
-\begin{lstlisting}
-struct Matrix {
-  Matrix(int rows, int columns):
-      m(vector<vector<ll>>{rows, vector<ll>(columns, 0)})
-      , rows(rows)
-      , columns(columns) {
-  }
-  Matrix(int size, bool unit = false):
-      m(vector<vector<ll>>{size, vector<ll>(size, 0)})
-    , rows(size), columns(size) {
-    if (unit) {
-      for (int i = 0; i < size; ++i) {
-        m[i][i] = 1;
-      }
-    }
-  }
-
-  Matrix operator * (const Matrix & other) const {
-    Matrix result(rows, columns);
-    for (int i = 0; i < 2; ++i) {
-      for (int j = 0; j < 2; ++j) {
-        for (int k = 0; k < 2; ++k) {
-          result.m[i][j] = 
-            d(d(result.m[i][j]) + 
-              d(d(m[i][k]) * d(other.m[k][j])));
-        }
-      }
-    }
-    return result;
-  }
-
-  vector<vector<ll>> m;
-  int rows, columns;
-};
-\end{lstlisting}
-
-\subsection{Odčítání v modulu}
-Proprietary (x - y) \% k
-\begin{lstlisting}
-inline ll modsub( ll x, ll y, ll k )
-{
-  return ( x % k - y % k + k ) % k;
-}
-\end{lstlisting}
+\lstinputlisting[firstline = 13, lastline = 43]{../Matyas/Templates/math/common.cpp}
 
 \subsection{GCD}
-\begin{lstlisting}
-  // nejmensi spolecny delitel
-  ll gcd(ll m, ll n) {
-    if(m == 0 && n == 0)
-      return -1;
-
-    if(m < 0) m = -m;
-    if(n < 0) n = -n;
-
-    ll r;
-    while(n) {
-      r = m % n;
-      m = n;
-      n = r;
-    }
-    return m;
-  }
-\end{lstlisting}
+\lstinputlisting[firstline = 46, lastline = 60]{../Matyas/Templates/math/common.cpp}
 
 \subsection{Kombinačni číslo}
-\begin{lstlisting}
-  ull NchooseK(ull n, ull k)
-  {
-    if (k == 0) return 1;
-    if (k < n) return 0;
-
-    if (k > n/2) return NchooseK(n, n-k);
-
-    ull out = 1;
-    for(int k = 1; k <= k; ++k) {
-      out *= n-k+1;
-      out /= k;
-    }
-
-    return out;
-  }
-\end{lstlisting}
+\lstinputlisting[firstline = 63, lastline = 77]{../Matyas/Templates/math/common.cpp}
 
 \subsection{Modularní inverze}
-\begin{lstlisting}
-ll modularInversion(ll n, ll m) {
-  ll mod = m;
-  if (n < 0) n = m + n;
-  n %= m;
+\lstinputlisting[firstline = 80, lastline = 114]{../Matyas/Templates/math/common.cpp}
 
-  ll p[2], q[2], d[2];
-  p[0] = 1; p[1] = 0;
-  q[0] = 0; q[1] = 1;
-  d[0] = 0; d[1] = m / n;
-
-  while(n) {
-    ll tp, tq, td, tn;
-    tp = p[0] - d[1]*p[1];
-    tq = q[0] - d[1]*q[1];
-    tn = m - d[1]*n;
-    if (tn == 0) break;
-    td = n / tn;
-
-    // move to the next line
-    m = n;
-    n = tn;
-    p[0] = p[1];
-    p[1] = tp;
-    q[0] = q[1];
-    q[1] = tq;
-    d[0] = d[1];
-    d[1] = td;
-  }
-
-  if (q[1] < 0) {
-    q[1] += mod * ((q[1] / mod) + 1);
-  }
-
-  return q[1];
-}
-\end{lstlisting}
-
-\subsection{Kombinacni cislo modulené(?)}
-\begin{lstlisting}
-  ull NchooseKmodP(ull n, ull k, ull p) {
-    ull top = 1;
-    ull bottom = 1;
-    for (ull i = n; i > k; -- i) {
-      top *= i;
-      top %= p;
-    }
-    for (ull i = n-k; i > 0; -- i) {
-      bottom *= i;
-      bottom %= p;
-    }
-
-    return ((top % p) * (modularInversion(bottom, p) % p)) % p;
-  }
-\end{lstlisting}
+\subsection{Kombinační číslo modulené(?)}
+\lstinputlisting[firstline = 117, lastline = 130]{../Matyas/Templates/math/common.cpp}
 
 \subsection{Eratosthenova síta}
 \begin{lstlisting}
@@ -1104,4 +337,14 @@ Nejkratsi usek pole roven nejakemu k.
     if (curSum == k) minLen = min(minLen, end - start + 1);
     return minLen;
   }
+\end{lstlisting}
+
+\subsection{Odčítání v modulu}
+Proprietary (x - y) \% k
+\lstinputlisting[]
+\begin{lstlisting}
+inline ll modsub( ll x, ll y, ll k )
+{
+  return ( x % k - y % k + k ) % k;
+}
 \end{lstlisting}
