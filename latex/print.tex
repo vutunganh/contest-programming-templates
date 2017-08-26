@@ -73,6 +73,10 @@ O(n * log(n)) asi
 \subsection{Binární vyhledávání}
 \lstinputlisting[firstline = 7]{../Matyas/Templates/algorithms/binary-search.cpp}
 
+\subsection{Nejkratší úsek pole se součtem roven k}
+Pouze pro kladné prvky pole
+\lstinputlisting[firstline = 12, lastline = 34]{../Matyas/Templates/algorithms/array.cpp}
+
 \newpage
 
 \section{Datové struktury}
@@ -108,243 +112,42 @@ JEŠTĚ JEDNOU ZDŮRAZNÍM, ŽE SE NEPOUŽÍVÁ T[0]
 \lstinputlisting[firstline = 117, lastline = 130]{../Matyas/Templates/math/common.cpp}
 
 \subsection{Eratosthenova síta}
-\begin{lstlisting}
-  vector<int> getPrimes(int upTo) {
-    vector<int> result = {2, 3, 5};
-    for (int i = 6; i <= upTo; ++i) {
-      bool isPrime = true;
-      for (int j = 0; 
-           j < result.size() && result[j] * result[j] <= i; 
-           ++ j) {
-        if (i % result[j] == 0) {
-          isPrime = false;
-        }
-      }
-      if (isPrime)
-        result.push_back(i);
-      }
-    return result;
-  }
+\subsubsection{Nějaký basic}
+O(n**3/2)
+\lstinputlisting[firstline = 134, lastline = 147]{../Matyas/Templates/math/common.cpp}
 
-  vector<int> erasothenes(int upTo) {
-    vector<bool> sieve(upTo + 1, false);
-    for (int i = 2; i <= upTo; ++i) {
-      if (!sieve[i]) {
-        for (int j = 2*i; j <= upTo; j += i) {
-          sieve[j] = true;
-        }
-      }
-    }
-
-    vector<int> result;
-    for (int i = 2; i <= upTo; ++i) {
-      if (!sieve[i])
-        result.push_back(i);
-      }
-    return result;
-  }
-\end{lstlisting}
+\subsubsection{Trochu rychlejší}
+O(n * log(n))
+\lstinputlisting[firstline = 151, lastline = 167]{../Matyas/Templates/math/common.cpp}
 
 \subsection{Faktorizace}
-\begin{lstlisting}
-  vector<pair<int, int>> 
-  factors(int n, const vector<int> & primes) {
-    vector<pair<int, int>> result;
-    for (int i = 0; i < primes.size() && primes[i] <= n; ++i) {
-      int c = 0;
-      while (n % primes[i] == 0) {
-        c ++;
-        n /= primes[i];
-      }
-      if (c != 0) {
-        result.push_back({primes[i], c});
-      }
-    }
-    return result;
-  }
-\end{lstlisting}
-
-\subsection{Počet dělitelů (potřeba faktorizace výše!)}
-\begin{lstlisting}
-  int divisorsCount(const vector<pair<int, int>> &facts) {
-    int d = 1;
-    for (int i = 0; i < facts.size(); ++i) {
-      d *= (facts[i].second + 1);
-    }
-    return d;
-  }
-\end{lstlisting}
+O(sqrt(n)), vrátí jako vektor párů {prvočíslo, počet}
+\lstinputlisting[firstline = 173, lastline = 196]{../Matyas/Templates/math/common.cpp}
 
 \subsection{Počet čtvercových dělitelů}
-\begin{lstlisting}
-  int squareDivisors(vector<pair<int, int>> facts) {
-    bool confirm = false;
-    // set to false if not counting proper divisorsCount
-    bool isEvenPerfectSquare = true;
-
-    for (int i = 0; i < facts.size(); ++i) {
-      if (facts[i].second % 2 != 0) isEvenPerfectSquare = false;
-      if (facts[i].first == 2 && facts[i].second >= 2) {
-        confirm = true;
-        facts[i].second -= 2;
-      }
-      facts[i].second /= 2;
-    }
-
-    int subtract = (confirm && isEvenPerfectSquare) ? 1 : 0;
-
-    if (confirm)
-      return divisorsCount(facts) - subtract;
-    else
-      return 0;
-    }
-\end{lstlisting}
+\lstinputlisting[firstline = 200, lastline = 220]{../Matyas/Templates/math/common.cpp}
 
 \subsection{Rychlé umocňování čísel}
-\begin{lstlisting}
-  int ipow(int base, int exp) {
-    int result = 1;
-      while (exp)
-      {
-        if (exp & 1) {
-            result *= base;
-            // modulit tady
-          }
-        exp >>= 1;
-        base *= base;
-        // modulit tady
-      }
-
-      return result;
-    }
-\end{lstlisting}
+\lstinputlisting[firstline = 238, lastline = 248]{../Matyas/Templates/math/common.cpp}
+\lstinputlisting[firstline = 251, lastline = 265]{../Matyas/Templates/math/common.cpp}
 
 \subsection{Rychlé umocňování matic}
-\begin{lstlisting}
-  Matrix ipow(Matrix base, ll exp) {
-    Matrix result(base.rows, true);
-    while (exp)
-    {
-      if (exp & 1)
-          result = result * base;
-      exp >>= 1;
-      base = base * base;
-    }
-
-    return result;
-  }
-\end{lstlisting}
+\lstinputlisting[firstline = 224, lastline = 234]{../Matyas/Templates/math/common.cpp}
 
 \subsection{Rozšířené Eratosthenovo síto}
-Faktorizace v O(log(n))
-\begin{lstlisting}
-  vector<int> erasothenesExt(int upTo) {
-    vector<bool> v(upTo + 1, false);
-    vector<int> sp(upTo + 1, 0);
-    for (int i = 2; i <= upTo; ++i) {
-      if (!v[i]) {
-        for (int j = 2*i; j <= upTo; j += i) {
-          if (!v[j]) {
-            v[j] = true;
-            sp[j] = i;
-          }
-        }
-        sp[i] = i;
-      }
-    }
-    sp[1] = 1;
-    return sp;
-  }
-\end{lstlisting}
+\lstinputlisting[firstline = 269, lastline = 285]{../Matyas/Templates/math/common.cpp}
 
-// rychla faktorizace v O(log(n)) za pomoci rozsireneho sita
 \subsection{Rychlá faktorizace}
-Potreba rozsirene Eratosthenovo sito vyse
-\begin{lstlisting}
-  vector<P> fastFactors(int n, vector<int> & sieve) {
-    int c;
-    vector<P> divs;
-    divs.push_back({sieve[n], 1});
-    n /= sieve[n];
-    while (n != 1) {
-      c = sieve[n];
-      if (divs.back().first != c) {
-        divs.push_back({c, 1});
-      } else {
-        divs.back().second ++;
-      }
-      n = n/sieve[n];
-    }
-    return divs;
-  }
-\end{lstlisting}
+Potřeba rozšiřené Eratosthenovo síto výše
+O(log(n))
+\lstinputlisting[firstline = 288, lastline = 301]{../Matyas/Templates/math/common.cpp}
 
 \subsection{Fast divisors}
 At je to cokoliv
-
-\begin{lstlisting}
-  // pomocna funkce pro fastDivisors
-  void getDivs(vector<int> & res, 
-               vector<P> & divs,
-               int t, int i) {
-    if (i >= divs.size()) {
-      res.push_back(t);
-      return;
-    }
-    int n = t;
-    for (int j = 0; j <= divs[i].second; ++j) {
-      getDivs(res, divs, n, i + 1);
-      n *= divs[i].first;
-    }
-  }
-
-  // ziska delitele v asymptoticky optimalnim case
-  vector<int> fastDivisors(int n, vector<int> sieve) {
-    vector<P> divs = fastFactors(n, sieve);
-    vector<int> exp(divs.size(), 0);
-    vector<int> result;
-
-    getDivs(result, divs, 1, 0);
-    return result;
-  }
-\end{lstlisting}
-\end{document}
-
-\subsection{Minimal subarray sum}
-Nejkratsi usek pole roven nejakemu k.
-
-\begin{lstlisting}
-  int minSubarraySum(vector<int> ar, int k) {
-    if (k == 0) return 0;
-    int minLen = INT_MAX;
-    int start = 0, end = 0;
-    int curSum = ar[0];
-    while (end != ar.size() - 1 || start != ar.size() - 1) {
-      if (curSum == k) minLen = min(minLen, end - start + 1);
-
-      if (curSum >= k && start < end) {
-        curSum -= ar[start];
-        start++;
-      } else {
-        if (end < ar.size() - 1) {
-          end++;
-          curSum += ar[end];
-        } else {
-          break;
-        }
-      }
-    }
-    if (curSum == k) minLen = min(minLen, end - start + 1);
-    return minLen;
-  }
-\end{lstlisting}
+\lstinputlisting[firstline = 305, lastline = 326]{../Matyas/Templates/math/common.cpp}
 
 \subsection{Odčítání v modulu}
 Proprietary (x - y) \% k
-\lstinputlisting[]
-\begin{lstlisting}
-inline ll modsub( ll x, ll y, ll k )
-{
-  return ( x % k - y % k + k ) % k;
-}
-\end{lstlisting}
+\lstinputlisting[firstline = 329, lastline = 331]{../Matyas/Templates/math/common.cpp}
+
+\end{document}
