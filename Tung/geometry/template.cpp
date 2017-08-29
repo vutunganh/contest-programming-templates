@@ -42,7 +42,7 @@ bool operator!=(const Pt& a, const Pt& b) { return !(a == b); }
 
 struct Line
 {
-  Pt a, b;
+  Pt a, b; // one of them serves as the dir vector
   bool operator<(const Line& o) const
   {
     Pt v = b - a, w = o.b - o.a;
@@ -52,20 +52,24 @@ struct Line
 
 struct Segment
 {
-  Pt a, b;
+  Pt a, b; // begin and end of segment
   bool operator<(const Segment& o) const { return a < o.a || (a == o.a && b < o.b); }
   bool operator==(const Segment& o) const { return (a == o.a && b == o.b) || (a == o.b && b == o.a); }
 };
 
+// basics
 int dcmp(ld x) { return fabs(x) < EPS ? 0 : (x < 0 ? - 1 : 1); }
 
+ld eps(ld x) { return x / EPS; }
+
+// vector
 ld cross(Pt a, Pt b) { return a.x * b.y - a.y * b.x; } 
 
 ld dot(Pt a, Pt b) { return a.x * b.x + a.y * b.y; }
 
 ld rdist(Pt a) { return sqrt(dot(a, a)); }
 
-ld ptptd(Pt a, Pt b) { return rdist(b - a); }
+ld ppd(Pt a, Pt b) { return rdist(b - a); }
 
 ld angle(Pt a, Pt b) { return dot(a, b) / rdist(a) / rdist(b); }
 
@@ -73,15 +77,19 @@ ld angle(Pt v) { return atan2(v.y, v.x); }
 
 Pt normal(Pt v) { ld n = rdist(v); return {-v.y / n, v.x / n}; }
 
+// transformations
 Pt toLen(Pt v, ld l) { return v * l / rdist(v); }
 
 Pt fromPolar(ld len, ld angle) { return {len * cos(angle), len * sin(angle)}; }
 
 Pt rotate(Pt a, ld rad) { return {a.x * cos(rad) - a.y * sin(rad), a.x * sin(rad) + a.y * cos(rad)}; }
 
-ld lnptd(Line l, Pt p) { return fabs(cross(p - l.a, l.b - l.a) / rdist(l.b - l.a)); }
+// lines
+ld lpd(Line l, Pt p) { return fabs(cross(p - l.a, l.b - l.a) / rdist(l.b - l.a)); }
 
-Pt lnlni(Line p, Line q)
+bool llperp(Line p, Line q) { return p.b - p.a == q.b - q.a || p.b - p.a == q.a - q.b; }
+
+Pt lli(Line p, Line q)
 {
   Pt v = p.b - p.a;
   Pt w = q.b - q.a;
@@ -89,6 +97,24 @@ Pt lnlni(Line p, Line q)
   return p.a + v * t;
 }
 
+ld lpvert(Line l, Pt p)
+{
+  Pt v = normal(l.b - l.a);
+  return lli(l, {p, p + v});
+}
+
+bool lle(Line p, Line q)
+{
+  return EQ(vec(p.a - q.b, q.a - q.b), 0) &&
+         EQ(angle(p.b - p.a), angle(q.b - q.a))
+}
+
+// segments
+bool sgsgcolinear(const Segment& p, const Segment& q) { return p.b - p.a == q.b - q.a || p.b - p.a == q.a - q.b; }
+
+bool sgsgbeg(const Segment& p, const Segment& q) { return p.a == q.a || p.a == q.b || p.b == q.a || p.b == q.b; }
+
+// abc lines
 void abcline(Line& l, ld& a, ld& b, ld& c)
 {
   a = l.a.y - l.b.y;
