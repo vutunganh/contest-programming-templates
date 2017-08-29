@@ -18,6 +18,7 @@ struct Vertex {
 };
 
 // O(n + m)
+// vraci posloupnost indexu odpovidajici topologickemu usporadani
 vector<int> topsort(vector<Vertex> & g) {
   vector<int> res;
   vector<int> s;
