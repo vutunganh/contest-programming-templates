@@ -1,7 +1,7 @@
-\documentclass{article}
+\documentclass[10pt, a4paper, twoside]{article}
 \usepackage[shorthands=off, czech]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage{hyperref}
+\usepackage[unicode]{hyperref}
 \hypersetup{
   colorlinks=true,
   linkcolor=blue,
@@ -14,7 +14,9 @@
 \lstset{
   basicstyle=\footnotesize,
   language=C++,
-  numbers=none
+  frame=tb,
+  numbers=left,
+  breaklines
 }
 
 \title{Knihovna týmu My z Kačerova}
