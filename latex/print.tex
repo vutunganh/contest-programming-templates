@@ -91,7 +91,8 @@ Pouze pro kladné prvky pole
 \lstinputlisting[firstline = 9]{../Matyas/Templates/math/big-int.cpp}
 
 \subsection{Fenwick}
-JEŠTĚ JEDNOU ZDŮRAZNÍM, ŽE SE NEPOUŽÍVÁ T[0]
+JEŠTĚ JEDNOU ZDŮRAZNÍM, ŽE SE NEPOUŽÍVÁ T[0]\\
+Chcete-li použít Fenwicka jako ``segmenťák'' (tedy update je add(l,d)+add(r+1,-d)), pak query stačí jako pref\_sum(i) a není třeba odečítat i-1.
 \lstinputlisting{../Tung/fenwick.cpp}
 
 \subsection{Union Find}
