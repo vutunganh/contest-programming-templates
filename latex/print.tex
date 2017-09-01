@@ -1,7 +1,7 @@
-\documentclass{article}
+\documentclass[10pt, a4paper, twoside]{article}
 \usepackage[shorthands=off, czech]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage{hyperref}
+\usepackage[unicode]{hyperref}
 \hypersetup{
   colorlinks=true,
   linkcolor=blue,
@@ -14,7 +14,9 @@
 \lstset{
   basicstyle=\footnotesize,
   language=C++,
-  numbers=none
+  frame=tb,
+  numbers=left,
+  breaklines
 }
 
 \title{Knihovna týmu My z Kačerova}
@@ -37,6 +39,10 @@ O(n**3)
 
 \subsubsection{Maximální párování}
 \lstinputlisting{../Tung/hopcroft-karp.cpp}
+
+\subsubsection{Dinicův algoritmus}
+Maximální tok O(V**2 * E)
+\lstinputlisting[firstline = 22]{../Tung/dinic.cpp}
 
 \subsubsection{Dijkstra}
 \lstinputlisting[firstline = 24, lastline = 54]{../Tung/dijkstra.cpp}
@@ -85,7 +91,8 @@ Pouze pro kladné prvky pole
 \lstinputlisting[firstline = 9]{../Matyas/Templates/math/big-int.cpp}
 
 \subsection{Fenwick}
-JEŠTĚ JEDNOU ZDŮRAZNÍM, ŽE SE NEPOUŽÍVÁ T[0]
+JEŠTĚ JEDNOU ZDŮRAZNÍM, ŽE SE NEPOUŽÍVÁ T[0]\\
+Chcete-li použít Fenwicka jako ``segmenťák'' (tedy update je add(l,d)+add(r+1,-d)), pak query stačí jako pref\_sum(i) a není třeba odečítat i-1.
 \lstinputlisting{../Tung/fenwick.cpp}
 
 \subsection{Union Find}
@@ -101,6 +108,9 @@ JEŠTĚ JEDNOU ZDŮRAZNÍM, ŽE SE NEPOUŽÍVÁ T[0]
 
 \subsection{GCD}
 \lstinputlisting[firstline = 46, lastline = 60]{../Matyas/Templates/math/common.cpp}
+
+\subsection{Rozšířený Euklidův algoritmus}
+\lstinputlisting[firstline = 22, lastline = 26]{../Tung/eea.cpp}
 
 \subsection{Kombinačni číslo}
 \lstinputlisting[firstline = 63, lastline = 77]{../Matyas/Templates/math/common.cpp}
@@ -153,5 +163,10 @@ Proprietary (x - y) \% k
 \subsection{Ternární vyhledávání}
 O(log(n))
 \lstinputlisting{../Tung/ternary-search.cpp}
+
+\newpage
+
+\section{Geometrie}
+\lstinputlisting{../Tung/geometry/template.cpp}
 
 \end{document}
