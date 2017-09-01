@@ -8,27 +8,26 @@
 #include <cstring>
 #include <algorithm>
 
-/* Mergesort ktery dokaze spocitat pocet inverzi v permutaci.
- * To je, suma(x z Prvky)(f(x))
- * kde f(x) je pocet prvku ktere jsou pred x a jsou vyssi */
-
 using namespace std;
+typedef long long ll;
 
-long long inv;
 
-int mergesort(vector<int> &src, int left, int right, int *result) {
+ll inv;
+int mergesortHelp(vector<ll> &src, int left, int right, ll *result) {
   if (right == left) {
     result[0] = src[left];
     return 0;
   }
 
   int middle = (left + right) / 2;
-  int resultL[middle - left + 2], resultR[right - middle + 1];
+  //ll resultL[middle - left + 2], resultR[right - middle + 1];
+  ll* resultL = new ll[middle - left + 2];
+  ll* resultR = new ll[right - middle + 1];
   resultL[middle - left + 1] = INT_MAX;
   resultR[right - middle] = INT_MAX;
 
-  mergesort(src, left, middle, resultL);
-  mergesort(src, middle + 1, right, resultR);
+  mergesortHelp(src, left, middle, resultL);
+  mergesortHelp(src, middle + 1, right, resultR);
 
   // merge
   int l = 0, r = 0;
@@ -40,34 +39,46 @@ int mergesort(vector<int> &src, int left, int right, int *result) {
       inv += (middle - left + 1) - l;
     }
   }
+  delete [] resultL;
+  delete [] resultR;
   return 0;
 }
 
-int result[200000];
+/* Mergesort ktery dokaze spocitat pocet inverzi v permutaci.
+ * To je, suma(x z Prvky)(f(x))
+ * kde f(x) je pocet prvku ktere jsou pred x a jsou vyssi */
+ll mergesort(vector<ll> & src) {
+  inv = 0;
+  ll* result = new ll[src.size()];
+  mergesortHelp(src, 0, src.size() - 1, result);
+  for (int i = 0; i < src.size(); ++i) src[i] = result[i];
+  delete [] result;
+  return inv;
+}
 
 int main() {
-  vector<int> input;
+  ios_base::sync_with_stdio(false);
+  vector<ll> input;
 
   // nacitani vstupu. Prvni na vstupu je pocet hodnot
-  int N;
+  ll N;
   cin >> N;
 
   for (int i = 0; i < N; ++i) {
-    int n;
+    ll n;
     cin >> n;
     input.push_back(n);
   }
 
-  // pred zavolanim nad novou posloupnosti potreba nastavit inv = 0
-  mergesort(input, 0, input.size() - 1, result);
-
+  //mergesortHelp(input, 0, input.size() - 1, result);
+  mergesort(input);
 
   cout << "inversions: " << inv << endl;
   cout << "sorted output: " << endl;
-  for (int i = 0; i < N - 1; ++i) {
-    cout << result[i] << " ";
+  /*for (int i = 0; i < N - 1; ++i) {
+    cout << input[i] << " ";
   }
-  cout << result[N-1] << endl;
+  cout << input[N-1] << endl;*/
 
 
   return 0;

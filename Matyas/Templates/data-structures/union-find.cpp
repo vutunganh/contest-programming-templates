@@ -1,5 +1,6 @@
 #include <vector>
 using namespace std;
+
 struct UnionFind {
   vector<int> parent;
   vector<int> depth;
@@ -9,25 +10,26 @@ struct UnionFind {
 
   // nalezne koren pro vrchol v
   // O(log*(n))
-  int root(int v) {
-    return (v == parent[v]) ? v : parent[v] = root(parent[v]);
+  int find(int v) {
+    return (v == parent[v]) ? v : parent[v] = find(parent[v]);
   }
 
   // zjisti, jestli jsou dva vektory ve stejne komponente
-  bool find(int a, int b) {
-    return root(a) == root(b);
+  bool check(int a, int b) {
+    return find(a) == find(b);
   }
 
   // spoji dva vrcholy do jedne komponenty
   void do_union(int a, int b) {
     if (a == b) return;
-    if (depth[a] < depth[b]) {
-      parent[a] = b;
-    } else if (depth[a] > depth[b]) {
-      parent[b] = a;
+    int ar = find(a), br = find(b);
+    if (depth[ar] < depth[br]) {
+      parent[ar] = br;
+    } else if (depth[ar] > depth[br]) {
+      parent[br] = ar;
     } else {
-      parent[b] = a;
-      depth[a] ++;
+      parent[br] = ar;
+      depth[ar] ++;
     }
   }
 };
