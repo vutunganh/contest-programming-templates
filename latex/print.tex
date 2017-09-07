@@ -101,6 +101,14 @@ Chcete-li použít Fenwicka jako ``segmenťák'' (tedy update je add(l,d)+add(r+
 \newpage
 
 \section{Matematika}
+\begin{lstlisting}
+  random_device r;
+  mt19937 e(r()); // nebo mt19937_64 pro 64 bitova cisla
+  uniform_int_distribution<int> uniform_dist(0,100000) // pravy kraj inclusive (kdybychom chteli generovat az intmax)
+  uniform_dist(e); // tohle vraci random cislo
+\end{lstlisting}
+
+\subsection{Jak správně generovat náhodná čísla?}
 
 \subsection{Struktury}
 \subsubsection{Matice}
