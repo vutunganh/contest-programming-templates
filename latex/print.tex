@@ -1,0 +1,186 @@
+\documentclass[10pt, a4paper, twoside]{article}
+\usepackage[shorthands=off, czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[unicode]{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  linktoc=all
+}
+\usepackage{listings}
+\usepackage{inconsolata}
+
+% nastavuje code blocks
+\lstset{
+  basicstyle=\footnotesize,
+  language=C++,
+  frame=tb,
+  numbers=left,
+  breaklines
+}
+
+\title{Knihovna týmu My z Kačerova}
+\author{Matyáš Křišťan, Jan Uhlík, Vu Tung Anh}
+
+\begin{document}
+
+\tableofcontents
+
+\section{Algoritmy}
+\subsection{Grafové algoritmy}
+
+\subsubsection{Topsort}
+O(n + m)
+\lstinputlisting[firstline = 21, lastline = 42]{../Matyas/Templates/algorithms/graph.cpp}
+
+\subsubsection{Floyd Warshall}
+O(n**3)
+\lstinputlisting[firstline = 44, lastline =61]{../Matyas/Templates/algorithms/graph.cpp}
+
+\subsubsection{Maximální párování}
+\lstinputlisting{../Tung/hopcroft-karp.cpp}
+
+\subsubsection{Dinicův algoritmus}
+Maximální tok O(V**2 * E)
+\lstinputlisting[firstline = 22]{../Tung/dinic.cpp}
+
+\subsubsection{Dijkstra}
+\lstinputlisting[firstline = 24, lastline = 54]{../Tung/dijkstra.cpp}
+
+\subsubsection{Bellman-ford}
+\lstinputlisting[firstline=22, lastline=56]{../Tung/bellmanford.cpp}
+
+\subsection{Stromové algoritmy}
+\subsubsection{LCA}
+O(n * log(n))
+\lstinputlisting[firstline = 66, lastline = 98]{../Matyas/Templates/algorithms/graph.cpp}
+
+\subsubsection{Nejdelší cesta ve stromě}
+O(těžko říct, s každým dalším query se zlepšuje)
+\lstinputlisting[firstline = 100, lastline = 129]{../Matyas/Templates/algorithms/graph.cpp}
+
+\subsubsection{Střed stromu}
+O(n)
+\lstinputlisting[firstline = 132, lastline = 167]{../Matyas/Templates/algorithms/graph.cpp}
+
+
+\subsection{Stringové algoritmy}
+\subsubsection{Longest common substring}
+O(n * m)
+Jenom délka.
+\lstinputlisting[firstline = 11, lastline = 22]{../Matyas/Templates/algorithms/string.cpp}
+
+\subsubsection{Longest common subsequence}
+O(n * m)
+Jenom délka.
+\lstinputlisting[firstline = 25, lastline = 38]{../Matyas/Templates/algorithms/string.cpp}
+
+\subsubsection{Levenshtein}
+\lstinputlisting{../Tung/levenshtein.cpp}
+
+\subsection{Mergesort s inverzemi}
+O(n * log(n)) asi
+\lstinputlisting[firstline = 15, lastline = 57]{../Matyas/Templates/algorithms/mergesort.cpp}
+
+\subsection{Binární vyhledávání}
+\lstinputlisting[firstline = 7]{../Matyas/Templates/algorithms/binary-search.cpp}
+
+\subsection{Nejkratší úsek pole se součtem roven k}
+Pouze pro kladné prvky pole
+\lstinputlisting[firstline = 12, lastline = 34]{../Matyas/Templates/algorithms/array.cpp}
+
+\newpage
+
+\section{Datové struktury}
+
+\subsection{Big Integer}
+\lstinputlisting[firstline = 9]{../Matyas/Templates/math/big-int.cpp}
+
+\subsection{Fenwick}
+JEŠTĚ JEDNOU ZDŮRAZNÍM, ŽE SE NEPOUŽÍVÁ T[0]\\
+Chcete-li použít Fenwicka jako ``segmenťák'' (tedy update je add(l,d)+add(r+1,-d)), pak query stačí jako pref\_sum(i) a není třeba odečítat i-1.
+\lstinputlisting{../Tung/fenwick.cpp}
+
+\subsection{Union Find}
+\lstinputlisting[firstline = 4]{../Matyas/Templates/data-structures/union-find.cpp}
+
+\newpage
+
+\section{Matematika}
+
+\subsection{Jak správně generovat náhodná čísla?}
+\begin{lstlisting}
+  random_device r;
+  mt19937 e(r()); // nebo mt19937_64 pro 64 bitova cisla
+  uniform_int_distribution<int> uniform_dist(0,100000) // pravy kraj inclusive (kdybychom chteli generovat az intmax)
+  uniform_dist(e); // tohle vraci random cislo
+\end{lstlisting}
+
+\subsection{Struktury}
+\subsubsection{Matice}
+\lstinputlisting[firstline = 13, lastline = 43]{../Matyas/Templates/math/common.cpp}
+
+\subsection{GCD}
+\lstinputlisting[firstline = 46, lastline = 60]{../Matyas/Templates/math/common.cpp}
+
+\subsection{Rozšířený Euklidův algoritmus}
+\lstinputlisting[firstline = 22, lastline = 26]{../Tung/eea.cpp}
+
+\subsection{Kombinačni číslo}
+\lstinputlisting[firstline = 63, lastline = 77]{../Matyas/Templates/math/common.cpp}
+
+\subsection{Modularní inverze}
+\lstinputlisting[firstline = 80, lastline = 114]{../Matyas/Templates/math/common.cpp}
+
+\subsection{Kombinační číslo modulené(?)}
+\lstinputlisting[firstline = 117, lastline = 130]{../Matyas/Templates/math/common.cpp}
+
+\subsection{Eratosthenova síta}
+\subsubsection{Nějaký basic}
+O(n**3/2)
+\lstinputlisting[firstline = 134, lastline = 147]{../Matyas/Templates/math/common.cpp}
+
+\subsubsection{Trochu rychlejší}
+O(n * log(n))
+\lstinputlisting[firstline = 151, lastline = 167]{../Matyas/Templates/math/common.cpp}
+
+\subsection{Faktorizace}
+O(sqrt(n)), vrátí jako vektor párů {prvočíslo, počet}
+\lstinputlisting[firstline = 173, lastline = 196]{../Matyas/Templates/math/common.cpp}
+
+\subsection{Počet čtvercových dělitelů}
+\lstinputlisting[firstline = 200, lastline = 220]{../Matyas/Templates/math/common.cpp}
+
+\subsection{Rychlé umocňování čísel}
+\lstinputlisting[firstline = 238, lastline = 248]{../Matyas/Templates/math/common.cpp}
+\lstinputlisting[firstline = 251, lastline = 265]{../Matyas/Templates/math/common.cpp}
+
+\subsection{Rychlé umocňování matic}
+\lstinputlisting[firstline = 224, lastline = 234]{../Matyas/Templates/math/common.cpp}
+
+\subsection{Rozšířené Eratosthenovo síto}
+\lstinputlisting[firstline = 269, lastline = 285]{../Matyas/Templates/math/common.cpp}
+
+\subsection{Rychlá faktorizace}
+Potřeba rozšiřené Eratosthenovo síto výše
+O(log(n))
+\lstinputlisting[firstline = 288, lastline = 301]{../Matyas/Templates/math/common.cpp}
+
+\subsection{Fast divisors}
+At je to cokoliv
+\lstinputlisting[firstline = 305, lastline = 326]{../Matyas/Templates/math/common.cpp}
+
+\subsection{Odčítání v modulu}
+Proprietary (x - y) \% k
+\lstinputlisting[firstline = 329, lastline = 331]{../Matyas/Templates/math/common.cpp}
+
+\subsection{Ternární vyhledávání}
+O(log(n))
+\lstinputlisting{../Tung/ternary-search.cpp}
+
+\newpage
+
+\section{Geometrie}
+\lstinputlisting{../Tung/geometry/template.cpp}
+
+\end{document}

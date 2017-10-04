@@ -1,7 +1,8 @@
-# my-z-kacerova
-acm sablonky
+# My z Kačerova
+Knihovnu si můžete vyrobit v pdf formáte příkazem "make" ve složce latex.
 
-TODO: 
-dodelat dfs
+Přidávání kódu do knihovny se dělá tagem:
 
-zkontrolovat spravnost dfs
+  * \\lstinputlisting[firstline = první řádek úseku kódu, lastline = poslední řádek]{cesta do souboru}
+
+__PROTIP__: zkratka gf ve vimu otevre soubor, na kterem je kurzor ;)
