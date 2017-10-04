@@ -1,12 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-using pii = pair<int, int>;
 using ll = long long;
 using ull = unsigned long long;
 using ld = double;
 using vi = vector<int>;
 using vvi = vector<vector<int>>;
+using pii = pair<int, int>;
 #define FOR(i,a,b) for (auto i=(a); i<(b); ++i)
 #define F(a,b) FOR(i, (a), (b))
 #define FF(a,b) FOR(j, (a), (b))
@@ -20,8 +19,9 @@ using vvi = vector<vector<int>>;
 #define EQ(a,b) (fabs(a-b)<=fabs(a+b)*EPS)
 
 int main(void){
-  ios::sync_with_stdio(false);
+  ios::sync_with_stdio(false);cout.tie(0);cin.tie(0);
   // freopen("input.txt","r",stdin);
   // freopen("output.txt","w",stdout);
+
   return 0;
 }
