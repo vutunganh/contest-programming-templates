@@ -13,6 +13,7 @@ set wrap
 set mouse=a
 
 colorscheme elflord
+filetype indent on
 syntax on
 set sc
 set ls=2
