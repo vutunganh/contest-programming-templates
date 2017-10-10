@@ -1,4 +1,4 @@
 debug:
-	g++ --std=c++14 -Wall -pedantic -Wextra -DDEBUG -g template.cpp
+	g++ -pipe -static -Wall -lm -O2 --std=c++11 -x c++ -DDEBUG -g template.cpp
 all:
-	g++ --std=c++14 -Wall -pedantic -Wextra template.cpp
+	g++ -pipe -static -Wall -lm -O2 --std=c++11 -x c++ template.cpp
