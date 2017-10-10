@@ -27,3 +27,4 @@ map <F6> :make all<CR>
 
 set cino+=g0
 set cino+=N-s
+set showcmd
