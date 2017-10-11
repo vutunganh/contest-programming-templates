@@ -1,22 +1,33 @@
-\documentclass[10pt, a4paper, twoside]{article}
+\documentclass[10pt, a4paper]{article}
 \usepackage[shorthands=off, czech]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[unicode]{hyperref}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{inconsolata}
+
 \hypersetup{
   colorlinks=true,
   linkcolor=blue,
   linktoc=all
 }
-\usepackage{listings}
-\usepackage{inconsolata}
+
+\geometry{
+ a4paper,
+ top=25mm,
+ bottom=25mm,
+ left=25mm,
+ right=25mm
+}
 
 % nastavuje code blocks
 \lstset{
-  basicstyle=\footnotesize,
+  % basicstyle=\footnotesize,
   language=C++,
   frame=tb,
   numbers=left,
-  breaklines
+  breaklines=true,
+  tabsize=2
 }
 
 \title{Knihovna týmu My z Kačerova}
@@ -182,5 +193,18 @@ O(log(n))
 
 \section{Geometrie}
 \lstinputlisting{../Tung/geometry/template.cpp}
+
+\section{Konfiguraky}
+\subsection{Vim}
+\lstinputlisting{../vimrc}
+\subsection{Bash}
+\lstinputlisting{../bashrc}
+\subsection{Template}
+\lstinputlisting{../template/template.cpp}
+\subsection{Makefile}
+\lstinputlisting{../template/Makefile}
+\subsection{Run}
+\lstinputlisting{../template/run.sh}
+
 
 \end{document}
