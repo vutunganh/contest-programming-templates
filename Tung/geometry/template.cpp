@@ -135,6 +135,29 @@ ld abcptd(Line l, Pt p) {
   return fabs(a * p.x + b * p.y + c) / sqrt(a*a + b*b);
 }
 
+vector<Pt> convex_hull(vector<Pt> p) {
+  vector<Pt> r(2 * p.size() + 14);
+  ll K = 0;
+  sort(p.begin(), p.end());
+  for(Pt e:p){
+    while (K >= 2 && vec(r[K-1]-r[K-2], e-r[K-2]) <= 0) K--;
+    r[K++] = e;
+  }
+  for(ll i=p.size()-2, T=K+1; i>=0; i--){
+    while (K >= T && vec(r[K-1]-r[K-2], p[i]-r[K-2]) <= 0) K--;
+    r[K++] = p[i];
+  }
+  r.resize(K);
+  r.pop_back();
+  return r;
+}
+
+ld area(vector<Pt> &a){
+  ld res=0;
+  F(a.size())res+=vec(a[i],a[(i+1)%a.size()]);
+  return fabs(res/2);
+}
+
 ostream& operator<<(ostream& os, Pt& p) {
   os << "[" << p.x << ", " << p.y << "]" << endl;
   return os;
