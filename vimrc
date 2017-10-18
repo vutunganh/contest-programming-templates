@@ -1,3 +1,5 @@
+set nohls
+set hid
 set nocp
 set wmnu
 set wim=full
