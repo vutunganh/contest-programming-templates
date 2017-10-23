@@ -20,7 +20,6 @@ syntax on
 set sc
 set ls=2
 set nu
-set rnu
 
 map 0 ^
 map j gj
