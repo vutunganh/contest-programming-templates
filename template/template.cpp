@@ -2,8 +2,8 @@
 using namespace std;
 
 #define FOR(i,a,b) for(auto i=a;i<b;++i)
-#define F(a,b) FOR(i,a,b)
-#define FF(a,b) FOR(j,a,b)
+#define F(a) FOR(i,0,a)
+#define FF(a) FOR(j,0,a)
 #define aa first
 #define bb second
 #define PB push_back
