@@ -1,6 +1,6 @@
+// Requirements:
 // SegmentTree with operations init,set,range modify,query
 // Graph with vector<vector<int>>
-
 
 template <class T, int V>
 class SegmentTree {
