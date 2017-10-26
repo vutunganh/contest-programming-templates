@@ -1,0 +1,19 @@
+set ts=4
+set sw=4
+set sr
+set et
+set sta
+set nu
+set bs=2
+set ai
+set fo=c,q,r,t
+set bg=dark " only dark terminal bg
+set mouse=a
+set cb=unnamedplus
+set hid
+colo delek
+filetype plugin indent on
+syntax on
+map <S-q> :s,^,//,<cr>
+map <S-e> :s,^//,<cr>
+inoremap jk <ESC>

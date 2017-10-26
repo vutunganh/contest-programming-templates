@@ -1,0 +1,5 @@
+mkcd() { mkdir $1 && cd $1; }
+alias c="g++ -Wall -pedantic -g -std=c++11 main.cpp"
+alias rt='c && find *.in | xargs -I @ sh -c "echo Test @; ./a.out < @;"'
+alias r="c && ./a.out"
+alias main="cp ../t.cpp ./main.cpp"
