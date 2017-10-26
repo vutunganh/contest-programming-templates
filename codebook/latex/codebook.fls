@@ -363,6 +363,9 @@ INPUT ../other/ternary_search.c
 INPUT ../other/miscellaneous.cpp
 INPUT ../other/miscellaneous.cpp
 INPUT ../other/miscellaneous.cpp
+INPUT ../other/grayCode.cpp
+INPUT ../other/grayCode.cpp
+INPUT ../other/grayCode.cpp
 INPUT ../other/kthMin.cpp
 INPUT ../other/kthMin.cpp
 INPUT ../other/kthMin.cpp
