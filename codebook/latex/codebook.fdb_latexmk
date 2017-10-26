@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1509054914 "codebook.tex" "codebook.pdf" "codebook" 1509054918
+["pdflatex"] 1509059023 "codebook.tex" "codebook.pdf" "codebook" 1509059027
   "../dp/lis.cpp" 1495608951 518 778a18e7e37d2e32361e4048083f3152 ""
   "../dp/minCostPath.cpp" 1495608951 609 730a212dbcbdd77ae660e67fa366b0cf ""
   "../geometry/2circlesInters.cpp" 1495608951 504 56bad136f8ae18e6ec3609dd94b3ec68 ""
@@ -15,6 +15,7 @@
   "../graphs/bellford.cpp" 1508934950 1082 9351f636363bbe2d54fd792373ea2ab6 ""
   "../graphs/bipartite.cpp" 1508934950 368 332213f27a9d1c0d1a7e4b1c5cacfff7 ""
   "../graphs/bipartite_matching.cpp" 1508934950 1049 b7cb72c50cf419a203dbc9734ab13713 ""
+  "../graphs/chinesePostman.cpp" 1509059024 1285 d233e8992de21a44c7be48886050c8ae ""
   "../graphs/dbfs.cpp" 1508934950 487 dbfcc13745f8166720c5e7a94ca21ed3 ""
   "../graphs/dijkstra.cpp" 1508935062 808 b87b491df1080813aae80509de0ef3db ""
   "../graphs/dinic.cpp" 1508935076 2320 d774e9b99262d19f09dda42bd4471d62 ""
@@ -149,13 +150,13 @@
   "/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1495593472 2350277 a699055bee05bf8a40b0504752487295 ""
   "/usr/local/texlive/2017/texmf-var/web2c/pdftex/pdflatex.fmt" 1505728783 4129592 5542528be78e443b734183aa39394348 ""
   "/usr/local/texlive/2017/texmf.cnf" 1495593465 577 2b71d4d888f9e5560b2e99985915a9fa ""
-  "codebook.aux" 1509054918 19393 dfef7832e8e6252af8c0c1ec0256c83b ""
-  "codebook.out" 1509054918 7325 794cc842bd5fb49d5713cddd3b656e7d ""
-  "codebook.tex" 1509054902 11444 cc7b8627ff16b9f46acca1f4f732a8c5 ""
-  "codebook.toc" 1509054918 8945 1498bdd4e51b61a9ce2946e496a3f70b ""
+  "codebook.aux" 1509059027 19611 665733c85f1d80f57c0e063ee8389ab9 ""
+  "codebook.out" 1509059027 7417 8b1b77f18fd468b3573a8669085c5d38 ""
+  "codebook.tex" 1509058931 11583 18948570a37e4a2b947a317368da89e7 ""
+  "codebook.toc" 1509059027 9050 7e02d926851b89f120bccd5ff8faddd2 ""
   (generated)
-  "codebook.pdf"
-  "codebook.log"
   "codebook.toc"
-  "codebook.aux"
+  "codebook.pdf"
   "codebook.out"
+  "codebook.aux"
+  "codebook.log"

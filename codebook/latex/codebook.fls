@@ -190,6 +190,9 @@ INPUT ../graphs/tsp.cpp
 INPUT ../graphs/hamiltonian_path.cpp
 INPUT ../graphs/hamiltonian_path.cpp
 INPUT ../graphs/hamiltonian_path.cpp
+INPUT ../graphs/chinesePostman.cpp
+INPUT ../graphs/chinesePostman.cpp
+INPUT ../graphs/chinesePostman.cpp
 INPUT ../graphs/euler.cpp
 INPUT ../graphs/euler.cpp
 INPUT ../graphs/euler.cpp
