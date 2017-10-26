@@ -1,4 +1,5 @@
 #include "../template.cpp"
+
 // Prime and Factorization sieve in O(n)
 // Constructs lp[i] := minimum prime factor of i
 
