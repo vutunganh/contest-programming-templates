@@ -39,15 +39,15 @@ bool operator==(const Pt& a, const Pt& b){ return EQ(a.x-b.x,0)&&EQ(a.y-b.y,0); 
 
 bool operator!=(const Pt& a, const Pt& b){ return !(a==b); }
 
-struct Line{
+struct Ln{
   Pt a,b;
 
-  Line(){}
-  Line(Pt _a,Pt _b) :a(_a),b(_b){
+  Ln(){}
+  Ln(Pt _a,Pt _b) :a(_a),b(_b){
     if(b<a)swap(a,b);
   }
 
-  bool operator<(const Line& o) const{ //podle uhlu
+  bool operator<(const Ln& o) const{ //podle uhlu
     Pt v=b-a,w=o.b-o.a;
     return atan2(v.y,v.x)<atan2(w.y,w.x);
   }
@@ -103,30 +103,30 @@ Pt rotate(Pt a, ld rad) { return {a.x * cos(rad) - a.y * sin(rad), a.x * sin(rad
 ld degToRad(ld deg) { return deg / 180 * M_PI; }
 
 // lines
-ld lpd(Line l, Pt p) { return fabs(cross(p - l.a, l.b - l.a) / rdist(l.b - l.a)); }
+ld lpd(Ln l, Pt p) { return fabs(cross(p - l.a, l.b - l.a) / rdist(l.b - l.a)); }
 
 // TODO: y dis work?
-ld langle(Line l) { 
+ld langle(Ln l) { 
   ld tmpa = angle(l.b - l.a);
   if (tmpa < 0) tmpa += M_PI;
   return tmpa;
 }
 
-bool lle(Line p, Line q) {
+bool lle(Ln p, Ln q) {
   return EQ(cross(p.a - q.b, q.a - q.b), 0) &&
          EQ(langle(p), langle(q));
 }
 
-bool llparallel(Line p, Line q) { return EQ(langle(p), langle(q)); }
+bool llparallel(Ln p, Ln q) { return EQ(langle(p), langle(q)); }
 
-Pt lli(Line p, Line q) {
+Pt lli(Ln p, Ln q) {
   Pt v = p.b - p.a;
   Pt w = q.b - q.a;
   ld t = cross(w, p.a - q.a) / cross(v, w);
   return p.a + v * t;
 }
 
-Pt lpvert(Line l, Pt p) {
+Pt lpvert(Ln l, Pt p) {
   Pt v = normal(l.b - l.a);
   return lli(l, {p, p + v});
 }
@@ -137,13 +137,13 @@ bool sgsgcolinear(const Sg& p, const Sg& q) { return p.b - p.a == q.b - q.a || p
 bool sgsgbeg(const Sg& p, const Sg& q) { return p.a == q.a || p.a == q.b || p.b == q.a || p.b == q.b; }
 
 // abc lines
-void abcline(Line& l, ld& a, ld& b, ld& c) {
+void abcline(Ln& l, ld& a, ld& b, ld& c) {
   a = l.a.y - l.b.y;
   b = l.a.x - l.b.x;
   c = cross(l.a, l.b);
 }
 
-ld abcptd(Line l, Pt p) {
+ld abcptd(Ln l, Pt p) {
   ld a, b, c;
   abcline(l, a, b, c);
   return fabs(a * p.x + b * p.y + c) / sqrt(a*a + b*b);
@@ -177,15 +177,15 @@ ostream& operator<<(ostream& os, Pt& p) {
   return os;
 }
 
-ostream& operator<<(ostream& os, Line& l) {
+ostream& operator<<(ostream& os, Ln& l) {
   os << l.a << " " << l.b << endl;
   return os;
 }
 
 int main()
 {
-  Line l = {{-1, -1}, {1, 1}};
-  Line k = {{1, 1}, {-1, -1}};
+  Ln l = {{-1, -1}, {1, 1}};
+  Ln k = {{1, 1}, {-1, -1}};
   assert(lle(l, k));
   assert(llparallel(l, k));
   l = k;
