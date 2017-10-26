@@ -1,6 +1,13 @@
+*.swp
 *.out
 *.aux
 *.dvi
 *.log
 *.pdf
 *.toc
+*.a
+*.dSYM
+*.o
+*.so
+*~
+*.fdb_latexmk

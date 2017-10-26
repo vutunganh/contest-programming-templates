@@ -11,9 +11,12 @@ Graphs:
 
 Math:
 [ ] linear programming
+[ ] box combinatorics
+[ ] polynomial long division
 
 Geometry:
 [ ] geometry/convex_polygons_intersection.cpp
+[ ] rotations
 
 Structs:
 [ ] refactor HLD
