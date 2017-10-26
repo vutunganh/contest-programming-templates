@@ -53,17 +53,17 @@ struct Line{
   }
 };
 
-struct Segment {
+struct Sg {
   Pt a,b; // begin and end of segment
 
-  Segment(){}
-  Segment(Pt _a,Pt _b) :a(_a),b(_b){
+  Sg(){}
+  Sg(Pt _a,Pt _b) :a(_a),b(_b){
     if(b<a)swap(a,b);
   }
 
-  bool operator<(const Segment& o) const{ return a<o.a||(a==o.a&&b<o.b); }
+  bool operator<(const Sg& o) const{ return a<o.a||(a==o.a&&b<o.b); }
 
-  bool operator==(const Segment& o) const{ return (a==o.a&&b==o.b)||(a==o.b&&b==o.a); }
+  bool operator==(const Sg& o) const{ return (a==o.a&&b==o.b)||(a==o.b&&b==o.a); }
 };
 
 struct Circ{
@@ -132,9 +132,9 @@ Pt lpvert(Line l, Pt p) {
 }
 
 // segments
-bool sgsgcolinear(const Segment& p, const Segment& q) { return p.b - p.a == q.b - q.a || p.b - p.a == q.a - q.b; }
+bool sgsgcolinear(const Sg& p, const Sg& q) { return p.b - p.a == q.b - q.a || p.b - p.a == q.a - q.b; }
 
-bool sgsgbeg(const Segment& p, const Segment& q) { return p.a == q.a || p.a == q.b || p.b == q.a || p.b == q.b; }
+bool sgsgbeg(const Sg& p, const Sg& q) { return p.a == q.a || p.a == q.b || p.b == q.a || p.b == q.b; }
 
 // abc lines
 void abcline(Line& l, ld& a, ld& b, ld& c) {
