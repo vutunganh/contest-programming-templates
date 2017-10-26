@@ -1,4 +1,4 @@
-# My z Kačerova
+# Zavalleni
 Knihovnu si můžete vyrobit v pdf formáte příkazem "make" ve složce latex.
 
 Přidávání kódu do knihovny se dělá tagem:
