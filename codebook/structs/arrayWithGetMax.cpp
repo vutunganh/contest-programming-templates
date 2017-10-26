@@ -1,4 +1,4 @@
-// Heap with updates on indexes
+// Array with GetMax() operation
 // - can be used as Array with deletes, updates and getMax in log(N)
 
 #include "../template.cpp"
