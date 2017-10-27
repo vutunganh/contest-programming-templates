@@ -7,13 +7,15 @@ using namespace std;
 #define aa first
 #define bb second
 #define PB push_back
+#define pb push_back
 #define MOD ((int)1e9+7)
 #define INF (1<<30)
 #define LINF (1LL<<61LL)
 #define EPS (1e-10)
 #define EQ(a,b) (fabs(a-b)<=(fabs(a+b)*EPS))
+#define DEB puts("DEB!")
 using ll=long long;
-using ull=unsigned ll;
+using ull=unsigned long long;
 using ld=double;
 using vi=vector<int>;
 using vvi=vector<vi>;

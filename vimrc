@@ -1,6 +1,6 @@
+set nocp
 set nohls
 set hid
-set nocp
 set wmnu
 set wim=full
 set et
@@ -14,6 +14,8 @@ set indk-=0#
 set wrap
 set mouse=a
 inoremap jk <esc>
+map <S-q> :s,^,//,<cr>
+map <S-e> :s,^//,<cr>
 
 colorscheme elflord
 filetype indent on
