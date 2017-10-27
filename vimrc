@@ -13,6 +13,7 @@ set cink-=0#
 set indk-=0#
 set wrap
 set mouse=a
+inoremap jk <esc>
 
 colorscheme elflord
 filetype indent on
