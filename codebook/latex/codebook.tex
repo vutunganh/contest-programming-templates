@@ -1,3 +1,4 @@
+% arara: xelatex
 \documentclass[a4paper]{article}
 \usepackage{amsmath}
 \usepackage{multicol} % Multiple columns
@@ -9,9 +10,11 @@
 \usepackage{listings}
 \usepackage{color}
 \usepackage{hyperref}
+\usepackage{fontspec}
+\setmonofont[Contextuals={Alternate}]{Fira Code}
 \lstset{ % Configure 
     tabsize=4,
-    basicstyle=\ttfamily\scriptsize,
+    basicstyle=\scriptsize,
     aboveskip={0\baselineskip},
     columns=fixed,
     showstringspaces=false,
