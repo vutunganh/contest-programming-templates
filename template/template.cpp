@@ -16,9 +16,11 @@ using namespace std;
 #ifdef DEBUG
 #define DEB puts("DEB!")
 #define DPRINT(X) printf("#X: %d\n",X)
+#define dout cout
 #else
 #define DEB do{}while(0)
 #define DPRINT(X) do{}while(0)
+#define dout 0 && cout
 #endif
 using ll=long long;
 using ull=unsigned long long;
