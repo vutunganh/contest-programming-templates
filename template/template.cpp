@@ -14,6 +14,7 @@ using namespace std;
 #define EPS (1e-10)
 #define EQ(a,b) (fabs(a-b)<=(fabs(a+b)*EPS))
 #define ALL(x) x.begin(),x.end()
+#define CL(A,I) (memset(A,I,sizeof(A)))
 #ifdef DEBUG
 #define DEB puts("DEB!")
 #define DPRINT(X) printf("#X: %d\n",X)
