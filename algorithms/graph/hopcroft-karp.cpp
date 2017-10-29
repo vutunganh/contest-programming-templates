@@ -1,6 +1,7 @@
 using vi = vector<int>;
-#define FOR(i,a,b) for(auto i=(a);i<(b);++i)
-#define F(a,b) FOR(i,(a),(b))
+#define FOR(i,a,b) for(auto i=a;i<b;++i)
+#define F(a) FOR(i,0,a)
+#define FF(a) FOR(j,0,a)
 #define MAXN1 (10000)
 #define MAXN2 (10000)
 #define TOT (MAXN1 + MAXN2 + 1)
@@ -8,6 +9,9 @@ using vi = vector<int>;
 
 // N - velikost 1. partity
 // t je "stok", ktery se musi nastavit jako N+velikost 2. partity+1
+// mozna se da nastavit na cokoliv, co nekoliduje s cisly vrcholu
+// vrati velikost toku a v PE1[u] se da najit, na co se naparoval vrchol u,
+//   popr nenaparoval a je INF
 int t,D[TOT],PE1[TOT],PE2[TOT],N;
 vi G[TOT];
 
@@ -17,11 +21,11 @@ void add_edge(int u,int v){
 
 bool bfs(){
   queue<int> Q;
-  F(0,N)
+  F(N)
     if(PE1[i]==t)D[i]=0,Q.push(i);
     else D[i]=INF;
   D[t]=INF;
-  while(!Q.empty()){
+  while(Q.size()){
     int v=Q.front();Q.pop();
     if(D[v]<D[t])
       for(auto w:G[v])
@@ -43,8 +47,8 @@ bool dfs(int v){
 }
 
 int hopcroft_karp(){
-  F(0,TOT)PE1[i]=t,PE2[i]=t;
+  F(TOT)PE1[i]=t,PE2[i]=t;
   int res=0;
-  while(bfs())F(0,N)if(PE1[i]==t&&dfs(i))++res;
+  while(bfs())F(N)if(PE1[i]==t&&dfs(i))++res;
   return res;
 }
