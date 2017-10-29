@@ -13,6 +13,7 @@ using namespace std;
 #define LINF (1LL<<61LL)
 #define EPS (1e-10)
 #define EQ(a,b) (fabs(a-b)<=(fabs(a+b)*EPS))
+#define ALL(x) x.begin(),x.end()
 #ifdef DEBUG
 #define DEB puts("DEB!")
 #define DPRINT(X) printf("#X: %d\n",X)
