@@ -133,6 +133,11 @@ Pt lpvert(Ln l,Pt p){
 // segments
 bool sgsgcolinear(const Sg& p,const Sg& q){ return p.b-p.a==q.b-q.a||p.b-p.a==q.a-q.b; }
 
+bool sgsgleq(const Sg& p,const Sg& q){
+  if(!sgsgcolinear(p,q))return false;
+  return EQ(angle(q.b-p.a),angle(p.b-p.a));
+}
+
 bool sgsgbeg(const Sg& p,const Sg& q){ return p.a==q.a||p.a==q.b||p.b==q.a||p.b==q.b; }
 
 Pt sgsgpt(Pt a1,Pt a2,Pt b1,Pt b2){
