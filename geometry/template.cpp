@@ -22,6 +22,9 @@ using vvi=vector<vector<int>>;
 struct Pt{
   ld x,y;
 
+  Pt(){}
+  Pt(ld a,ld b) :x(a),y(b){}
+
   bool operator<(const Pt& o) const{
     return x<o.x||(x==o.x&&y<o.y);
     // return x<o.x-EPS||EQ(x,o.x))&&y<o.y-EPS;
@@ -34,11 +37,11 @@ struct Pt{
   Pt operator*(ld d) const{ return {x*d,y*d}; }
 
   Pt operator/(ld d) const{ return {x/d,y/d}; }
+
+  bool operator==(const Pt& o) const{ return EQ(x-o.x,0)&&EQ(y-o.y,0);}
+
+  bool operator!=(const Pt& o) const{ return !(a==b); }
 };
-
-bool operator==(const Pt& a, const Pt& b){ return EQ(a.x-b.x,0)&&EQ(a.y-b.y,0); }
-
-bool operator!=(const Pt& a, const Pt& b){ return !(a==b); }
 
 struct Ln{
   Pt a,b;
@@ -50,7 +53,7 @@ struct Ln{
 
   bool operator<(const Ln& o) const{ //podle uhlu
     Pt v=b-a,w=o.b-o.a;
-    return atan2(v.y,v.x)<atan2(w.y,w.x);
+    return atan2(v.y,v.x)<atan2(w.y,w.x); //+ EPS
   }
 };
 
@@ -70,14 +73,14 @@ struct Sg {
 struct Circ{
   Pt s;
   ld r;
-  Pt point(double ag) const { return {s.x + cos(ag) * r, s.y + sin(ag) * r}; }
-  bool operator<(const Circ& o ) { return r < o.r; }
+  Pt point(double ag) const{ return {s.x+cos(ag)*r,s.y+sin(ag)*r}; }
+  bool operator<(const Circ& o) const{ return r < o.r; }
 };
 
 // basics
 int dcmp(ld x){ return fabs(x)<EPS?0:(x<0?-1:1); }
 
-ld eps(ld x){ return x/EPS; }
+ld eps(ld x){ return x*EPS; }
 
 // vector
 ld cross(Pt a,Pt b){ return a.x*b.y-a.y*b.x; } 
