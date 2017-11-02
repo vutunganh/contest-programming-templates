@@ -33,7 +33,7 @@ struct Pt{
   Pt operator*(ld d) const{ return {x*d,y*d}; }
   Pt operator/(ld d) const{ return {x/d,y/d}; }
   bool operator==(const Pt& o) const{ return EQ(x-o.x,0)&&EQ(y-o.y,0);}
-  bool operator!=(const Pt& o) const{ return !(a==b); }
+  bool operator!=(const Pt& o) const{ return !(*this==b); }
 };
 
 struct Ln{
@@ -129,6 +129,7 @@ Pt lpvert(Ln l,Pt p){
 // segments
 bool sgsgcolinear(const Sg& p,const Sg& q){ return p.b-p.a==q.b-q.a||p.b-p.a==q.a-q.b; }
 
+// TODO: WTF IS THIS??
 bool sgsgleq(const Sg& p,const Sg& q){
   if(!sgsgcolinear(p,q))return false;
   return EQ(angle(q.b-p.a),angle(p.b-p.a));
@@ -141,6 +142,14 @@ Pt sgsgpt(Pt a1,Pt a2,Pt b1,Pt b2){
   ld D1=(b2.x-b1.x)*(a1.y-b1.y)-(b2.y-b1.y)*(a1.x-b1.x);
   ld D2=(a2.x-a1.x)*(a1.y-b1.y)-(a2.y-a1.y)*(a1.x-b1.x);
   return {a1.x+(D1/D0)*(a2.x-a1.x),b1.x+(D2/D0)*(a2.y-a1.y)};
+}
+
+bool jsgpt(const Sg& s,const Pt& p){
+  Pt sv=s.b-s.a,pv=p-s.a;
+  if(!EQ(angle(sv),angle(pv)))return false;
+  ld sd=rdist(sv),pd=rdist(pv),rd=rdist(p-s.b);
+  if(!EQ(sd,pd+rd))return false;
+  return true;
 }
 
 // abc lines
