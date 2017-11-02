@@ -24,22 +24,15 @@ struct Pt{
 
   Pt(){}
   Pt(ld a,ld b) :x(a),y(b){}
-
   bool operator<(const Pt& o) const{
     return x<o.x||(x==o.x&&y<o.y);
-    // return x<o.x-EPS||EQ(x,o.x))&&y<o.y-EPS;
+    // return x<o.x+EPS||EQ(x,o.x)&&y<o.y+EPS;
   }
-
   Pt operator+(const Pt& o) const{ return {x+o.x,y+o.y}; }
-
   Pt operator-(const Pt& o) const{ return {x-o.x,y-o.y}; }
-
   Pt operator*(ld d) const{ return {x*d,y*d}; }
-
   Pt operator/(ld d) const{ return {x/d,y/d}; }
-
   bool operator==(const Pt& o) const{ return EQ(x-o.x,0)&&EQ(y-o.y,0);}
-
   bool operator!=(const Pt& o) const{ return !(a==b); }
 };
 
