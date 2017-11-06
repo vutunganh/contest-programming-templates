@@ -22,23 +22,19 @@ using vvi=vector<vector<int>>;
 struct Pt{
   ld x,y;
 
+  Pt(){}
+  Pt(ld a,ld b) :x(a),y(b){}
   bool operator<(const Pt& o) const{
     return x<o.x||(x==o.x&&y<o.y);
-    // return x<o.x-EPS||EQ(x,o.x))&&y<o.y-EPS;
+    // return x<o.x+EPS||EQ(x,o.x)&&y<o.y+EPS;
   }
-
   Pt operator+(const Pt& o) const{ return {x+o.x,y+o.y}; }
-
   Pt operator-(const Pt& o) const{ return {x-o.x,y-o.y}; }
-
   Pt operator*(ld d) const{ return {x*d,y*d}; }
-
   Pt operator/(ld d) const{ return {x/d,y/d}; }
+  bool operator==(const Pt& o) const{ return EQ(x-o.x,0)&&EQ(y-o.y,0);}
+  bool operator!=(const Pt& o) const{ return !(*this==b); }
 };
-
-bool operator==(const Pt& a, const Pt& b){ return EQ(a.x-b.x,0)&&EQ(a.y-b.y,0); }
-
-bool operator!=(const Pt& a, const Pt& b){ return !(a==b); }
 
 struct Ln{
   Pt a,b;
@@ -50,7 +46,7 @@ struct Ln{
 
   bool operator<(const Ln& o) const{ //podle uhlu
     Pt v=b-a,w=o.b-o.a;
-    return atan2(v.y,v.x)<atan2(w.y,w.x);
+    return atan2(v.y,v.x)<atan2(w.y,w.x); //+ EPS
   }
 };
 
@@ -70,14 +66,14 @@ struct Sg {
 struct Circ{
   Pt s;
   ld r;
-  Pt point(double ag) const { return {s.x + cos(ag) * r, s.y + sin(ag) * r}; }
-  bool operator<(const Circ& o ) { return r < o.r; }
+  Pt point(double ag) const{ return {s.x+cos(ag)*r,s.y+sin(ag)*r}; }
+  bool operator<(const Circ& o) const{ return r < o.r; }
 };
 
 // basics
 int dcmp(ld x){ return fabs(x)<EPS?0:(x<0?-1:1); }
 
-ld eps(ld x){ return x/EPS; }
+ld eps(ld x){ return x*EPS; }
 
 // vector
 ld cross(Pt a,Pt b){ return a.x*b.y-a.y*b.x; } 
@@ -133,6 +129,12 @@ Pt lpvert(Ln l,Pt p){
 // segments
 bool sgsgcolinear(const Sg& p,const Sg& q){ return p.b-p.a==q.b-q.a||p.b-p.a==q.a-q.b; }
 
+// TODO: WTF IS THIS??
+bool sgsgleq(const Sg& p,const Sg& q){
+  if(!sgsgcolinear(p,q))return false;
+  return EQ(angle(q.b-p.a),angle(p.b-p.a));
+}
+
 bool sgsgbeg(const Sg& p,const Sg& q){ return p.a==q.a||p.a==q.b||p.b==q.a||p.b==q.b; }
 
 Pt sgsgpt(Pt a1,Pt a2,Pt b1,Pt b2){
@@ -140,6 +142,14 @@ Pt sgsgpt(Pt a1,Pt a2,Pt b1,Pt b2){
   ld D1=(b2.x-b1.x)*(a1.y-b1.y)-(b2.y-b1.y)*(a1.x-b1.x);
   ld D2=(a2.x-a1.x)*(a1.y-b1.y)-(a2.y-a1.y)*(a1.x-b1.x);
   return {a1.x+(D1/D0)*(a2.x-a1.x),b1.x+(D2/D0)*(a2.y-a1.y)};
+}
+
+bool jsgpt(const Sg& s,const Pt& p){
+  Pt sv=s.b-s.a,pv=p-s.a;
+  if(!EQ(angle(sv),angle(pv)))return false;
+  ld sd=rdist(sv),pd=rdist(pv),rd=rdist(p-s.b);
+  if(!EQ(sd,pd+rd))return false;
+  return true;
 }
 
 // abc lines
