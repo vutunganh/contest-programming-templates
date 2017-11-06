@@ -69,3 +69,48 @@ long long maxflow() {
             total_flow += flow;
     return total_flow;
 }
+
+// Morass shitcode
+// init pomoci fce ini
+#define SZ 512 //pocet nodu
+#define ME (1<<14) //pocet edgu
+struct Dinic{
+  int n,m,h[SZ],l[SZ],s,t,w[SZ];
+  struct eg{
+    int v,c,f,x;
+  }E[ME];
+  bool bfs(){
+    static int q[SZ];
+    F(n)l[i]=-1;
+    int B(l[s]=0),E(1);
+    q[0]=s;
+    while(B<E)for(int k(q[B++]),i(h[k]);~i;i=e[i].x)
+      if(e[i].f<e[i].c&&!~l[e[i].v])
+        l[e[i].v]=l[k]+1,q[E++]=e[i].v;
+    return ~l[t];
+  }
+  int dfs(int u,int f){
+    if(u==t)return f;
+    int mf;
+    for(int i(w[i]);~i;i=e[i].x)
+      if(e[i].f<e[i].c&&l[u]+1==l[e[i].v])
+        if((mf=dfs(e[i].v,min(f,e[i].c-e[i].f)))>0)
+          return e[i].f+=mf,e[i^1].f-=mf,mf;
+    return 0;
+  }
+  void ini(int N,int f,int d){n=N;s=f;t=d;m=0;F(n)h[i]=-1;}
+  void ade(int u,int v,int c=1,int rc=0){
+    e[m]=eg{v,c,0,h[u]};
+    h[u]=m++;
+    e[m]=eg{u,c,0,h[v]};
+    h[v]=m++;
+  }
+  int mf(){
+    int a(0),d;
+    while(bfs()){
+      memcpy(w,h,sizeof(int)*n);
+      do a+=d=dfs(s,INF); while(d);
+    }
+    return a;
+  }
+};
