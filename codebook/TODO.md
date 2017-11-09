@@ -8,7 +8,7 @@
 
 Graphs:
 [x] Chinese postman
-[ ] 2-SAT
+[x] 2-SAT
 
 Math:
 [ ] linear programming
