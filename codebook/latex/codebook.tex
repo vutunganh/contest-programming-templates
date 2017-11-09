@@ -1,20 +1,20 @@
-% arara: xelatex
 \documentclass[a4paper]{article}
 \usepackage{amsmath}
 \usepackage{multicol} % Multiple columns
 \usepackage{graphicx} % Image including
 \usepackage{float} % Floats positioning (allows fixed)
-\usepackage[landscape,a4paper,twoside=false,top=15mm,bottom=15mm,left=10mm,right=10mm]{geometry} % Document margins
+\usepackage[a4paper,twoside=false,top=20mm,bottom=15mm,left=10mm,right=10mm]{geometry} % Document margins
 \pagestyle{myheadings}
 \markright{}
 \usepackage{listings}
 \usepackage{color}
 \usepackage{hyperref}
-\usepackage{fontspec}
-\setmonofont[Contextuals={Alternate}]{Fira Code}
+\usepackage{titlesec}
+% \usepackage{fontspec}
+% \setmonofont[Contextuals={Alternate}]{Fira Code}
 \lstset{ % Configure 
     tabsize=4,
-    basicstyle=\scriptsize,
+    basicstyle=\ttfamily\normalsize,
     aboveskip={0\baselineskip},
     columns=fixed,
     showstringspaces=false,
@@ -26,26 +26,45 @@
     showtabs=false,
     showspaces=false,
     showstringspaces=false,
-    keywordstyle=\color[rgb]{0,0,1},
+    keywordstyle=\color[rgb]{0,0,1}\bfseries,
     commentstyle=\color[rgb]{0.133,0.545,0.133},
     stringstyle=\color[rgb]{0.627,0.126,0.941},
     numbers=left,
-    numberstyle=\tiny,
+    numberstyle=\small,
     numbersep=7pt,
     xleftmargin=0.5cm,
 }
 \lstset{emph={% Add keywords from C++ and Template
     vll,ll,ld,pll,vpll,F,FF,REP,FOR,pb,dbg,EPS,INF,CL,all,size,IN,string,pair,map,set,unordered_map,vector,unordered_set,queue,priority_queue,list%
-    },emphstyle={\color{blue}}%
+    },emphstyle={\color{blue}\bfseries}%
 }
 \widowpenalty=10000 % Breaking before last line of a paragraph
 \clubpenalty=10000 % Breaking after first line of paragraph
 \setlength{\parindent}{0.0in}
+\titleformat{\section}{\normalfont\sffamily\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\sffamily\Large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\sffamily\Large\bfseries}{\thesubsubsection}{1em}{}
+\usepackage{tocloft}
+% \titleformat*{\section}{\Huge\heiti}
+% \titleformat*{\subsection}{\huge\heiti}
 
 \begin{document}
-\begin{multicols*}{2}
+
+\renewcommand\familydefault{\sfdefault}
+
+\title{\LARGE\bfseries\sffamily CODEBOOK}
+\date{}
+\maketitle
+
+% \begin{multicols*}{2}
 \setlength{\parskip}{0.0in}
+
+\renewcommand{\cftsecfont}{\large\sffamily\bfseries}
+\renewcommand{\cftsubsecfont}{\large\sffamily}
 \tableofcontents
+
+\newpage
+
 \setlength{\parskip}{0.1in}
 
 \section{Strings}
@@ -74,6 +93,8 @@
             \lstinputlisting[language=c++]{../graphs/bipartite.cpp}
         \subsubsection{Articulations \& bridges}
             \lstinputlisting[language=c++]{../graphs/articulations-bridges.cpp}
+        \subsubsection{2-SAT}
+            \lstinputlisting[language=c++]{../graphs/2sat.cpp}
 
     \subsection{Shortest path}
         \subsubsection{Dijkstra's algorithm}
@@ -250,5 +271,5 @@
         \lstinputlisting[language=bash]{../other/vimrc}
     \includegraphics[width=\linewidth]{../other/asciifull.png}
 
-\end{multicols*}
+% \end{multicols*}
 \end{document}
