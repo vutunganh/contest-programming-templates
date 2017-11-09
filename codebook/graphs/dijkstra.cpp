@@ -7,9 +7,9 @@
 #include "../template.cpp"
 
 #define MX 207
-// {neighbour, cost}
-vpll dijkstra(vector<vpll>& G, ll s)
-{
+// graph: {neighbour, cost}
+// return {vertex, shortest path}
+vpll dijkstra(vector<vpll>& G, ll s) {
   ll S = G.size();
   vpll res(S, {0, INF});
   res[s] = {s, 0};

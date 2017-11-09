@@ -11,3 +11,4 @@
 *.so
 *~
 *.fdb_latexmk
+*.fls
