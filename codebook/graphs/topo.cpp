@@ -2,18 +2,14 @@
 
 // Toposort: DFS version
 // O(V+E)
-#define MX 100000 // vertices
-bitset<MX> vis;
-vll path; // reverse path
-void tdfs(vector<vll>& G, ll n)
-{
-  vis[n] = 1;
-  F(G[n].size())
-    if (!vis[G[n][i]])
-      tdfs(G, G[n][i]);
+void tdfs(vector<vll>& g, ll n, vll &path, set<ll> &vis) {
+  vis.insert(n);
+  for(auto j: g[i]) if (!vis.count(j)) tdfs(G, j, path, vis);
   path.pb(n);
 }
-void topo(vector<vll>& G)
-{
-  F(G.size()) if (!vis[i]) tdfs(G, i);
+vll topo(vector<vll>& G) {
+  vll path; set<ll> vis;
+  F(G.size()) if (!vis.count(i)) tdfs(G, i, path, vis);
+  reverse(all(path));
+  return path;
 }
