@@ -8,6 +8,8 @@ using ld = long double;
 using pll = pair<ll, ll>;
 using vll = vector<ll>;
 using vpll = vector<pll>;
+using gr = vector<vll>;
+using wgr = vector<vpll>;
 
 #define pb push_back
 #define FOR(i, m, n) for (ll i(m); i < n; i++)
@@ -18,8 +20,12 @@ struct d_ {
     template<typename T> d_ & operator ,(const T & x) { cerr << ' ' <<  x; return *this;}
     template<typename T> d_ & operator ,(const vector<T> & x) { for(auto x: x) cerr << ' ' <<  x; return *this;}
 } d_t;
-#define D(args ...) { d_t,"|",__LINE__,"|",#args,":",args,"\n"; }
 #define dbg(args ...) { d_t,"|",__LINE__,"|",":",args,"\n"; }
+#ifdef DEBUG
+	#define D cout
+#else
+	#define D 0 && cout
+#endif
 #define EPS (1e-10)
 #define INF (1LL<<61)
 #define CL(A,I) (memset(A,I,sizeof(A)))
