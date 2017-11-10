@@ -10,10 +10,11 @@ using namespace std;
 #define pb push_back
 #define MOD ((int)1e9+7)
 #define INF (1<<30)
-#define LINF (1LL<<61LL)
+#define LINF (1LL<<61)
 #define EPS (1e-10)
 #define EQ(a,b) (fabs(a-b)<=(fabs(a+b)*EPS))
 #define ALL(x) x.begin(),x.end()
+#define all(x) x.begin(),x.end()
 #define CL(A,I) memset(A,I,sizeof(A))
 #ifdef DEBUG
 #define DEB cout<<"DEB!\n"
