@@ -1,9 +1,10 @@
+#define M_PI   3.14159265358979323846264338327950288
 using ptt = double;
 using pt = complex<ptt>;
+using vpt = vector<pt>;
 #define x real()
 #define y imag()
 #define eq(x,y) (abs(x-(y)) <= EPS)
-
 // no basic function use this handy defines but you can use them
 pt I(0,1);
 #define dot(a,b) (conj(a)*(b)).x // dot product
@@ -12,6 +13,16 @@ pt projp(pt p, pt a, pt b) { return a+dot(p-a,b-a)/conj(b-a); } // project point
 pt reflep(pt p, pt a,pt b) { return a+conj((p-a)/(b-a))*(b-a); } // reflect point across line (a,b)
 pt rotp(pt a, pt p, ptt ang) { return (a-p) * polar(1.0, ang) + p; } // rotate point around p ang radians
 #define sgn(x) ((x > -EPS) - (x < EPS)) // signum function
+
+template<class T>
+istream& operator>> (istream& is, complex<T>& p) {
+    T value;
+    is >> value;
+    p.real(value);
+    is >> value;
+    p.imag(value);
+    return is;
+}
 
 /*
 (defined) Dot product: (conj(a) * b).x
@@ -47,14 +58,15 @@ pt ins(pt a, pt b, pt p, pt q) { // intersection; lines are represented by start
 // Polygons
 
 // dependency: cross product (crs)
-pt area(vector<pt> pts) {
+ptt area(vector<pt> pts) {
     ptt ar = 0;
     F(pts.size()-1) ar += crs(pts[i],pts[i+1]);
-    return abs(ar)/2;
+    return fabs(ar)/2;
 }
 
-// Compute centroid
-// dependency: area, crs
+// Compute centroid 
+// (average of all points, intersection of median lines of triangle)
+// - dependency: area, crs
 pt centroid(const vector<polt> &pol) {
   pt c(0,0);
   ptt sc = 6.0 * area(pol);
@@ -82,7 +94,7 @@ vector<pt> cut(vector<pt> pol, pt a, pt b) {
 
 // check whether point is inside a polygon
 // dependency: cross product (crs)
-bool isin(pt p,vector<pt>& pol) {
+bool isIn(pt p, vector<pt>& pol) {
     int wn=0;
     int n=pol.size()-1;
     for(int i=0;i<n;i++) {
@@ -130,6 +142,5 @@ struct pt : complex<ptt> {
         return crs(*this,o) > EPS;
     }
 };
-
 
 

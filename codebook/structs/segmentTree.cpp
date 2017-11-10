@@ -28,8 +28,6 @@ T upd(int pos,T val, int sst=0,int sen=(MX)-1,int p=1) {
 	else return seg[p] = mrg(seg[2*p],upd(pos,val,mid+1,sen,2*p+1));
 }
 
-int a[MX];
-
 int main(void) {
     ios_base::sync_with_stdio(false);
     int a[] = {1,2,3,4,5};

@@ -44,7 +44,8 @@ ll chinesePostman(vector<vpll> &g) {
     sum/=2;
     fw();
     ll oddMask = 0;
-    F(n) if(deg[i]&1) oddMask |= 1<<i;
+    F(n) if(deg[i]&1) {dbg(i); oddMask |= 1<<i;}
     ll best = dp(oddMask);
+    dbg(best);
     return best + sum;
 }

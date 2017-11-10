@@ -7,7 +7,8 @@
 
 
 Graphs:
-[ ] Chinese postman
+[x] Chinese postman
+[x] 2-SAT
 
 Math:
 [ ] linear programming
@@ -15,9 +16,23 @@ Math:
 [ ] polynomial long division
 
 Geometry:
-[ ] geometry/convex_polygons_intersection.cpp
+[ ] geometry/convexPolygonsIntersection.cpp
 [ ] rotations
+[ ] geometry template (maing command)
 
 Structs:
 [ ] refactor HLD
 [ ] refactor non lazy segment tree
+
+Theorems:
+[ ] Konig's theorem
+[ ] Hall's Marriage theorem
+[ ] Kuratowski's theorem
+
+Others:
+[ ] Hungarian algorithm
+[ ] CYK
+
+Textbook:
+[ ] Graph definitions: hamiltonian path, TSP, vertex cover, independent set,
+dominance number, its dependencies...

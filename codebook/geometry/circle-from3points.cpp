@@ -1,8 +1,7 @@
 #include "../template.cpp"
 using pt = pair<double,double>;
 
-pair<pt,double> circle(pt a, pt b, pt c)
-{
+pair<pt,double> circle(pt a, pt b, pt c) {
     pt center;
     double bx = a.x; double by = a.y;
     double cx = b.x; double cy = b.y;
