@@ -1,44 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-using ll=long long;
-using ull=unsigned long long;
-using ld=double;
-using vi=vector<int>;
-using vvi=vector<vi>;
-using pii=pair<int,int>;
-#define FOR(i,a,b) for(decltype(b) i=a;i<b;++i)
-#define REP(i,b) FOR(i,0,b)
-#define F(a) REP(i,a)
-#define FF(a) REP(j,a)
-#define aa first
-#define bb second
-#define PB push_back
-#define pb push_back
-#define MOD ((int)1e9+7)
-#define INF (1<<30)
-#define LINF (1LL<<61)
-#define EPS (1e-10)
-#define EQ(a,b) (fabs(a-b)<=(fabs(a+b)*EPS))
-#define ALL(x) x.begin(),x.end()
-#define all(x) x.begin(),x.end()
-#define CL(A,I) memset(A,I,sizeof(A))
-#ifdef DEBUG
-#define DEB cout<<"DEB!\n"
-#define DPRINT(X) cout<<#X<<"= "<<X<<endl
-#define dout cout
-#else
-#define DEB do{}while(0)
-#define DPRINT(X) do{}while(0)
-#define dout 0&&cout
-#endif
-
-
-
-
-
-using namespace std;
-
 using ll = long long;
 
 using pll = pair<ll, ll>;
@@ -70,6 +32,7 @@ struct d_ {
 #define x first
 #define y second
 
+// Suffix array 
 #define MX 510000
 struct SA{
     int sa[MX],R[MX],C[MX],s[MX<<1],t[MX<<1],p[MX],S[MX],U[MX];
@@ -118,30 +81,21 @@ struct SA{
 }Z;
 
 
+// Longest common substring in O(n)
 int main(){
   ios::sync_with_stdio(false);cout.tie(0);cin.tie(0);
   string sa, sb;
   cin >> sa >> sb;
   string r = (sa + "}" + sb);
-  //cout << r << endl;
-  //sa(r.c_str(), suf, r.size());
   Z.sx(r.size(), r.c_str());
 
-  //cout << r << endl;
-  //cout << sa.size() << endl;
-  int b = -1;
   int res = 0;
   F (r.size() + 1) {
     if (i == 0) continue;
-    /*cout << Z.sa[i] << endl;
-    if ((Z.sa[b] >= sa.size() && Z.sa[i] >= sa.size()) || (Z.sa[b] <= sa.size() && Z.sa[i] <= sa.size())) b = i;
-    else {
-      res = max(res, Z.C[b]);
-    }*/
     if ((Z.sa[i - 1] >= sa.size() && Z.sa[i] <= sa.size()) ||
         (Z.sa[i - 1] <= sa.size() && Z.sa[i] >= sa.size())) {
-        res = max(res, Z.C[i]);
-        }
+      res = max(res, Z.C[i]);
+    }
   }
   cout << res << endl;
   
