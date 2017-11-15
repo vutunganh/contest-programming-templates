@@ -122,13 +122,25 @@ int main(){
   ios::sync_with_stdio(false);cout.tie(0);cin.tie(0);
   string s;
   cin >> s;
-  F(s.size()) l[s[i]] += s.size() - i;
   Z.sx(s.size(), s.c_str());
 
-  F (s.size() + 1) {
+  vll b(s.size());
+  F(s.size()) {
     if (i == 0) continue;
-    l[ s[Z.sa[i]] ] -= Z.C[i];
+    b[i]+=(i?b[i-1]:0);
+    b[i] += s.size() - Z.sa[i + 1] + Z.C[i] - 1;
   }
-
+  //F(s.size() + 1) cout << Z.sa[i] << endl;
+  //F(s.size()) dbg(b[i]);
+  int q;
+  cin >> q;
+  F(b.size()) cout << b[i] << " ";
+  cout<<endl;
+  F(q) {
+    ll k; cin>>k; k--;
+    ll pos = lower_bound(all(b),k)-b.begin();
+    if(b[pos]>k) pos--;
+    FOR(j,Z.sa[pos + 1],Z.sa[pos + 1]+k-b[pos]+1) cout<<s[j]; cout<<endl;
+  }
   return 0;
 }
