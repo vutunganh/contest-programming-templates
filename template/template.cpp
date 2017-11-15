@@ -1,9 +1,16 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define FOR(i,a,b) for(auto i=a;i<b;++i)
-#define F(a) FOR(i,0,a)
-#define FF(a) FOR(j,0,a)
+using ll=long long;
+using ull=unsigned long long;
+using ld=double;
+using vi=vector<int>;
+using vvi=vector<vi>;
+using pii=pair<int,int>;
+#define FOR(i,a,b) for(decltype(b) i=a;i<b;++i)
+#define REP(i,b) FOR(i,0,b)
+#define F(a) REP(i,a)
+#define FF(a) REP(j,a)
 #define aa first
 #define bb second
 #define PB push_back
@@ -25,12 +32,6 @@ using namespace std;
 #define DPRINT(X) do{}while(0)
 #define dout 0&&cout
 #endif
-using ll=long long;
-using ull=unsigned long long;
-using ld=double;
-using vi=vector<int>;
-using vvi=vector<vi>;
-using pii=pair<int,int>;
 
 int main(){
   ios::sync_with_stdio(false);cout.tie(0);cin.tie(0);
