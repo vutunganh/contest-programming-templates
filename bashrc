@@ -13,3 +13,10 @@ function rtt {
   c && for a in *$1.in; do echo "Test $a"; ./a.out < $a | diff - ${a:0:-3}.out $2; done
 }
 
+function vg {
+  c && find *"$1".in | xargs -I @ sh -c "echo Test @; valgrind ./a.out < @;"
+}
+
+function tt {
+  c && find *"$1".in | xargs -I @ sh -c "echo Test @; time ./a.out < @;"
+}
