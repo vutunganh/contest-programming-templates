@@ -59,6 +59,12 @@ ld eps(ld x){ return x*EPS; }
 // vector
 ld cross(Pt a,Pt b){ return a.x*b.y-a.y*b.x; } 
 
+ld cross(Pt a, Pt b, Pt c){
+  Pt ab=b-a;
+  Pt ac=c-a;
+  return ab.x*ac.y-ab.y*ac.x;
+}
+
 ld dot(Pt a,Pt b){ return a.x*b.x+a.y*b.y; }
 
 ld rdist(Pt a){ return sqrt(dot(a, a)); }
