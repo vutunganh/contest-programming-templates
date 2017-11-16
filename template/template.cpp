@@ -3,12 +3,9 @@ using namespace std;
 using ll=long long;
 using ull=unsigned long long;
 using ld=double;
-using pii=pair<int,int>;
 using pll=pair<ll,ll>;
-using vi=vector<int>;
 using vll=vector<ll>;
 using vpll=vector<pll>;
-using vvi=vector<vi>;
 using vvll=vector<vll>;
 #define FOR(i,a,b) for(decltype(b) i=a;i<b;++i)
 #define ROF(i,a,b) for(decltype(b) i=a;i>=b;--i)
@@ -18,7 +15,7 @@ using vvll=vector<vll>;
 #define aa first
 #define bb second
 #define pb push_back
-#define MOD ((int)1e9+7)
+#define MOD ((ll)1e9+7)
 #define INF (1<<30)
 #define LINF (1LL<<61)
 #define EPS (1e-10)
@@ -31,10 +28,8 @@ struct d_{
 }d_t;
 #define dbg(args ...) {d_t,"|",__LINE__,"|",":",args,"\n";}
 #ifdef DEBUG
-#define DEB cout<<"DEB!\n"
 #define D cout
 #else
-#define DEB do{}while(0)
 #define D 0&&cout
 #endif
 
