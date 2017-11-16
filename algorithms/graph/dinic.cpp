@@ -1,3 +1,4 @@
+// experimentalni init u Miminovy verze
 #define NODES (5000)
 #define EDGES (30000)
 int N, M = NODES, source, sink;
@@ -64,7 +65,8 @@ void add_edge(int from, int to, long long cap1, long long cap2) {
 }
 
 void init(int nodeCnt,int st,int en){
-  N=M=nodeCnt;
+  N=nodeCnt;
+  M=NODES;
   source=st;
   sink=en;
 }
