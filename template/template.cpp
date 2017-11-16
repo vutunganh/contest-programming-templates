@@ -1,42 +1,47 @@
 #include <bits/stdc++.h>
 using namespace std;
-
 using ll=long long;
 using ull=unsigned long long;
 using ld=double;
-using vi=vector<int>;
-using vvi=vector<vi>;
 using pii=pair<int,int>;
+using pll=pair<ll,ll>;
+using vi=vector<int>;
+using vll=vector<ll>;
+using vpll=vector<pll>;
+using vvi=vector<vi>;
+using vvll=vector<vll>;
 #define FOR(i,a,b) for(decltype(b) i=a;i<b;++i)
-#define REP(i,b) FOR(i,0,b)
-#define F(a) REP(i,a)
-#define FF(a) REP(j,a)
+#define ROF(i,a,b) for(decltype(b) i=a;i>=b;--i)
+#define REP(i,n) FOR(i,0,n)
+#define F(n) REP(i,n)
+#define FF(n) REP(j,n)
 #define aa first
 #define bb second
-#define PB push_back
 #define pb push_back
 #define MOD ((int)1e9+7)
 #define INF (1<<30)
 #define LINF (1LL<<61)
 #define EPS (1e-10)
 #define EQ(a,b) (fabs(a-b)<=(fabs(a+b)*EPS))
-#define ALL(x) x.begin(),x.end()
 #define all(x) x.begin(),x.end()
 #define CL(A,I) memset(A,I,sizeof(A))
+struct d_{
+  template<class T> d_ & operator,(const T& x){cerr<<' '<<x;return *this;}
+  template<class T> d_ & operator,(const vector<T>& x){for(auto& x:x)cerr<<' '<<x;return *this;}
+}d_t;
+#define dbg(args ...) {d_t,"|",__LINE__,"|",":",args,"\n";}
 #ifdef DEBUG
 #define DEB cout<<"DEB!\n"
-#define DPRINT(X) cout<<#X<<"= "<<X<<endl
-#define dout cout
+#define D cout
 #else
 #define DEB do{}while(0)
-#define DPRINT(X) do{}while(0)
-#define dout 0&&cout
+#define D 0&&cout
 #endif
 
 int main(){
   ios::sync_with_stdio(false);cout.tie(0);cin.tie(0);
-  //freopen("input.txt","r",stdin);
-  //freopen("output.txt","w",stdout);
+  // freopen("input.txt","r",stdin);
+  // freopen("output.txt","w",stdout);
 
   return 0;
 }
