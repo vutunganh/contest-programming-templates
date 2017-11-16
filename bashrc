@@ -7,6 +7,7 @@ function m {
 
 function rt {
   c && find *"$1".in | xargs -I @ sh -c "echo Test @ >&2; ./a.out < @;"
+  # c && find *in*"$1" | xargs -I @ sh -c "echo Test @ >&2; ./a.out < @;" 
 }
 
 function rtt {
