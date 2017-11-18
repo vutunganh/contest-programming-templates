@@ -2,7 +2,6 @@
 
 struct Pt{
   ld x,y;
-
   Pt(){}
   Pt(ld a,ld b) :x(a),y(b){}
   bool operator<(const Pt& o) const{
@@ -19,12 +18,8 @@ struct Pt{
 
 struct Ln{
   Pt a,b;
-
   Ln(){}
-  Ln(Pt _a,Pt _b) :a(_a),b(_b){
-    if(b<a)swap(a,b);
-  }
-
+  Ln(Pt _a,Pt _b) :a(_a),b(_b){}
   bool operator<(const Ln& o) const{ //podle uhlu
     Pt v=b-a,w=o.b-o.a;
     return atan2(v.y,v.x)<atan2(w.y,w.x); //+ EPS
@@ -33,14 +28,9 @@ struct Ln{
 
 struct Sg {
   Pt a,b; // begin and end of segment
-
   Sg(){}
-  Sg(Pt _a,Pt _b) :a(_a),b(_b){
-    if(b<a)swap(a,b);
-  }
-
-  bool operator<(const Sg& o) const{ return a<o.a||(a==o.a&&b<o.b); }
-
+  Sg(Pt _a,Pt _b) :a(_a),b(_b){}
+  bool operator<(const Sg& o) const{ return a<o.a||(a==o.a&&b<o.b); } 
   bool operator==(const Sg& o) const{ return (a==o.a&&b==o.b)||(a==o.b&&b==o.a); }
 };
 
