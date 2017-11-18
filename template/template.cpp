@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll=long long;
-using ull=unsigned long long;
 using ld=double;
 using pll=pair<ll,ll>;
 using vll=vector<ll>;
@@ -27,11 +26,6 @@ struct d_{
   template<class T> d_ & operator,(const vector<T>& x){for(auto& x:x)cerr<<' '<<x;return *this;}
 }d_t;
 #define dbg(args ...) {d_t,"|",__LINE__,"|",":",args,"\n";}
-#ifdef DEBUG
-#define D cout
-#else
-#define D 0&&cout
-#endif
 
 int main(){
   ios::sync_with_stdio(false);cout.tie(0);cin.tie(0);
