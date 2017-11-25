@@ -25,3 +25,24 @@ struct Ln{
     return atan2(v.y,v.x)<atan2(w.y,w.x); //+ EPS
   }
 };
+
+ld eps(ld x){return x*EPS;}
+ld cross(Pt a,Pt b){return a.x*b.y-a.y*b.x;}
+ld cross(Pt a,Pt b,Pt c){
+  Pt ab=b-a;
+  Pt ac=c-a;
+  return ab.x*ac.y-ab.y*ac.x;
+}
+// zakladni operace
+ld dot(Pt a,Pt b){return a.x*b.x+a.y*b.y;}
+ld rdist(Pt a){return sqrt(dot(a,a));}
+ld angle(Pt a,Pt b){return acos(dot(a,b)/rdist(a)/rdist(b));}
+ld angle(Pt v){return atan2(v.y,v.x);} // uhel od x-ove osy
+Pt normal(Pt a){
+  ld n=rdist(a);
+  return {-a.y/n,a.x/n};
+}
+Pt toLen(Pt v,ld l){return v*l/rdist(v);} // natazeni vektoru na delku l
+Pt fromPolar(ld len,ld ang){return {len*cos(ang),len*sin(ang)};}
+Pt rotate(Pt a,ld ang){return {a.x*cos(rad)-a.y*sin(rad),a.x*sin(rad)+a.y*cos(rad)};}
+ld toRad(ld deg){return deg/180*M_PI;}
