@@ -1,6 +1,7 @@
 // N - velikost 1. partity
+// t - pomyslny stok, nemusi se do nej sahat
 // vrati velikost toku a v P[u] se da najit, na co se naparoval vrchol u,
-//   popr nenaparoval a je LINF
+//   popr nenaparoval a je t
 #define MAXN1 (10000)
 #define MAXN2 (10000)
 #define TOT (MAXN1+MAXN2+1)
