@@ -46,3 +46,12 @@ Pt toLen(Pt v,ld l){return v*l/rdist(v);} // natazeni vektoru na delku l
 Pt fromPolar(ld len,ld ang){return {len*cos(ang),len*sin(ang)};}
 Pt rotate(Pt a,ld ang){return {a.x*cos(rad)-a.y*sin(rad),a.x*sin(rad)+a.y*cos(rad)};}
 ld toRad(ld deg){return deg/180*M_PI;}
+// printeni
+ostream& operator<<(ostream& os,Pt &p){
+  os<<"["<<p.x<<","<<p.y<<"]";
+  return os;
+}
+ostream& operator<<(ostream& os,Ln &l){
+  os<<l.a<<","<<l.b;
+  return os;
+}
