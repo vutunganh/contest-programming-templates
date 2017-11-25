@@ -1,53 +1,44 @@
-using vi = vector<int>;
-#define FOR(i,a,b) for(auto i=a;i<b;++i)
-#define F(a) FOR(i,0,a)
-#define FF(a) FOR(j,0,a)
+// N - velikost 1. partity
+// vrati velikost toku a v P[u] se da najit, na co se naparoval vrchol u,
+//   popr nenaparoval a je LINF
 #define MAXN1 (10000)
 #define MAXN2 (10000)
-#define TOT (MAXN1 + MAXN2 + 1)
-#define INF (1<<31)
+#define TOT (MAXN1+MAXN2+1)
+ll t=TOT-1,D[TOT],P[TOT],N;
+vll G[TOT];
 
-// N - velikost 1. partity
-// t je "stok", ktery se musi nastavit jako N+velikost 2. partity+1
-// mozna se da nastavit na cokoliv, co nekoliduje s cisly vrcholu
-// vrati velikost toku a v P[u] se da najit, na co se naparoval vrchol u,
-//   popr nenaparoval a je INF
-// EXPERIMENTALNI ZMENA, ZMERGOVANI PE1 A PE2
-int t,D[TOT],P[TOT],N;
-vi G[TOT];
-
-void add_edge(int u,int v){G[u].PB(v);G[v].PB(u);}
+void add_edge(ll u,ll v){G[u].PB(v);G[v].PB(u);}
 
 bool bfs(){
-  queue<int> Q;
+  queue<ll> Q;
   F(N)
     if(P[i]==t)D[i]=0,Q.push(i);
-    else D[i]=INF;
-  D[t]=INF;
+    else D[i]=LINF;
+  D[t]=LINF;
   while(Q.size()){
     int v=Q.front();Q.pop();
     if(D[v]<D[t])
       for(auto w:G[v])
-        if(D[P[w]]==INF)
+        if(D[P[w]]==LINF)
           D[P[w]]=D[v]+1,Q.push(P[w]);
   }
-  return D[t]!=INF;
+  return D[t]!=LINF;
 }
 
-bool dfs(int v){
+bool dfs(ll v){
   if(v!=t){
     for(auto w:G[v])
       if(D[P[w]]==D[v]+1&&dfs(P[w]))
         return P[w]=v,P[v]=w,true;
-    D[v]=INF;
+    D[v]=LINF;
     return false;
   }
   return true;
 }
 
-int hopcroft_karp(){
+ll hopcroft_karp(){
   F(TOT)P[i]=t;
-  int res=0;
+  ll res=0;
   while(bfs())F(N)if(P[i]==t&&dfs(i))++res;
   return res;
 }
