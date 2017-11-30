@@ -55,7 +55,15 @@ ld ptptd(const Pt& p,const Pt& q){return sqrt(dot(q-p));}
 ld lnptd(const Ln& l,const Pt& p){return fabs(cross(l.a,l.b,p)/ptptd(p.a,p.b));}
 // judge
 bool lnlnparallel(const Ln& k,const Ln& l){
-  return cross()
+  ld ak,bk,ck,al,bl,cl;
+  abcln(k,ak,bk,ck);
+  abcln(l,al,bl,cl);
+  return EQ(ak*bl-al*bk,0);
+}
+bool lnlnparallel2(const Ln& k,const Ln& l){
+  Pt v=k.b-k.a;
+  Pt w=l.b-l.a;
+  return EQ(cross(v,w),0);
 }
 // pruseciky
 Pt lnlnpt(const Ln& k,const Ln& l){
@@ -65,6 +73,29 @@ Pt lnlnpt(const Ln& k,const Ln& l){
   return k.a+v*t;
 }
 Pt lnptvert(const Ln& l,const Pt& p){return lnlnpt(l,{p,p+normal(p.b-p.a)});} // kolmy prumet
+// konvexni obalka
+vector<Pt> convex_hull(vector<Pt> p){
+  vector<Pt> r(2*p.size()+14);
+  ll K=0;
+  sort(p.begin(),p.end());
+  for(Pt e:p){
+    while(K>=2&&cross(r[K-1]-r[K-2],e-r[K-2])<=0)K--;
+    r[K++]=e;
+  }
+  for(ll i=p.size()-2,T=K+1;i>=0;i--){
+    while(K>=T&&cross(r[K-1]-r[K-2],p[i]-r[K-2])<=0)K--;
+    r[K++]=p[i];
+  }
+  r.resize(K);
+  r.pop_back();
+  return r;
+}
+// plocha polygonu
+ld area(vector<Pt>& p){
+  ld res=0;
+  F(p.size())res+=cross(p[i],p[(i+1)%p.size()]);
+  return fabs(res/2);
+}
 // printeni
 ostream& operator<<(ostream& os,Pt &p){
   os<<"["<<p.x<<","<<p.y<<"]";
