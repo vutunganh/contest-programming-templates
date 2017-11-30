@@ -25,18 +25,22 @@ struct Ln{
     return atan2(v.y,v.x)<atan2(w.y,w.x); //+ EPS
   }
 };
-
+void abcln(const Ln& l,ld& a,ld& b,ld& c){ // prevod parametricke primky na normalni tvar
+  a=l.b.y-l.a.y;
+  b=l.b.x-l.a.x;
+  c=a*l.a.x+b*l.a.y;
+}
+// zakladni operace
 ld eps(ld x){return x*EPS;}
-ld cross(Pt a,Pt b){return a.x*b.y-a.y*b.x;}
-ld cross(Pt a,Pt b,Pt c){
+ld cross(Pt a,Pt b){return a.x*b.y-a.y*b.x;} // vektorovy soucin
+ld cross(Pt a,Pt b,Pt c){ // vektorovy soucin AB x AC
   Pt ab=b-a;
   Pt ac=c-a;
   return ab.x*ac.y-ab.y*ac.x;
 }
-// zakladni operace
-ld dot(Pt a,Pt b){return a.x*b.x+a.y*b.y;}
-ld rdist(Pt a){return sqrt(dot(a,a));}
-ld angle(Pt a,Pt b){return acos(dot(a,b)/rdist(a)/rdist(b));}
+ld dot(Pt a,Pt b){return a.x*b.x+a.y*b.y;} // skalarni soucin
+ld rdist(Pt a){return sqrt(dot(a,a));} // vzdalenost od pocatku
+ld angle(Pt a,Pt b){return acos(dot(a,b)/rdist(a)/rdist(b));} // uhel svirany vektory a b
 ld angle(Pt v){return atan2(v.y,v.x);} // uhel od x-ove osy
 Pt normal(Pt a){ // jednotkova kolmice
   ld n=rdist(a);
@@ -44,11 +48,23 @@ Pt normal(Pt a){ // jednotkova kolmice
 }
 Pt toLen(Pt v,ld l){return v*l/rdist(v);} // natazeni vektoru na delku l
 Pt fromPolar(ld len,ld ang){return {len*cos(ang),len*sin(ang)};}
-Pt rotate(Pt a,ld ang){return {a.x*cos(rad)-a.y*sin(rad),a.x*sin(rad)+a.y*cos(rad)};}
+Pt rotate(Pt a,ld ang){return {a.x*cos(rad)-a.y*sin(rad),a.x*sin(rad)+a.y*cos(rad)};} // rotace vektoru
 ld toRad(ld deg){return deg/180*M_PI;}
 // vzdalenosti
 ld ptptd(const Pt& p,const Pt& q){return sqrt(dot(q-p));}
 ld lnptd(const Ln& l,const Pt& p){return fabs(cross(l.a,l.b,p)/ptptd(p.a,p.b));}
+// judge
+bool lnlnparallel(const Ln& k,const Ln& l){
+  return cross()
+}
+// pruseciky
+Pt lnlnpt(const Ln& k,const Ln& l){
+  Pt v=k.b-k.a;
+  Pt w=l.b-l.a;
+  ld t=cross(w,k.a-l.a)/cross(v,w);
+  return k.a+v*t;
+}
+Pt lnptvert(const Ln& l,const Pt& p){return lnlnpt(l,{p,p+normal(p.b-p.a)});} // kolmy prumet
 // printeni
 ostream& operator<<(ostream& os,Pt &p){
   os<<"["<<p.x<<","<<p.y<<"]";
