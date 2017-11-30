@@ -1,5 +1,5 @@
 alias cc='g++ -std=c++11 -static -Wall -O2 -DONLINE_JUDGE template.cpp'
-alias c='g++ -std=c++11 -static -Wall -O2 -DONLINE_JUDGE -DDEBUG -g template.cpp'
+alias c='g++ -std=c++11 -static -Wall -O2 -DONLINE_JUDGE -DD -g template.cpp'
 
 function m {
   cp -r ~/template/ "$1" && cd "$1"
@@ -11,7 +11,7 @@ function rt {
 }
 
 function rtt {
-  c && for a in *$1.in; do echo "Test $a"; ./a.out < $a | diff - ${a:0:-3}.out $2; done
+  c && for a in *"$1".in; do echo "Test $a"; ./a.out < "$a" | diff - "${a%.in}.out" "$2"; done
 }
 
 function vg {

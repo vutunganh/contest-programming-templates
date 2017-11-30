@@ -13,17 +13,10 @@ using vvll=vector<vll>;
 #define aa first
 #define bb second
 #define PB push_back
-#define INF (1<<30)
-#define LINF (1LL<<61)
 #define EQ(a,b) (fabs(a-b)<=(fabs(a+b)*EPS))
-struct d_{
-  template<class T> d_ & operator,(const T& x){cerr<<' '<<x;return *this;}
-  template<class T> d_ & operator,(const vector<T>& x){for(auto& a:x)cerr<<' '<<a;return *this;}
-}d_t;
-#define dbg(args ...) {d_t,__LINE__,"|",args,"\n";}
 
 int main(){
-  ios::sync_with_stdio(false);cout.tie(0);cin.tie(0);
+  ios::sync_with_stdio(0);cout.tie(0);cin.tie(0);
   // freopen("input.txt","r",stdin);
   // freopen("output.txt","w",stdout);
 
