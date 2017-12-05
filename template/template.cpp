@@ -6,8 +6,8 @@ using pll=pair<ll,ll>;
 using vll=vector<ll>;
 using vpll=vector<pll>;
 using vvll=vector<vll>;
-#define FOR(i,a,b) for(decltype(b) i=a;i<b;++i)
-#define ROF(i,a,b) for(decltype(b) i=a;i>=b;--i)
+#define FOR(i,a,b) for(ll i=a;i<(ll)b;++i)
+#define ROF(i,a,b) for(ll i=a;i>=(ll)b;--i)
 #define F(n) FOR(i,0,n)
 #define FF(n) FOR(j,0,n)
 #define aa first
