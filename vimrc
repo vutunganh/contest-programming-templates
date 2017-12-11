@@ -12,7 +12,6 @@ set sw=2
 set sts=2
 set wrap
 set mouse=a
-inoremap jk <esc>
 map <S-q> :s,^,// ,<cr>
 map <S-e> :s,^// ,<cr>
 
