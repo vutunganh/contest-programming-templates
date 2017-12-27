@@ -1,6 +1,5 @@
-set nocp
 filetype indent on
-syntax on
+syntax enable
 set nohls
 set is
 set hid
