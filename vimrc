@@ -13,7 +13,7 @@ set sts=2
 set wrap
 set mouse=a
 
-colorscheme elflord
+colo elflord
 set sc
 set ls=2
 set nu
