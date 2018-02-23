@@ -32,12 +32,15 @@ void print(int cnt=1,int id=1){
   if(cnt==1)cout<<"========================================"<<endl;
 }
 
+// ans tells how many leafs are broken
 void query(const int l,const int r,ll& ans,int ql=1,int qr=MAXN,int n=1){
   if(ql>qr||ql>r||qr<l||r<l)return;
   if(l<=ql&&qr<=r){
     if(tree[n]%X==0)return;
     else{
-      while(n<MAXN){
+      while(n<MAXN){ // while only one of the children is broken
+                     // i.e. only a path from this node to some leaf is broken
+                     // i.e. one leaf is broken and can be fixed
         if(tree[2*n]%X){
           if(tree[1+2*n]%X){
             ans+=2;
