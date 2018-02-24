@@ -18,7 +18,7 @@ using vvll=vector<vll>;
 #define ARRAY_SIZE 200001
 #define TREE_SIZE (20*ARRAY_SIZE)
 
-ll N,A[ARRAY_SIZE],tree[TREE_SIZE],P[ARRAY_SIZE],X,MAXN=1;
+ll N,tree[TREE_SIZE],X,MAXN=1;
 
 ll gcd(ll a,ll b){
   return b==0?a:gcd(b,a%b);
@@ -32,32 +32,26 @@ void print(int cnt=1,int id=1){
   if(cnt==1)cout<<"========================================"<<endl;
 }
 
-// ans tells how many leafs are broken
-void query(const int l,const int r,ll& ans,int ql=1,int qr=MAXN,int n=1){
-  if(ql>qr||ql>r||qr<l||r<l)return;
+// returns the amount of broken leaves
+ll query(const int l,const int r,int ql=1,int qr=MAXN,int n=1){
+  if(ql>qr||ql>r||qr<l)return 0;
   if(l<=ql&&qr<=r){
-    if(tree[n]%X==0)return;
+    if(tree[n]%X==0)return 0;
     else{
       while(n<MAXN){ // while only one of the children is broken
                      // i.e. only a path from this node to some leaf is broken
                      // i.e. one leaf is broken and can be fixed
         if(tree[2*n]%X){
-          if(tree[1+2*n]%X){
-            ans+=2;
-            return;
-          }
+          if(tree[1+2*n]%X)return 2;
           n*=2;
         }else
           n=1+2*n;
       }
-      ++ans;
-      return;
+      return 1;
     }
   }
   int mid=(ql+qr)/2;
-  query(l,r,ans,ql,mid,2*n);
-  if(ans>1)return;
-  query(l,r,ans,mid+1,qr,1+2*n);
+  return query(l,r,ql,mid,2*n)+query(l,r,mid+1,qr,1+2*n);
 }
 
 void upd(ll i,ll y){
@@ -82,10 +76,9 @@ int main(){
     ll t;
     cin>>t;
     if(t==1){
-      ll l,r,ans=0;
+      ll l,r;
       cin>>l>>r>>X;
-      query(l,r,ans);
-      cout<<(ans<=1?"YES":"NO")<<endl;
+      cout<<(query(l,r)>1?"NO":"YES")<<endl;
     }else{
       ll i,y;
       cin>>i>>y;
