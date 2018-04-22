@@ -1,5 +1,4 @@
-alias cc='g++ -std=c++11 -static -Wall -O2 -DONLINE_JUDGE template.cpp'
-alias c='g++ -std=c++11 -static -Wall -O2 -DONLINE_JUDGE -DDEBUG -g template.cpp'
+alias c='g++ -std=c++14 -static -Wall -O2 template.cpp'
 
 function m {
   cp -r ~/template/ "$1" && cd "$1"
