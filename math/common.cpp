@@ -60,17 +60,16 @@ ll gcd(ll m, ll n) {
 }
 
 // kombinacni cislo: (n k)
-ull NchooseK(ull n, ull k)
-{
+ll Graph::NchooseK(ll n, ll k) {
   if (k == 0) return 1;
-  if (k < n) return 0;
+  if (n < k) return 0;
 
   if (k > n/2) return NchooseK(n, n-k);
 
-  ull out = 1;
-  for(int k = 1; k <= k; ++k) {
-    out *= n-k+1;
-    out /= k;
+  ll out = 1;
+  for(int i = 1; i <= k; ++i) {
+    out *= n-i+1;
+    out /= i;
   }
 
   return out;
