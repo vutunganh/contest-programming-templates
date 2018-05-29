@@ -1,9 +1,13 @@
+/**
+ * Obecne zasady:
+ *   * EPS pri porovnavani
+ *   * delit nakonec
+ */
 //#define M_PI 3.14159265358979323846
+#define EQ(a,b) (fabs(a-b)<=fabs(a+b)*EPS)
 
 struct Pt{
   ld x,y;
-  Pt(){}
-  Pt(ld a,ld b) :x(a),y(b){}
   bool operator<(const Pt& o) const{
     return x<o.x||(x==o.x&&y<o.y);
     // return x<o.x+EPS||EQ(x,o.x)&&y<o.y+EPS;
@@ -12,14 +16,12 @@ struct Pt{
   Pt operator-(const Pt& o) const{return {x-o.x,y-o.y};}
   Pt operator*(ld d) const{return {x*d,y*d};}
   Pt operator/(ld d) const{return {x/d,y/d};}
-  bool operator==(const Pt& o) const{return EQ(x-o.x,0)&&EQ(y-o.y,0);}
-  bool operator!=(const Pt& o) const{return !(*this==b);}
 };
+bool operator==(const Pt& p,const Pt& q){return EQ(p.x,q.x)&&EQ(p.y,q.y);}
+bool operator!=(const Pt& p,const Pt& q){return !(p==q);}
 
 struct Ln{
   Pt a,b;
-  Ln(){}
-  Ln(Pt p,Pt q) :a(p),b(q){}
   bool operator<(const Ln& l) const{ // podle uhlu
     Pt v=b-a,w=l.b-l.a;
     return atan2(v.y,v.x)<atan2(w.y,w.x); //+ EPS
@@ -48,7 +50,7 @@ Pt normal(Pt a){ // jednotkova kolmice
 }
 Pt toLen(Pt v,ld l){return v*l/rdist(v);} // natazeni vektoru na delku l
 Pt fromPolar(ld len,ld ang){return {len*cos(ang),len*sin(ang)};}
-Pt rotate(Pt a,ld ang){return {a.x*cos(rad)-a.y*sin(rad),a.x*sin(rad)+a.y*cos(rad)};} // rotace vektoru
+Pt rotate(Pt a,ld ang){return {a.x*cos(ang)-a.y*sin(ang),a.x*sin(ang)+a.y*cos(ang)};} // rotace vektoru
 ld toRad(ld deg){return deg/180*M_PI;}
 // vzdalenosti
 ld ptptd(const Pt& p,const Pt& q){return sqrt(dot(q-p));}
@@ -64,6 +66,9 @@ bool lnlnparallel2(const Ln& k,const Ln& l){
   Pt v=k.b-k.a;
   Pt w=l.b-l.a;
   return EQ(cross(v,w),0);
+}
+bool lnlnparallel3(Ln p,Ln q){
+  return EQ(angle(p.b-p.a),angle(q.b-q.a));
 }
 // pruseciky
 Pt lnlnpt(const Ln& k,const Ln& l){
