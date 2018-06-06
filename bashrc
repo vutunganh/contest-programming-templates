@@ -1,4 +1,4 @@
-alias c='g++ -std=c++14 -static -Wall -O2 template.cpp'
+alias c='g++ -std=c++14 -static -Wall -O2 template.cpp -g'
 
 function m {
   cp -r ~/template/ "$1" && cd "$1"
