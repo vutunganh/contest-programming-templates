@@ -3,7 +3,7 @@
 
 struct Edge{
   ll v,w; // destination and weight
-  bool operator<(const Edge& a)const{return w<a.w;}
+  bool operator<(const Edge& a)const{return w>a.w;}
 };
 
 // node cnt,edge cnt,distances,parents
