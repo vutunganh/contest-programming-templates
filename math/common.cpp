@@ -60,7 +60,7 @@ ll gcd(ll m, ll n) {
 }
 
 // kombinacni cislo: (n k)
-ll Graph::NchooseK(ll n, ll k) {
+ll NchooseK(ll n, ll k) {
   if (k == 0) return 1;
   if (n < k) return 0;
 
@@ -287,7 +287,12 @@ vector<int> eratosthenesExt(int upTo) {
 vector<P> fastFactors(int n, vector<int> & sieve) {
   int c;
   vector<P> divs;
-  divs.push_back({sieve[n], 1});
+
+  if (sieve[n] == 1)
+    divs.push_back({sieve[n], 0});
+  else
+    divs.push_back({sieve[n], 1});
+
   n /= sieve[n];
   while (n != 1) {
     c = sieve[n];
@@ -315,7 +320,7 @@ void getDivs(vector<int> & res, vector<P> & divs, int t, int i) {
 }
 
 // ziska delitele v asymptoticky optimalnim case
-vector<int> fastDivisors(int n, vector<int> sieve) {
+vector<int> fastDivisors(int n, vector<int> & sieve) {
   vector<P> divs = fastFactors(n, sieve);
   vector<int> exp(divs.size(), 0);
   vector<int> result;
