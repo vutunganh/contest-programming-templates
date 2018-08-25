@@ -126,6 +126,15 @@ Chcete-li použít Fenwicka jako ``segmenťák'' (tedy update je add(l,d)+add(r+
 \subsection{Union Find}
 \lstinputlisting[firstline = 4]{../data-structures/union-find.cpp}
 
+\subsection{Jak na rychlé mapy}
+\begin{lstlisting}
+#include <ext/pb_ds/tree_policy.hpp>
+#include <ext/pb_ds/assoc_container.hpp>
+using namespace __gnu_pbds;
+cc_hash_table<ll,ll> N; // horsi varianta
+gp_hash_table<ll,ll> M; // o ~10% pomalejsi read/write, ale 3-6x rychlejsi insert/delete/clear
+\end{lstlisting}
+
 \newpage
 
 \section{Matematika}
