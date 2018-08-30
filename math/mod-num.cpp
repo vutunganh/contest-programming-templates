@@ -5,9 +5,9 @@
 struct mll {
   const long long m = 1000000007; // set mod here
   long long v;
-  mll(): v(0) {}
   mll(long long v): v(v%m) {}
   mll(int v): v(v%m) {}
+  mll(): v(0) {}
 
   mll operator += (const mll & a) {
     v += a.v;
@@ -73,6 +73,11 @@ struct mll {
     mll res(*this);
     res %= a.v;
     return res;
+  }
+
+  mll operator = (const mll & a) {
+    v = a.v;
+    return *this;
   }
 
   bool operator == (const mll & a) const { return v == a.v; }
