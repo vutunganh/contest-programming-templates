@@ -40,104 +40,134 @@
 \section{Algoritmy}
 \subsection{Grafové algoritmy}
 
-\subsubsection{Topsort}
-O(n + m)
-\lstinputlisting[firstline = 21, lastline = 42]{../algorithms/graph/graph.cpp}
-
-\subsubsection{Floyd Warshall}
-O(n**3)
-\lstinputlisting[firstline = 44, lastline = 61]{../algorithms/graph/graph.cpp}
-
-\subsubsection{Maximální párování}
-\lstinputlisting{../algorithms/graph/hopcroft-karp.cpp}
-
-\subsubsection{Dinicův algoritmus}
-Maximální tok O(V**2 * E)
-\lstinputlisting{../algorithms/graph/dinic.cpp}
+\subsubsection{Bellman-ford}
+\lstinputlisting{../algorithms/graph/bellman-ford.cpp}
 
 \subsubsection{Dijkstra}
 \lstinputlisting{../algorithms/graph/dijkstra.cpp}
 
-\subsubsection{Bellman-ford}
-\lstinputlisting{../algorithms/graph/bellman-ford.cpp}
+\subsubsection{Dinicův algoritmus}
+Maximální tok v $O(V^2 \cdot E)$.
+\lstinputlisting{../algorithms/graph/dinic.cpp}
+
+\subsubsection{Floyd Warshall}
+$O(n^3)$
+\lstinputlisting{../algorithms/graph/floyd-warshall.cpp}
 
 \subsubsection{Globální minimální hranový řez}
-Stoer-Wagner, O(V**3)
+Stoer-Wagner, $O(V^3)$
 \lstinputlisting{../algorithms/graph/stoer-wagner.cpp}
 
+\subsubsection{Maximální párování}
+Něco jako $O(\sqrt{V}E)$.
+\lstinputlisting{../algorithms/graph/hopcroft-karp.cpp}
+
+\subsubsection{Topsort}
+Asi přepracovat, moc Javovský. $O(n + m)$
+\lstinputlisting{../algorithms/graph/topsort.cpp}
+
 \subsection{Stromové algoritmy}
-\subsubsection{LCA}
-O(n * log(n)), Tarjan offline algo
-\lstinputlisting[firstline = 66, lastline = 98]{../algorithms/graph/graph.cpp}
+
+\subsubsection{Dominace stromu}
+$O(n)$, resp takové DFS.
+\lstinputlisting{../algorithms/graph/tree-dominating-set.cpp}
 
 \subsubsection{Nejdelší cesta ve stromě}
-O(těžko říct, s každým dalším query se zlepšuje)
-\lstinputlisting[firstline = 100, lastline = 129]{../algorithms/graph/graph.cpp}
+$O(\hbox{těžko říct, s každým dalším query se zlepšuje})$
+\lstinputlisting{../algorithms/graph/tree-diameter.cpp}
+
+\subsubsection{Offline tree LCA}
+$O(n\log(n))$
+\lstinputlisting{../algorithms/graph/offline-tree-lca.cpp}
 
 \subsubsection{Střed stromu}
-O(n)
-\lstinputlisting[firstline = 132, lastline = 167]{../algorithms/graph/graph.cpp}
+$O(n)$
+\lstinputlisting{../algorithms/graph/tree-center.cpp}
 
 
 \subsection{Stringové algoritmy}
-\subsubsection{Longest common substring}
-O(n * m)
-Jenom délka.
-\lstinputlisting[firstline = 11, lastline = 22]{../algorithms/string/string.cpp}
 
-\subsubsection{Longest common subsequence}
-O(n * m)
-Jenom délka.
-\lstinputlisting[firstline = 25, lastline = 38]{../algorithms/string/string.cpp}
+\subsubsection{Levenshtein}
+\lstinputlisting{../algorithms/string/levenshtein.cpp}
+
+\subsubsection{Longest common continuous substring}
+Jenom délka, $O(n \cdot m)$.
+\lstinputlisting{../algorithms/string/longest-common-continuous-substring.cpp}
+
+\subsubsection{Longest common substring}
+Jenom délka, $O(n \cdot m)$.
+\lstinputlisting{../algorithms/string/longest-common-substring.cpp}
 
 \subsubsection{Suffix tree + LCP + použití na Longest common subsequence}
 O(n)
 \lstinputlisting[firstline = 1, lastline = 103]{../Matyas/ACM2/7/longest-common-substring/template.cpp}
 
-\subsubsection{Levenshtein}
-\lstinputlisting{../algorithms/string/levenshtein.cpp}
+\subsection{Binární vyhledávání}
+\lstinputlisting{../algorithms/binary-search.cpp}
 
 \subsection{Mergesort s inverzemi}
-O(n * log(n)) asi
-\lstinputlisting[firstline = 15, lastline = 57]{../algorithms/mergesort.cpp}
-
-\subsection{Binární vyhledávání}
-\lstinputlisting[firstline = 7]{../algorithms/binary-search.cpp}
+$O(n\log(n))$
+\lstinputlisting{../algorithms/mergesort.cpp}
 
 \subsection{Nejkratší úsek pole se součtem roven k}
 Pouze pro kladné prvky pole
-\lstinputlisting[firstline = 12, lastline = 34]{../algorithms/min-subarray-sum.cpp}
+\lstinputlisting{../algorithms/min-subarray-sum.cpp}
 
 \newpage
 
 \section{Datové struktury}
 
 \subsection{Big Integer}
-\lstinputlisting[firstline = 9]{../data-structures/big-int.cpp}
+\lstinputlisting{../data-structures/big-int.cpp}
+
+\subsection{Bitová trie}
+\lstinputlisting{../data-structures/bit-trie.cpp}
+
+\subsection{Block cut tree}
+\lstinputlisting{../data-structures/blockcut-tree.cpp}
 
 \subsection{Fenwick}
 JEŠTĚ JEDNOU ZDŮRAZNÍM, ŽE SE NEPOUŽÍVÁ T[0]\\
-Chcete-li použít Fenwicka jako ``segmenťák'' (tedy update je add(l,d)+add(r+1,-d)), pak query stačí jako pref\_sum(i) a není třeba odečítat i-1.
+Chcete-li použít Fenwicka jako \uv{segmenťák} (tedy update je \texttt{add(l,d)+add(r+1,-d)}), pak query stačí jako \texttt{pref\_sum(i)} a není třeba odečítat $i-1$.
 \lstinputlisting{../data-structures/fenwick.cpp}
-
-\subsection{Maximový Fenwick}
-\lstinputlisting{../data-structures/max-fenwick.cpp}
-
-\subsection{Union Find}
-\lstinputlisting[firstline = 4]{../data-structures/union-find.cpp}
 
 \subsection{Jak na rychlé mapy}
 \begin{lstlisting}
 #include <ext/pb_ds/tree_policy.hpp>
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds;
-cc_hash_table<ll,ll> N; // horsi varianta
+cc_hash_table<ll,ll> N;
 gp_hash_table<ll,ll> M; // o ~10% pomalejsi read/write, ale 3-6x rychlejsi insert/delete/clear
 \end{lstlisting}
+
+\subsection{Maximový Fenwick}
+\lstinputlisting{../data-structures/max-fenwick.cpp}
+
+\subsection{Union Find}
+\lstinputlisting{../data-structures/union-find.cpp}
 
 \newpage
 
 \section{Matematika}
+
+\subsection{Dělitelé}
+\lstinputlisting{../math/divisors.cpp}
+
+\subsubsection{Rychlejší za pomoci síta}
+\lstinputlisting{../math/fast-divisors.cpp}
+
+\subsection{Eratosthenova síta}
+To první je nějaký úplný basic v $O(n^{\frac{3}{2}})$. To druhé je poněkud lepší s časem $O(n\log(\log n))$. To třetí je rozšířené o to, že si pro každé číslo pamatuje nejmenšího prvočíselného dělitelé, tzn. dá se tím dělat rychlý rozklad na prvočísla.
+\lstinputlisting{../math/sieves.cpp}
+
+\subsection{Faktorizace}
+To první je basic faktorizace v čase $O(\sqrt n)$, které vrátí vektor dvojic (dělitel, mocnina). To druhé využívá síto, vrátí vektor prvočíselných dělitelů.
+\lstinputlisting{../math/factorization.cpp}
+
+\subsection{GCD}
+\begin{lstlisting}
+__gcd(a,b);
+\end{lstlisting}
 
 \subsection{Jak správně generovat náhodná čísla?}
 \begin{lstlisting}
@@ -147,76 +177,36 @@ gp_hash_table<ll,ll> M; // o ~10% pomalejsi read/write, ale 3-6x rychlejsi inser
   give_random(e); // tohle vraci random cislo
 \end{lstlisting}
 
-\subsection{Struktury}
-\subsubsection{Matice}
-\lstinputlisting[firstline = 13, lastline = 43]{../math/common.cpp}
-
-\subsection{GCD}
-\lstinputlisting[firstline = 46, lastline = 60]{../math/common.cpp}
-
-\subsection{Rozšířený Euklidův algoritmus}
-\lstinputlisting[firstline = 22, lastline = 26]{../math/eea.cpp}
-
 \subsection{Kombinačni číslo}
-\lstinputlisting[firstline = 63, lastline = 77]{../math/common.cpp}
+\lstinputlisting{../math/combination.cpp}
 
 \subsection{Modularní inverze}
-\lstinputlisting[firstline = 80, lastline = 114]{../math/common.cpp}
-
-\subsubsection{Z malé Fermatovy věty}
+Pouze pro prvočíselná modula. Vychází z malé Fermatovy věty.
 \lstinputlisting{../math/modinv.cpp}
 
-\subsection{Kombinační číslo modulené}
-\lstinputlisting[firstline = 117, lastline = 130]{../math/common.cpp}
-
-\subsection{Eratosthenova síta}
-\subsubsection{Nějaký basic}
-O(n**3/2)
-\lstinputlisting[firstline = 134, lastline = 147]{../math/common.cpp}
-
-\subsubsection{Trochu rychlejší}
-O(n * log(n))
-\lstinputlisting[firstline = 151, lastline = 167]{../math/common.cpp}
-
-\subsection{Faktorizace}
-O(sqrt(n)), vrátí jako vektor párů {prvočíslo, počet}
-\lstinputlisting[firstline = 173, lastline = 196]{../math/common.cpp}
+\subsection{Odečítání v modulu}
+\lstinputlisting{../math/modsub.cpp}
 
 \subsection{Počet čtvercových dělitelů}
-\lstinputlisting[firstline = 200, lastline = 220]{../math/common.cpp}
-
-\subsection{Rychlé umocňování čísel}
-\lstinputlisting[firstline = 238, lastline = 248]{../math/common.cpp}
-\lstinputlisting[firstline = 251, lastline = 265]{../math/common.cpp}
-
-\subsection{Rychlé umocňování matic}
-\lstinputlisting[firstline = 224, lastline = 234]{../math/common.cpp}
-
-\subsection{Rozšířené Eratosthenovo síto}
-\lstinputlisting[firstline = 269, lastline = 285]{../math/common.cpp}
-
-\subsection{Rychlá faktorizace}
-Potřeba rozšiřené Eratosthenovo síto výše
-O(log(n))
-\lstinputlisting[firstline = 288, lastline = 301]{../math/common.cpp}
-
-\subsection{Fast divisors}
-At je to cokoliv
-\lstinputlisting[firstline = 305, lastline = 326]{../math/common.cpp}
-
-\subsection{Odčítání v modulu}
-Proprietary (x - y) \% k
-\lstinputlisting[firstline = 329, lastline = 331]{../math/common.cpp}
-
-\subsection{Ternární vyhledávání}
-O(log(n))
-\lstinputlisting{../math/ternary-search.cpp}
-
-\subsection{Hledání dělitelů}
-\lstinputlisting{../math/divisors.cpp}
+\lstinputlisting{../math/square-divisors.cpp}
 
 \subsection{Prefixový xor aritmetické řady}
-\lstinputlisting{../math/prefix-xor.cpp}
+\lstinputlisting{../math/prefix-xor-arithmetic-sequence.cpp}
+
+\subsection{Rozšířený Euklidův algoritmus}
+\lstinputlisting{../math/eea.cpp}
+
+\subsection{Ternární vyhledávání}
+$O(\log(n))$
+\lstinputlisting{../math/ternary-search.cpp}
+
+\subsection{Umocňování}
+\lstinputlisting{../math/fast-exponent.cpp}
+
+\subsection{Struktury}
+
+\subsubsection{Matice}
+\lstinputlisting{../math/matrix.cpp}
 
 \newpage
 
@@ -232,7 +222,7 @@ O(log(n))
 
 \newpage
 
-\section{Konfiguraky}
+\section{Konfiguráky}
 \subsection{Vim}
 \lstinputlisting{../vimrc}
 \subsection{Bash}
@@ -240,5 +230,5 @@ O(log(n))
 \subsection{Template}
 \lstinputlisting{../template/template.cpp}
 
-
 \end{document}
+

@@ -1,11 +1,3 @@
-//
-// Created by maty on 8/19/17.
-//
-#include <array>
-#include <vector>
-
-using namespace std;
-
 struct BigInt {
   typedef int NUM;
   vector<NUM> n; // change to char for memory efficiency

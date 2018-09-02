@@ -1,12 +1,3 @@
-#include <utility>
-#include <climits>
-
-//
-// Created by maty on 8/13/17.
-//
-typedef long long ll;
-using namespace std;
-
 // dotazovana funkce pri binarnim vyhledavani
 // nutne dodefinovat zacatek/konec pole jako -INF/+INF
 ll fn(ll i) {

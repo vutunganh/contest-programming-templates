@@ -1,11 +1,3 @@
-#include <climits>
-#include <vector>
-
-//
-// Created by maty on 7/29/17.
-//
-using namespace std;
-
 // nalezne nejkratsi usek pole, jehoz soucet se rovna k.
 // smi obsahovat pouze kladna cisla!
 // O(n)

@@ -1,17 +1,3 @@
-//
-// Created by maty on 3/3/17.
-//
-
-#include <iostream>
-#include <vector>
-#include <climits>
-#include <cstring>
-#include <algorithm>
-
-using namespace std;
-typedef long long ll;
-
-
 ll inv;
 int mergesortHelp(vector<ll> &src, int left, int right, ll *result) {
   if (right == left) {
@@ -54,32 +40,4 @@ ll mergesort(vector<ll> & src) {
   for (int i = 0; i < src.size(); ++i) src[i] = result[i];
   delete [] result;
   return inv;
-}
-
-int main() {
-  ios_base::sync_with_stdio(false);
-  vector<ll> input;
-
-  // nacitani vstupu. Prvni na vstupu je pocet hodnot
-  ll N;
-  cin >> N;
-
-  for (int i = 0; i < N; ++i) {
-    ll n;
-    cin >> n;
-    input.push_back(n);
-  }
-
-  //mergesortHelp(input, 0, input.size() - 1, result);
-  mergesort(input);
-
-  cout << "inversions: " << inv << endl;
-  cout << "sorted output: " << endl;
-  /*for (int i = 0; i < N - 1; ++i) {
-    cout << input[i] << " ";
-  }
-  cout << input[N-1] << endl;*/
-
-
-  return 0;
 }
