@@ -1,93 +1,112 @@
 \input opmac
 \chyph
 
-\hyperlinks{\Blue}{\Green}
+\hyperlinks{\Blue}{\Green} % odkazy z obsahu
 
-\def\newpage{\vfil \break}
-\def\linebreak{\hfil \break}
-\overfullrule=0pt
+\def\newpage{\vfil \break} % makro na novou stránku
+\def\linebreak{\hfil \break} % makro na nový řádek
+\overfullrule=0pt % už žádné černé čtverečky na konci řádků
+\def\tthook{\ttline=-2} % nečíslovat řádky kódu
 
 \tit Knihovna týmu Zavalleni
 
 \maketoc
 
 \chap Algoritmy
-\sec Grafové algoritmy
 
-\def\tthook{\ttline=-2}
-\secc Bellman-ford
+\sec Grafové algoritmy 
+
+\secc Bellman-ford 
+
 \verbinput (-) ../algorithms/graph/bellman-ford.cpp
 
-\secc Dijkstra
+\secc Dijkstra 
+
 \verbinput (-) ../algorithms/graph/dijkstra.cpp
 
-\secc Dinicův algoritmus
+\secc Dinicův algoritmus 
+
 Maximální tok v $O(V^2 \cdot E)$.
 \verbinput (-) ../algorithms/graph/dinic.cpp
 
-\secc Floyd Warshall
+\secc Floyd Warshall 
+
 $O(n^3)$
 \verbinput (-) ../algorithms/graph/floyd-warshall.cpp
 
-\secc Globální minimální hranový řez
+\secc Globální minimální hranový řez 
+
 Stoer-Wagner, $O(V^3)$
 \verbinput (-) ../algorithms/graph/stoer-wagner.cpp
 
-\secc Kruskal
+\secc Kruskal 
+
 \verbinput (-) ../algorithms/graph/kruskal.cpp
 
-\secc Maximální párování
+\secc Maximální párování 
+
 Něco jako $O(\sqrt{V}E)$.
 \verbinput (-) ../algorithms/graph/hopcroft-karp.cpp
 
-\secc Topsort
+\secc Topsort 
+
 Asi přepracovat, moc Javovský. $O(n + m)$
 \verbinput (-) ../algorithms/graph/topsort.cpp
 
-\sec Stromové algoritmy
+\sec Stromové algoritmy 
 
-\secc Dominace stromu
+\secc Dominace stromu 
+
 $O(n)$, resp takové DFS.
 \verbinput (-) ../algorithms/graph/tree-dominating-set.cpp
 
-\secc Nejdelší cesta ve stromě
+\secc Nejdelší cesta ve stromě 
+
 $O(\hbox{těžko říct, s každým dalším query se zlepšuje})$
 \verbinput (-) ../algorithms/graph/tree-diameter.cpp
 
-\secc Offline tree LCA
+\secc Offline tree LCA 
+
 $O(n\log(n))$
 \verbinput (-) ../algorithms/graph/offline-tree-lca.cpp
 
-\secc Střed stromu
+\secc Střed stromu 
+
 $O(n)$
 \verbinput (-) ../algorithms/graph/tree-center.cpp
 
-
 \sec Stringové algoritmy
 
-\secc Levenshtein
+\secc Levenshtein 
+
 \verbinput (-) ../algorithms/string/levenshtein.cpp
 
-\secc Longest common continuous substring
+\secc Longest common continuous substring 
+
 Jenom délka, $O(n \cdot m)$.
 \verbinput (-) ../algorithms/string/longest-common-continuous-substring.cpp
 
-\secc Longest common substring
+\secc Longest common substring 
+
 Jenom délka, $O(n \cdot m)$.
 \verbinput (-) ../algorithms/string/longest-common-substring.cpp
 
-\secc Suffix tree + LCP + použití na Longest common subsequence
+\secc Suffix tree + LCP + použití na Longest common subsequence 
+
 O(n)
 \verbinput (1-103) ../Matyas/ACM2/7/longest-common-substring/template.cpp
 
-\sec Binární vyhledávání
+\sec Binární vyhledávání 
+
 \verbinput (-) ../algorithms/binary-search.cpp
 
-\sec Mergesort s inverzemi
+\sec Mergesort s inverzemi 
+
 $O(n\log(n))$
 \verbinput (-) ../algorithms/mergesort.cpp
 
-\sec Nejkratší úsek pole se součtem roven k
+\sec Nejkratší úsek pole se součtem roven k 
+
 Pouze pro kladné prvky pole
 \verbinput (-) ../algorithms/min-subarray-sum.cpp
 
@@ -95,22 +114,26 @@ Pouze pro kladné prvky pole
 
 \chap Datové struktury
 
-\sec Big Integer
+\sec Big Integer 
+
 \verbinput (-) ../data-structures/big-int.cpp
 
-\sec Bitová trie
+\sec Bitová trie 
+
 \verbinput (-) ../data-structures/bit-trie.cpp
 
-\sec Block cut tree
+\sec Block cut tree 
+
 \verbinput (-) ../data-structures/blockcut-tree.cpp
 
 \sec Fenwick
 
-JEŠTĚ JEDNOU ZDŮRAZNÍM, ŽE SE NEPOUŽÍVÁ T[0]\linebreak
+{\bf JEŠTĚ JEDNOU ZDŮRAZNÍM, ŽE SE NEPOUŽÍVÁ {\tt T[0]}}\linebreak
 Chcete-li použít Fenwicka jako \uv{segmenťák} (tedy update je {\tt add(l,d)+add(r+1,-d)}), pak query stačí jako {\tt pref\_sum(i)} a není třeba odečítat $i-1$.
 \verbinput (-) ../data-structures/fenwick.cpp
 
-\sec Jak na rychlé mapy
+\sec Jak na rychlé mapy 
+
 \begtt
 #include <ext/pb_ds/tree_policy.hpp>
 #include <ext/pb_ds/assoc_container.hpp>
@@ -119,36 +142,44 @@ cc_hash_table<ll,ll> N;
 gp_hash_table<ll,ll> M; // o ~10% pomalejsi read/write, ale 3-6x rychlejsi insert/delete/clear
 \endtt
 
-\sec Maximový Fenwick
+\sec Maximový Fenwick 
+
 \verbinput (-) ../data-structures/max-fenwick.cpp
 
-\sec Union Find
+\sec Union Find 
+
 \verbinput (-) ../data-structures/union-find.cpp
 
 \newpage
 
 \chap Matematika
 
-\sec Dělitelé
+\sec Dělitelé 
+
 \verbinput (-) ../math/divisors.cpp
 
-\secc Rychlejší za pomoci síta
+\secc Rychlejší za pomoci síta 
+
 \verbinput (-) ../math/fast-divisors.cpp
 
-\sec Eratosthenova síta
+\sec Eratosthenova síta 
+
 To první je nějaký úplný basic v $O(n^{3 \over 2})$. To druhé je poněkud lepší s časem $O(n\log(\log n))$. To třetí je rozšířené o to, že si pro každé číslo pamatuje nejmenšího prvočíselného dělitelé, tzn. dá se tím dělat rychlý rozklad na prvočísla.
 \verbinput (-) ../math/sieves.cpp
 
-\sec Faktorizace
+\sec Faktorizace 
+
 To první je basic faktorizace v čase $O(\sqrt n)$, které vrátí vektor dvojic (dělitel, mocnina). To druhé využívá síto, vrátí vektor prvočíselných dělitelů.
 \verbinput (-) ../math/factorization.cpp
 
-\sec GCD
+\sec GCD 
+
 \begtt
 __gcd(a,b);
 \endtt
 
-\sec Jak správně generovat náhodná čísla?
+\sec Jak správně generovat náhodná čísla? 
+
 \begtt
   random_device r;
   mt19937 e(r()); // nebo mt19937_64 pro 64 bitova cisla
@@ -156,60 +187,78 @@ __gcd(a,b);
   give_random(e); // tohle vraci random cislo
 \endtt
 
-\sec Kombinačni číslo
+\sec Kombinačni číslo 
+
 \verbinput (-) ../math/combination.cpp
 
-\sec Modularní inverze
+\sec Modularní inverze 
+
 Pouze pro prvočíselná modula. Vychází z malé Fermatovy věty.
 \verbinput (-) ../math/modinv.cpp
 
-\sec Odečítání v modulu
+\sec Odečítání v modulu 
+
 \verbinput (-) ../math/modsub.cpp
 
-\sec Počet čtvercových dělitelů
+\sec Počet čtvercových dělitelů 
+
 \verbinput (-) ../math/square-divisors.cpp
 
-\sec Prefixový xor aritmetické řady
+\sec Prefixový xor aritmetické řady 
+
 \verbinput (-) ../math/prefix-xor-arithmetic-sequence.cpp
 
-\sec Rozšířený Euklidův algoritmus
+\sec Rozšířený Euklidův algoritmus 
+
 \verbinput (-) ../math/eea.cpp
 
-\sec Ternární vyhledávání
+\sec Ternární vyhledávání 
+
 $O(\log(n))$
 \verbinput (-) ../math/ternary-search.cpp
 
-\sec Umocňování
+\sec Umocňování 
+
 \verbinput (-) ../math/fast-exponent.cpp
 
-\sec Struktury
+\sec Struktury 
 
-\secc Čísla v modulu
+
+\secc Čísla v modulu 
+
 \verbinput (-) ../math/mod-num.cpp
 
-\secc Matice
+\secc Matice 
+
 \verbinput (-) ../math/matrix.cpp
 
 \newpage
 
 \chap Misc
 
-\sec Parser
+\sec Parser 
+
 \verbinput (-) ../misc/parser.cpp
 
 \newpage
 
 \chap Geometrie
+
 \verbinput (-) ../geometry/template.cpp
 
 \newpage
 
 \chap Konfiguráky
-\sec Vim
+\sec Vim 
+
 \verbinput (-) ../vimrc
-\sec Bash
+
+\sec Bash 
+
 \verbinput (-) ../bashrc
-\sec Template
+
+\sec Template 
+
 \verbinput (-) ../template/template.cpp
 
 \bye
