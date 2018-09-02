@@ -24,25 +24,3 @@ void dijkstra(ll s){
         D[e.v]=D[u]+e.w,P[e.v]=u,Q.push({e.v,D[e.v]});
   }
 }
-
-int main(){
-  ios::sync_with_stdio(0);
-  int _;cin>>_;
-  while(_--){
-    cin>>N>>M;
-    F(MX)G[i].clear();
-    F(M){
-      ll u,v,w;
-      cin>>u>>v>>w;
-      add_edge(u-1,v-1,w);
-    }
-    ll s,t;
-    cin>>s>>t;
-    --s,--t;
-    dijkstra(s);
-    if(D[t]==LINF)cout<<"NO"<<endl;
-    else cout<<D[t]<<endl;
-  }
-
-  return 0;
-}

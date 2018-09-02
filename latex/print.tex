@@ -1,17 +1,15 @@
 \documentclass[10pt, a4paper]{article}
-\usepackage[shorthands=off, czech]{babel}
-\usepackage[utf8]{inputenc}
-\usepackage[unicode]{hyperref}
-\usepackage{geometry}
-\usepackage{listings}
-\usepackage{inconsolata}
 
+\usepackage[czech]{babel}
+
+\usepackage[unicode]{hyperref}
 \hypersetup{
   colorlinks=true,
   linkcolor=black,
   linktoc=all
 }
 
+\usepackage{geometry}
 \geometry{
  a4paper,
  top=25mm,
@@ -20,22 +18,20 @@
  right=25mm
 }
 
-% nastavuje code blocks
+\usepackage{listings}
 \lstset{
-  % basicstyle=\footnotesize,
-  language=C++,
-  frame=tb,
-  numbers=left,
+  breakatwhitespace=true,
   breaklines=true,
+  frame=tb,
+  language=C++,
+  numbers=left,
   tabsize=2
 }
 
+
 \title{Knihovna týmu Zavalleni}
-\author{Matyáš Křišťan, Šimon Lomič, Tung Anh Vu}
 
 \begin{document}
-
-\tableofcontents
 
 \section{Algoritmy}
 \subsection{Grafové algoritmy}

@@ -1,8 +1,10 @@
-TEX=pdflatex
+TEX=pdfcsplain
 
 all: print.tex
-	$(TEX) print.tex
-	$(TEX) print.tex
-	$(TEX) print.tex
+	$(TEX) plaintex.tex
+	$(TEX) plaintex.tex
+
+.PHONY: clean
+
 clean:
-	rm print.aux print.log print.toc print.out
+	rm *.log *.ref
