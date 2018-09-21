@@ -1,9 +1,7 @@
-ll NchooseK(ll n, ll k) {
+ll C(ll n, ll k) {
   if (k == 0) return 1;
   if (n < k) return 0;
-
-  if (k > n/2) return NchooseK(n, n-k);
-
+  if (k > n/2) return C(n, n-k);
   ll out = 1;
   for(int i = 1; i <= k; ++i) {
     out *= n-i+1;
@@ -12,8 +10,8 @@ ll NchooseK(ll n, ll k) {
 
   return out;
 }
-
-ull NchooseKmodP(ull n, ull k, ull p) {
+// the module must be prime
+ll Cmod(ll n, ll k, ll p) {
   ull top = 1;
   ull bottom = 1;
   for (ull i = n; i > k; -- i) {
@@ -25,6 +23,6 @@ ull NchooseKmodP(ull n, ull k, ull p) {
     bottom %= p;
   }
 
-  return ((top % p) * (modularInversion(bottom, p) % p)) % p;
+  return ((top % p) * (mpow(bottom, p-2) % p)) % p;
 }
 
