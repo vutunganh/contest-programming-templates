@@ -12,13 +12,13 @@ ll C(ll n, ll k) {
 }
 // the module must be prime
 ll Cmod(ll n, ll k, ll p) {
-  ull top = 1;
-  ull bottom = 1;
-  for (ull i = n; i > k; -- i) {
+  ll top = 1;
+  ll bottom = 1;
+  for (ll i = n; i > k; -- i) {
     top *= i;
     top %= p;
   }
-  for (ull i = n-k; i > 0; -- i) {
+  for (ll i = n-k; i > 0; -- i) {
     bottom *= i;
     bottom %= p;
   }
