@@ -14,11 +14,11 @@ using vvll=vector<vll>;
 #define bb second
 #define PB push_back
 #define EQ(a,b) (fabs(a-b)<=(fabs(a+b)*EPS))
+#define mp make_pair
 
 int main(){
   ios::sync_with_stdio(0);cout.tie(0);cin.tie(0);
-  // freopen("input.txt","r",stdin);
-  // freopen("output.txt","w",stdout);
+  // freopen("input.txt","r",stdin); freopen("output.txt","w",stdout);
 
   return 0;
 }

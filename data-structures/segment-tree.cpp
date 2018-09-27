@@ -16,10 +16,11 @@ struct SumAndSet {
 };
 
 // type of data stored in the segment tree, a struct containing the operations
-template <class Item,class O>
+template <class Item,class O,class LazyItem = Item>
 struct SegmentTree {
   int n;
-  Item* a, *lz;
+  Item* a;
+  LazyItem *lz;
   bool* lzf;
 
   ~SegmentTree() {
@@ -32,7 +33,7 @@ struct SegmentTree {
 
   void alloc(int n) {
     a = new Item[2*n];
-    lz = new Item[2*n];
+    lz = new LazyItem[2*n];
     lzf = new bool[2*n];
     F(2*n) lz[i] = O::neutral();
     memset(lzf, 0, 2*n*sizeof(bool));
@@ -42,7 +43,7 @@ struct SegmentTree {
   SegmentTree(int _n):
     n(npow2(_n)) { alloc(n); build(); }
 
-  SegmentTree(vector<Item> in): n(npow2(in.size())) {
+  SegmentTree(vector<Item> & in): n(npow2(in.size())) {
     alloc(n);
     FOR(i,n,n+in.size()) a[i] = in[i-n];
     build();
