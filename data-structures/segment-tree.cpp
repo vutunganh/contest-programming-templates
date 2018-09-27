@@ -1,17 +1,18 @@
 // operation for sum on iterval + set all on interval to val
 template <class Item>
+struct SumAndAdd {
+  static Item neutral() { return Item(0); } // for sums
+  static Item merge(Item a, Item b) { return a+b; }
+  static Item lazyToNode(Item node, Item lazy, ll len) { return node + len*lazy; }
+  static Item lazyToLazy(Item old, Item newV) { return old + newV; }
+};
+
+template <class Item>
 struct SumAndSet {
   static Item neutral() { return Item(0); } // for sums
   static Item merge(Item a, Item b) { return a+b; }
-  static Item lazyToNode(Item lazy, int len) { return len*lazy; }
-};
-
-
-template <class Item>
-struct GcdAndSet {
-  static Item neutral() { return Item(0); } // for sums
-  static Item merge(Item a, Item b) { return gcd(a,b); }
-  static Item lazyToNode(Item lazy, Item node, int len) { return lazy; }
+  static Item lazyToNode(Item node, Item lazy, int len) { return len*lazy; }
+  static Item lazyToLazy(Item old, Item newV) { return newV; }
 };
 
 // type of data stored in the segment tree, a struct containing the operations
@@ -20,26 +21,21 @@ struct SegmentTree {
   int n;
   Item* a, *lz;
   bool* lzf;
-  bool useLazy = true; // forbid lazy if TLe
 
   ~SegmentTree() {
     delete [] a;
-    if (useLazy) {
-      delete [] lz;
-      delete [] lzf;
-    }
+    delete [] lz;
+    delete [] lzf;
   }
 
   int npow2(int n) {return 1 << (int)ceil(log2(n)); }
 
   void alloc(int n) {
     a = new Item[2*n];
-    if (useLazy) {
-      lz = new Item[2*n];
-      lzf = new bool[2*n];
-      F(2*n) lz[i] = O::neutral();
-      memset(lzf, 0, 2*n*sizeof(bool));
-    }
+    lz = new Item[2*n];
+    lzf = new bool[2*n];
+    F(2*n) lz[i] = O::neutral();
+    memset(lzf, 0, 2*n*sizeof(bool));
     F(2*n) a[i] = O::neutral();
   }
 
@@ -57,45 +53,52 @@ struct SegmentTree {
     else return a[i] = O::merge(build(2*i), build(2*i + 1));
   }
 
-  void propLazy(int nd, int len) {
-    if (!useLazy) return;
+  void propLazy(int nd, ll len) {
     if (lzf[nd]) {
-      a[nd] = O::lazyToNode(lz[nd], len);
-      lzf[nd] = false;
+      a[nd] = O::lazyToNode(a[nd], lz[nd], len);
       if (nd < n) {
-        lz[2*nd] = lz[2*nd + 1] = lz[nd];
+        lz[2*nd] = O::lazyToLazy(lz[2*nd], lz[nd]);
+        lz[2*nd+1] = O::lazyToLazy(lz[2*nd+1], lz[nd]);
         lzf[2*nd] = lzf[2*nd+1] = true;
-        lzf[nd] = false;
       }
+      lzf[nd] = false;
+      lz[nd] = O::neutral();
     }
   }
 
   //# query left, query right, node, left range, right range
-  Item get(ll l, ll r) { return _get(l, r, 1, 0, n-1); }
+  Item get(ll l, ll r) { 
+    return (r < l) ? O::neutral() : _get(l, r, 1, 0, n-1);
+  }
   Item _get(ll l, ll r, ll nd, ll ndl, ll ndr) {
-    if (useLazy) propLazy(nd, ndr - ndl + 1);
-    if (ndl >= l && ndr <= r) return a[nd];
+    propLazy(nd, ndr - ndl + 1);
+    if (ndl >= l && ndr <= r) return a[nd]; 
     else if (ndr < l || ndl > r || ndr < ndl) return O::neutral(); // neutralni prvek
-    else {
-      return O::merge(_get(l, r, nd*2, ndl, ndl+(ndr-ndl)/2)
+    else return O::merge(_get(l, r, nd*2, ndl, ndl+(ndr-ndl)/2)
                 ,_get(l, r, nd*2 + 1, ndl+(ndr-ndl)/2+1, ndr));
-    }
   }
 
-  void update(ll l, ll r, ll v) { _update(l, r, v, 1, 0, n-1); }
-  void _update(ll l, ll r, ll v, ll nd, ll ndl, ll ndr) {
-    if (useLazy) propLazy(nd, ndr - ndl + 1);
+  Item realVal(ll nd, ll len) {
+    if (lzf[nd]) return O::lazyToNode(a[nd], lz[nd], len);
+    else return a[nd];
+  }
+
+  Item update(ll l, ll r, ll v) { 
+    return (r < l) ? O::neutral() : _update(l, r, v, 1, 0, n-1);
+  }
+  Item _update(ll l, ll r, ll v, ll nd, ll ndl, ll ndr) {
+    if (ndr < l || ndl > r || ndr < ndl) return O::neutral();
+    const ll len = ndr - ndl + 1;
     if (ndl >= l && ndr <= r) { //# fully in range
-      a[nd] = O::lazyToNode(v, ndr - ndl + 1);
-      if (nd < n && useLazy) {
-        lz[nd*2] = lz[nd*2+1] = v;
-        lzf[nd*2] = lzf[nd*2+1] = true;
-      }
-    } else if (ndr < l || ndl > r || ndr < ndl) return;
-    else {
+      lzf[nd] = true;
+      lz[nd] = O::lazyToLazy(lz[nd], v);
+      propLazy(nd, len);
+      return a[nd];
+    } else {
+      propLazy(nd, len);
       _update(l, r, v, nd*2, ndl, ndl+(ndr-ndl)/2);
       _update(l, r, v, nd*2+1, ndl+(ndr-ndl)/2+1, ndr);
-      a[nd] = O::merge(a[nd*2], a[nd*2+1]);
+      return a[nd] = O::merge(realVal(nd*2, len/2), realVal(nd*2+1, len/2));
     }
   }
 };
