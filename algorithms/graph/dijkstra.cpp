@@ -24,3 +24,17 @@ void dijkstra(ll s){
         D[e.v]=D[u]+e.w,P[e.v]=u,Q.push({e.v,D[e.v]});
   }
 }
+
+// for every vertex, finds the path with the lowest possible maximal edge
+void dijkstraMax(ll s){
+  F(MX)D[i]=LINF,P[i]=-1;
+  D[s]=mtx[a][b];
+  priority_queue<Edge> Q;
+  Q.push({s,D[s]});
+  while(Q.size()){
+    auto u=Q.top().v;Q.pop();
+    for(auto e:G[u])
+      if(D[e.v]>max(D[u],e.w))
+        D[e.v]=max(D[u],e.w),P[e.v]=u,Q.push({e.v,D[e.v]});
+  }
+}
