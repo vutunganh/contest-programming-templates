@@ -1,7 +1,8 @@
 // operation for sum on iterval + set all on interval to val
 template <class Item>
 struct SumAndAdd {
-  static Item neutral() { return Item(0); } // for sums
+  static Item zero() { return Item(0); } // for sums
+  static Item lazyZero() { return Item(0); }
   static Item merge(Item a, Item b) { return a+b; }
   static Item lazyToNode(Item node, Item lazy, ll len) { return node + len*lazy; }
   static Item lazyToLazy(Item old, Item newV) { return old + newV; }
@@ -9,7 +10,8 @@ struct SumAndAdd {
 
 template <class Item>
 struct SumAndSet {
-  static Item neutral() { return Item(0); } // for sums
+  static Item zero() { return Item(0); } // for sums
+  static Item lazyZero() { return Item(0); }
   static Item merge(Item a, Item b) { return a+b; }
   static Item lazyToNode(Item node, Item lazy, int len) { return len*lazy; }
   static Item lazyToLazy(Item old, Item newV) { return newV; }
@@ -35,9 +37,9 @@ struct SegmentTree {
     a = new Item[2*n];
     lz = new LazyItem[2*n];
     lzf = new bool[2*n];
-    F(2*n) lz[i] = O::neutral();
+    F(2*n) lz[i] = O::lazyZero();
     memset(lzf, 0, 2*n*sizeof(bool));
-    F(2*n) a[i] = O::neutral();
+    F(2*n) a[i] = O::zero();
   }
 
   SegmentTree(int _n):
@@ -63,18 +65,18 @@ struct SegmentTree {
         lzf[2*nd] = lzf[2*nd+1] = true;
       }
       lzf[nd] = false;
-      lz[nd] = O::neutral();
+      lz[nd] = O::lazyZero();
     }
   }
 
   //# query left, query right, node, left range, right range
   Item get(ll l, ll r) { 
-    return (r < l) ? O::neutral() : _get(l, r, 1, 0, n-1);
+    return (r < l) ? O::zero() : _get(l, r, 1, 0, n-1);
   }
   Item _get(ll l, ll r, ll nd, ll ndl, ll ndr) {
     propLazy(nd, ndr - ndl + 1);
     if (ndl >= l && ndr <= r) return a[nd]; 
-    else if (ndr < l || ndl > r || ndr < ndl) return O::neutral(); // neutralni prvek
+    else if (ndr < l || ndl > r || ndr < ndl) return O::zero(); // zeroni prvek
     else return O::merge(_get(l, r, nd*2, ndl, ndl+(ndr-ndl)/2)
                 ,_get(l, r, nd*2 + 1, ndl+(ndr-ndl)/2+1, ndr));
   }
@@ -85,10 +87,10 @@ struct SegmentTree {
   }
 
   Item update(ll l, ll r, ll v) { 
-    return (r < l) ? O::neutral() : _update(l, r, v, 1, 0, n-1);
+    return (r < l) ? O::zero() : _update(l, r, v, 1, 0, n-1);
   }
   Item _update(ll l, ll r, ll v, ll nd, ll ndl, ll ndr) {
-    if (ndr < l || ndl > r || ndr < ndl) return O::neutral();
+    if (ndr < l || ndl > r || ndr < ndl) return O::zero();
     const ll len = ndr - ndl + 1;
     if (ndl >= l && ndr <= r) { //# fully in range
       lzf[nd] = true;
