@@ -17,6 +17,20 @@ struct SumAndSet {
   static Item lazyToLazy(Item old, Item newV) { return newV; }
 };
 
+// includes position of the maximum
+struct MaxAndSet {
+  // value, position
+  static pair<ll,ll> zero() { return mp( -INF, 0LL ); } // for sums
+  static pair<ll,ll> lazyZero() { return mp( -INF, 0LL ); }
+  static pair<ll,ll> merge(pair<ll,ll> a, pair<ll,ll> b) {
+    if (a.aa > b.aa) return a;
+    else return b;
+  }
+  // TOOO: lazy not tested
+  static pair<ll,ll> lazyToNode(pair<ll,ll> node, pair<ll,ll> lazy, int len) { return lazy; }
+  static pair<ll,ll> lazyToLazy(pair<ll,ll> old, pair<ll,ll> newV) { return newV; }
+};
+
 // type of data stored in the segment tree, a struct containing the operations
 template <class Item,class O,class LazyItem = Item>
 struct SegmentTree {

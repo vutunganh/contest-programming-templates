@@ -3,13 +3,15 @@
 // declare the trie as: V trie;
 struct V;
 struct V {
-  // 0, 1
+  // left is 0, right is 1
   V* left = nullptr, *right = nullptr;
   ll num = 0; // information saved in the node
   int bit = 0; // index of the bit in the saved number
   const int bitlen = 32; // length of number saved in the trie
+  ll leaves = 0; // assumes that no number is inserted twice
 
   void insert(ll n) {
+    leaves ++;
     if (bit == bitlen) {
       num = n;
       return;
@@ -48,7 +50,36 @@ struct V {
     return res;
   }
 
+  // returns the number of numbers x in the trie, such that x xor n >= mx
+  ll findGreater(ll n, ll mx) const {
+    cout << bit << " " << leaves << endl;
+    // current bit of n
+    ll b = (n & (1 << (bitlen - 1 - bit)));
+    ll m = (mx & (1 << (bitlen - 1 - bit)));
+    ll res = 0;
+    if (bit == bitlen) {
+      res = 1;
+    } else {
+      if (b == 0 && m == 0) {
+        if (right) res += right->leaves;
+        if (left) res += left->findGreater(n, mx);
+      } else if (b == 0 && m != 0) {
+        if (right) res += right->findGreater(n, mx);
+      } else if (b != 0 && m == 0) {
+        if (left) res += left->leaves;
+        if (right) res += right->findGreater(n, mx);
+      } else if (b != 0 && m != 0) {
+        if (left) res += left->findGreater(n, mx);
+      } else {
+        assert(false);
+      }
+    }
+
+    return res;
+  }
+
   void erase(ll n) {
+    leaves --;
     if (bit == bitlen) {
       return;
     }
