@@ -1,8 +1,11 @@
-TEX=pdfcsplain
+TEX = pdfcsplain
+PDFFILES = plaintex.pdf
 
-all: print.tex
-	$(TEX) plaintex.tex
-	$(TEX) plaintex.tex
+all: $(PDFFILES)
+
+%.pdf: %.tex
+	$(TEX) $<
+	$(TEX) $<
 
 .PHONY: clean
 
