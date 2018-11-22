@@ -1,3 +1,13 @@
+vpll factors(ll n){
+  vpll result;
+  for(ll i=2;i*i<=n&&n>1;++i){
+    ll p=0;
+    while(n%i==0)++p,n/=i;
+    if(p)result.PB({i,p});
+  }
+  return result;
+}
+
 // vrati vektor prvocinitelnu n
 // napr 12 = 2^2 * 3 vrati
 // { (2, 2), (3, 1) }

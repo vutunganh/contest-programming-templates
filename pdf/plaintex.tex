@@ -146,6 +146,14 @@ gp_hash_table<ll,ll> M; // o ~10% pomalejsi read/write, ale 3-6x rychlejsi inser
 
 \verbinput (-) ../data-structures/max-fenwick.cpp
 
+\sec Treap
+
+Datová struktura, která umí hledat $k$-tý prvek a zeptat se, kolikátý je nějaký prvek.
+Všechny operace amortizovaně $O(\log(n))$.
+{\bf Pozor}, neumí to duplicitní prvky.
+
+\verbinput (-) ../data-structures/treap.cpp
+
 \sec Union Find 
 
 \verbinput (-) ../data-structures/union-find.cpp
@@ -156,6 +164,7 @@ gp_hash_table<ll,ll> M; // o ~10% pomalejsi read/write, ale 3-6x rychlejsi inser
 
 \sec Dělitelé 
 
+Ve výsledku budou i $1$ a $n$.
 \verbinput (-) ../math/divisors.cpp
 
 \secc Rychlejší za pomoci síta 
@@ -169,7 +178,7 @@ To první je nějaký úplný basic v $O(n^{3 \over 2})$. To druhé je poněkud 
 
 \sec Faktorizace 
 
-To první je basic faktorizace v čase $O(\sqrt n)$, které vrátí vektor dvojic (dělitel, mocnina). To druhé využívá síto, vrátí vektor prvočíselných dělitelů.
+To první je basic faktorizace v čase $O(\sqrt n)$, které vrátí vektor dvojic (dělitel, mocnina). Ta další využívají síta nebo musí znát prvočísla.
 \verbinput (-) ../math/factorization.cpp
 
 \sec GCD 

@@ -6,11 +6,10 @@ function m {
 
 function rt {
   c && find *"$1".in | xargs -I @ sh -c "echo Test @ >&2; ./a.out < @;"
-  # c && find *in*"$1" | xargs -I @ sh -c "echo Test @ >&2; ./a.out < @;" 
 }
 
 function rtt {
-  c && for a in *"$1".in; do echo "Test $a"; ./a.out < "$a" | diff - "${a%.in}.out" "$2"; done
+  c && for a in *"$1".in; do echo "Test $a"; diff <(./a.out < "$a") "${a%.in}.out"; done
 }
 
 function vg {
