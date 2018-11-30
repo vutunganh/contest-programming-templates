@@ -150,7 +150,8 @@ gp_hash_table<ll,ll> M; // o ~10% pomalejsi read/write, ale 3-6x rychlejsi inser
 
 Datová struktura, která umí hledat $k$-tý prvek a zeptat se, kolikátý je nějaký prvek.
 Všechny operace amortizovaně $O(\log(n))$.
-{\bf Pozor}, neumí to duplicitní prvky.
+{\bf Pozor}, neumí to duplicitní prvky, v tom případě se to musí ohnout páry, kde {\tt first} je skutečný prvek a {\tt second} je nějaký hash.
+Query se na {\tt cnt} (= počet {\bf menších}) se pak volají na {\tt ($n$, $\infty$)}, pokud počítáme včetně $n$ jinak {\tt ($n$, $-\infty$)} pokud nechceme včetně $n$.
 
 \verbinput (-) ../data-structures/treap.cpp
 
