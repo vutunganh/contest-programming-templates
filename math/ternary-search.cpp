@@ -2,7 +2,7 @@
 ld tern(ld l, ld r)
 {
   if (r - l < 1e-6) 
-    return (l + r) / 2;
+    return func((l + r) / 2);
   ld lt = (2 * l + r) / 3;
   ld rt = (l + 2 * r) / 3;
 
