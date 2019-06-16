@@ -9,7 +9,7 @@ function rt {
 }
 
 function rtt {
-  c && for a in *"$1".in; do echo "Test $a"; diff <(./a.out < "$a") "${a%.in}.out"; done
+  c && for a in *"$1".in; do echo "Test $a"; diff <(./a.out < "$a") "${a%.in}.ref"; done
 }
 
 function vg {
