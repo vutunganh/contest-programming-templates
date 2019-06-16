@@ -18,7 +18,7 @@ struct SumAndSet {
 };
 
 // includes position of the maximum
-struct MaxAndSet {
+struct MaxAndSetPos {
   // value, position
   static pair<ll,ll> zero() { return mp( -INF, 0LL ); } // for sums
   static pair<ll,ll> lazyZero() { return mp( -INF, 0LL ); }
@@ -29,6 +29,18 @@ struct MaxAndSet {
   // TOOO: lazy not tested
   static pair<ll,ll> lazyToNode(pair<ll,ll> node, pair<ll,ll> lazy, int len) { return lazy; }
   static pair<ll,ll> lazyToLazy(pair<ll,ll> old, pair<ll,ll> newV) { return newV; }
+};
+
+struct MinAndSet {
+  // value, position
+  static ll zero() { return INF; } // for sums
+  static ll lazyZero() { return INF; }
+  static ll merge(ll a, ll b) {
+    return min(a, b);
+  }
+  // TOOO: lazy not tested
+  static ll lazyToNode(ll node, ll lazy, int len) { return lazy; }
+  static ll lazyToLazy(ll old, ll newV) { return newV; }
 };
 
 // type of data stored in the segment tree, a struct containing the operations
@@ -56,8 +68,27 @@ struct SegmentTree {
     F(2*n) a[i] = O::zero();
   }
 
+  SegmentTree() = default;
+
   SegmentTree(int _n):
     n(npow2(_n)) { alloc(n); build(); }
+
+  SegmentTree(const SegmentTree & o): n(o.n) {
+    alloc(n);
+    memcpy(a, o.a, sizeof(*a) * 2*n);
+    memcpy(lz, o.lz, sizeof(*lz) * 2*n);
+    memcpy(lzf, o.lzf, sizeof(*lzf) * 2*n);
+  }
+
+  SegmentTree & operator = (const SegmentTree & o) {
+    if (this == &o) return *this;
+    n = o.n;
+    alloc(n);
+    memcpy(a, o.a, sizeof(*a) * 2*n);
+    memcpy(lz, o.lz, sizeof(*lz) * 2*n);
+    memcpy(lzf, o.lzf, sizeof(*lzf) * 2*n);
+    return *this;
+  }
 
   SegmentTree(vector<Item> & in): n(npow2(in.size())) {
     alloc(n);
@@ -85,6 +116,7 @@ struct SegmentTree {
 
   //# query left, query right, node, left range, right range
   Item get(ll l, ll r) { 
+    assert(l <= r);
     return (r < l) ? O::zero() : _get(l, r, 1, 0, n-1);
   }
   Item _get(ll l, ll r, ll nd, ll ndl, ll ndr) {
@@ -101,6 +133,7 @@ struct SegmentTree {
   }
 
   Item update(ll l, ll r, ll v) { 
+    assert(l <= r);
     return (r < l) ? O::zero() : _update(l, r, v, 1, 0, n-1);
   }
   Item _update(ll l, ll r, ll v, ll nd, ll ndl, ll ndr) {
