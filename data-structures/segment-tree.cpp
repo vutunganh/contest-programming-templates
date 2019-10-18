@@ -119,6 +119,8 @@ struct SegmentTree {
     assert(l <= r);
     return (r < l) ? O::zero() : _get(l, r, 1, 0, n-1);
   }
+
+  // closed interval, ie. [l, r]
   Item _get(ll l, ll r, ll nd, ll ndl, ll ndr) {
     propLazy(nd, ndr - ndl + 1);
     if (ndl >= l && ndr <= r) return a[nd]; 

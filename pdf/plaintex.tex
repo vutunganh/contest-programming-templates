@@ -39,6 +39,10 @@ $O(n^3)$
 Stoer-Wagner, $O(V^3)$
 \verbinput (-) ../algorithms/graph/stoer-wagner.cpp
 
+\secc Hopcroft-Karp 
+
+\verbinput (-) ../algorithms/graph/hopcroft-karp.cpp
+
 \secc Kruskal 
 
 \verbinput (-) ../algorithms/graph/kruskal.cpp
@@ -107,7 +111,7 @@ Jenom délka, $O(n \cdot m)$.
 Jenom délka, $O(n \cdot m)$.
 \verbinput (-) ../algorithms/string/longest-common-substring.cpp
 
-\secc Suffix tree + LCP + použití na Longest common subsequence 
+\secc Suffix array + LCP + použití na Longest common subsequence 
 
 O(n)
 \verbinput (1-103) ../Matyas/ACM2/7/longest-common-substring/template.cpp
@@ -147,6 +151,10 @@ Pouze pro kladné prvky pole
 {\bf JEŠTĚ JEDNOU ZDŮRAZNÍM, ŽE SE NEPOUŽÍVÁ {\tt T[0]}}\linebreak
 Chcete-li použít Fenwicka jako \uv{segmenťák} (tedy update je {\tt add(l,d)+add(r+1,-d)}), pak query stačí jako {\tt pref\_sum(i)} a není třeba odečítat $i-1$.
 \verbinput (-) ../data-structures/fenwick.cpp
+
+\sec Intervaly
+
+\verbinput (-) ../data-structures/intervals.cpp
 
 \sec Jak na rychlé mapy 
 
@@ -289,13 +297,20 @@ $O(\log(n))$
 
 \sec Vim 
 
+Přepsat do souboru .vimrc
+
 \verbinput (-) ../vimrc
 
 \sec Bash 
 
+Přepsat do souboru .bashrc
+
 \verbinput (-) ../bashrc
 
 \sec Template 
+
+
+Přepsat do souboru template/template.cpp
 
 \verbinput (-) ../template/template.cpp
 
