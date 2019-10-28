@@ -91,6 +91,29 @@ $O(n\log(n))$
 $O(n)$
 \verbinput (-) ../algorithms/graph/tree-center.cpp
 
+\sec Streamové algoritmy
+
+Doufejme, že nikdy nebudou potřeba.
+
+\secc Výběr prvku, který se vyskutuje alespoň $n/2$ krát
+
+\ttline=1
+\begtt
+k <- null, c <- 0
+process(x):
+  if k = null:
+    k <- x
+  if x = k
+    c <- c + 1
+  else
+    c <- c - 1
+    if c = 0
+      k <- null
+========================================
+for x in stream:
+  process(x)
+\endtt
+
 \sec Stringové algoritmy
 
 \secc Aho-Corasick
