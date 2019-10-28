@@ -17,5 +17,5 @@ function vg {
 }
 
 function tt {
-  c && find *"$1".in | xargs -I @ sh -c "echo Test @; time ./a.out < @;"
+  c && find *"$1".in | xargs -I @ bash -c "echo Test @; time ./a.out < @;"
 }
