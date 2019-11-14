@@ -1,4 +1,9 @@
-alias c='g++ -std=c++14 -static -Wall -O2 template.cpp -g'
+alias _c='g++ -std=c++14 -static -Wall -O2 -g'
+function c {
+  for f in *.cpp; do
+    _c "${f}"
+  done
+}
 
 function m {
   cp -r ~/template/ "$1" && cd "$1" && mv *.cpp "$1".cpp
