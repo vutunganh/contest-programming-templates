@@ -1,10 +1,11 @@
-vpll factors(ll n){
+vector<pair<ll,ll>> factors(ll n){
   vpll result;
   for(ll i=2;i*i<=n&&n>1;++i){
     ll p=0;
     while(n%i==0)++p,n/=i;
     if(p)result.PB({i,p});
   }
+  if (n > 1) result.PB({n,1});
   return result;
 }
 
