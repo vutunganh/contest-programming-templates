@@ -12,7 +12,7 @@ ll ipow(ll base, ll exp) {
 }
 
 // rychle modularni umocnovani v case log(exp)
-ll ipowMod(ll base, ll exp, ll mod) {
+ll ipowMod(ll base, ll exp, ll mod=MOD) {
   ll result = 1;
   while (exp)
   {
