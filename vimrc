@@ -1,28 +1,5 @@
 filetype indent on
 syntax enable
-set nohls
-set is
-set hid
-set wmnu
-set wim=full
-set et
-set sta
-set ts=2
-set sw=2
-set sts=2
-set wrap
-set mouse=a
-
-colo elflord
-set sc
-set ls=2
-set nu
-
-map 0 ^
-map j gj
-map k gk
-
-set cin
-set cink-=0#
-set indk-=0#
-set cino+=g0
+set nohls is hid wmnu wim=full et sta ts=2 sw=2 sts=2 wrap mouse=a sc ls=2 nu so=8 siso=15 ss=1 cin cink-=0# indk-=0# cino+=g0 si ai
+color elflord
+nnoremap <F6> :w\|!bash -ci rt<CR>
