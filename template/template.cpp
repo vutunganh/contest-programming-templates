@@ -9,6 +9,7 @@ using ld=double;
 #define bb second
 #define PB push_back
 #define EQ(a,b) (fabs(a-b)<=(fabs(a+b)*EPS))
+#define MOD ((ll)(1e9+7))
 
 int main(){
   ios::sync_with_stdio(0);cin.tie(0);
