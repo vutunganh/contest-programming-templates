@@ -1,5 +1,9 @@
 // O(N * ALPHA) construction
 // taken from garbage collectors templates
+#define rep(i, a, b) for (int i = a; i < (b); ++i)
+#define trav(a, x) for (auto& a : x)
+#define all(x) x.begin(), x.end()
+#define sz(x) (int)(x).size()
 struct SuffixTree {
   // Change N, ALPHA and toi
   enum { N = 400010, ALPHA = 'Z' - 'A' + 1 };
@@ -68,3 +72,7 @@ suff:
     return findCommonRec(t[node][toi(q[idx])], q, idx);
   }
 };
+
+// May crash when created as a stack variable
+// Usage:
+// SuffixTree* st = new SuffixTree(s);
