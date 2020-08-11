@@ -1,4 +1,4 @@
-alias _c='g++ -std=c++14 -static -Wall -O2 -g'
+alias _c='g++ -std=c++17 -Wall -pedantic -Wextra -O2 -g'
 function c {
   for f in *.cpp; do
     _c "${f}"
