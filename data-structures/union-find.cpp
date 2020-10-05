@@ -29,12 +29,6 @@ struct UnionFind {
       depth[ar] ++;
     }
   }
-
-  void clear() {
-    hp = 0;
-    iota(parent.begin(), parent.end(), 0);
-    fill(depth.begin(), depth.end(), 0);
-  }
 };
 
 // persistentni varianta
